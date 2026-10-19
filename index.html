@@ -41,6 +41,9 @@
 </style>
 <!-- Zähler ohne Cookies und ohne persönliche Daten (GoatCounter); zählt Aufrufe und Klicks auf die Download-Knöpfe -->
 <script data-goatcounter="https://dicom-converter.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<!-- eigener Zähler (Cloudflare, ohne Cookies, ohne Speicherung von IP-Adressen): Aufruf und Klicks auf Knöpfe mit data-goatcounter-click -->
+<script>(function(){var u="https://dicom-converter-zaehler.jensberger-dev.workers.dev/hit";function s(k){try{navigator.sendBeacon(u,new Blob([JSON.stringify({k:k,p:location.pathname,r:document.referrer})],{type:"text/plain"}))}catch(e){}}
+s("view");document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("[data-goatcounter-click]");if(a)s(a.getAttribute("data-goatcounter-click"))},true)})();</script>
 </head>
 <body>
 <main>
@@ -201,7 +204,7 @@ Jahresgebühr für das Apple-Entwicklerprogramm (Signatur und Prüfung durch App
 Warnung startet) und das Abonnement für den KI-Assistenten Claude, mit dem das Programm entwickelt wird. Wer die
 Weiterentwicklung unterstützen möchte, kann das gern über
 <a href="https://www.paypal.com/paypalme/DicomConverter" data-goatcounter-click="paypal" data-goatcounter-title="PayPal">PayPal</a> tun – vielen Dank!</p>
-<p class="muted">Diese Seite zählt Aufrufe und Downloads anonym (GoatCounter, ohne Cookies, ohne Speicherung von IP-Adressen).</p>
+<p class="muted">Diese Seite zählt Aufrufe und Downloads anonym (GoatCounter und ein eigener Zähler bei Cloudflare, ohne Cookies, ohne Speicherung von IP-Adressen).</p>
 <p class="muted"><a href="rechtliches.html#impressum">Impressum</a> · <a href="rechtliches.html#datenschutz">Datenschutz</a></p>
 
 
