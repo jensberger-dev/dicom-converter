@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DICOM-Converter</title>
+<style>
+  :root { --bg: #ffffff; --text: #1d1d1f; --muted: #5f6368; --line: #d9dce1; --box: #f3f5f8; --accent: #163452; --warn: #fff4e0; --warnline: #e3a33a; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #17191c; --text: #e8eaed; --muted: #a0a6ad; --line: #3a3e44; --box: #22262b; --accent: #8db8e6; --warn: #3a2f1c; --warnline: #c48a2c; }
+  }
+  :root[data-theme="dark"] { --bg: #17191c; --text: #e8eaed; --muted: #a0a6ad; --line: #3a3e44; --box: #22262b; --accent: #8db8e6; --warn: #3a2f1c; --warnline: #c48a2c; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.55 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  main { max-width: 880px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { color: var(--accent); font-size: 2em; margin: 0.4em 0 0.1em; }
+  h2 { color: var(--accent); margin-top: 2.2em; padding-top: 0.6em; border-top: 1px solid var(--line); }
+  h3 { margin-bottom: 0.3em; }
+  .lead { font-size: 1.15em; }
+  .muted { color: var(--muted); font-size: 0.9em; }
+  nav { background: var(--box); border-radius: 8px; padding: 10px 16px; margin: 20px 0; }
+  nav a { margin-right: 14px; white-space: nowrap; }
+  a { color: var(--accent); }
+  figure { margin: 16px 0 24px; }
+  figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; }
+  figcaption { color: var(--muted); font-size: 0.9em; margin-top: 6px; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 640px) { .pair { grid-template-columns: 1fr; } }
+  .box { background: var(--box); border-radius: 8px; padding: 12px 18px; }
+  .warn { background: var(--warn); border-left: 4px solid var(--warnline); border-radius: 6px; padding: 10px 16px; }
+  ol li, ul li { margin: 0.3em 0; }
+  pre { background: var(--box); border-radius: 6px; padding: 12px; overflow-x: auto; font-size: 0.85em; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.95em; }
+  td, th { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+  kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 0.9em; background: var(--box); }
+  .downloads { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0 8px; }
+  .button { display: inline-block; background: var(--accent); color: var(--bg); text-decoration: none; font-weight: 600; border-radius: 8px; padding: 12px 20px; }
+  .button small { display: block; font-weight: 400; font-size: 0.8em; opacity: 0.85; }
+</style>
+<!-- Zähler ohne Cookies und ohne persönliche Daten (GoatCounter); zählt Aufrufe und Klicks auf die Download-Knöpfe -->
+<script data-goatcounter="https://dicom-converter.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<main>
+
+<h1>DICOM-Converter</h1>
+<p class="muted">Version 3.0.0.86 · Stand 19.10.2026 · für macOS und Windows</p>
+
+<p class="lead">Der DICOM-Converter macht aus Ultraschall-Untersuchungen ganz normale <b>Filme und Bilder</b>,
+die man mit jedem Programm ansehen, in PowerPoint oder Keynote einbauen oder weitergeben kann –
+und er <b>entfernt dabei Name, Patienten-ID und Geburtsdatum aus dem Bild</b>.</p>
+
+<nav>
+  <a href="#was">Was er macht</a>
+  <a href="#installieren">Installieren</a>
+  <a href="#rechtsklick">Rechtsklick</a>
+  <a href="#fenster">Programmfenster</a>
+  <a href="#ergebnis">Ergebnis</a>
+  <a href="#mehr">Was er noch kann</a>
+  <a href="#datenschutz">Datenschutz</a>
+  <a href="#hilfe">Hilfe</a>
+</nav>
+
+
+<h2 id="download" style="border-top:0; margin-top:1em; padding-top:0">Herunterladen</h2>
+<div class="downloads">
+  <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-macOS.pkg" data-goatcounter-click="download-macos" data-goatcounter-title="Download macOS">Für Mac<small>DICOM-Converter-macOS.pkg</small></a>
+  <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-Setup.exe" data-goatcounter-click="download-windows" data-goatcounter-title="Download Windows">Für Windows<small>DICOM-Converter-Windows-Setup.exe</small></a>
+</div>
+<p class="muted">Version 3.0.0.86 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
+
+
+<h2 id="was">Was er macht</h2>
+<p>Ultraschallgeräte speichern ihre Bilder im Format <b>DICOM</b>. Diese Dateien lassen sich auf einem normalen
+Computer kaum öffnen, und im Bild stehen die Patientendaten. Der DICOM-Converter</p>
+<ul>
+  <li>wandelt jede Filmschleife (Loop) in einen <b>Film</b> und jedes Standbild in ein <b>PNG-Bild</b> um,</li>
+  <li><b>überdeckt Name, ID und Geburtsdatum</b> im Bild – passend für jedes unterstützte Gerät, Logos und Messwerte bleiben sichtbar,</li>
+  <li>sortiert die Ergebnisse ordentlich: <b>ein Ordner pro Patient</b>, darin <b>ein Ordner pro Untersuchung</b>.</li>
+</ul>
+
+<div class="pair">
+  <figure><img src="img/vorher-kopf.jpg" alt="Kopfzeile vorher mit Name, ID und Geburtsdatum"><figcaption>Vorher: Name, ID und Geburtsdatum oben links im Bild</figcaption></figure>
+  <figure><img src="img/nachher-kopf.jpg" alt="Kopfzeile nachher ohne Patientendaten"><figcaption>Nachher: Name, ID und Geburtsdatum sind überdeckt, der Rest bleibt unverändert</figcaption></figure>
+</div>
+<figure><img src="img/nachher.jpg" alt="Umgewandeltes Ultraschallbild"><figcaption>Das fertige Bild (hier ein erfundenes Beispiel)</figcaption></figure>
+
+<h2 id="installieren">Installieren</h2>
+<p>Die Installationsprogramme gibt es oben unter <a href="#download">Herunterladen</a>. Weitere Software ist nicht nötig.</p>
+
+<h3>Mac</h3>
+<ol>
+  <li><b>DICOM-Converter-macOS.pkg</b> doppelklicken.</li>
+  <li>Meldet macOS, das Paket könne nicht geöffnet werden: <b>Systemeinstellungen → Datenschutz &amp; Sicherheit → Trotzdem öffnen</b>.</li>
+  <li>Dem Installationsprogramm folgen. Eine ältere Version wird entfernt – Ihre bisherigen Untersuchungen bleiben erhalten.</li>
+</ol>
+
+<h3>Windows (ab Windows 10)</h3>
+<ol>
+  <li><b>DICOM-Converter-Windows-Setup.exe</b> doppelklicken.</li>
+  <li>Warnt Windows („Der Computer wurde durch Windows geschützt“): <b>Weitere Informationen → Trotzdem ausführen</b>, dann die Frage nach Administratorrechten mit <b>Ja</b> beantworten.</li>
+  <li>Ist noch ein alter DICOM-Converter da, fragt das Installationsprogramm, ob er entfernt werden soll – Ihre Untersuchungen bleiben erhalten.</li>
+</ol>
+
+<h2 id="rechtsklick">Am schnellsten: Rechtsklick auf den Ordner</h2>
+<p>Den Ordner mit den DICOM-Daten (z.&nbsp;B. vom USB-Stick oder von der CD) mit der <b>rechten Maustaste</b> anklicken:</p>
+<ul>
+  <li><b>Windows:</b> <i>DICOM-Converter 3</i> → <i>Konvertieren</i>. Unter Windows 11 erst auf <i>Weitere Optionen anzeigen</i> klicken.</li>
+  <li><b>Mac:</b> <i>DICOM-Converter 3 – Konvertieren</i> ganz unten im Menü (bei manchen Macs im Untermenü <i>Schnellaktionen</i>).</li>
+</ul>
+<figure><img src="img/win-kontextmenue.jpg" alt="Windows-Rechtsklickmenü mit Untermenü DICOM-Converter 3"><figcaption>Windows: Rechtsklick auf den Ordner „DICOM“ → DICOM-Converter 3</figcaption></figure>
+<figure style="max-width:468px"><img src="img/mac-kontextmenue.jpg" alt="Mac-Rechtsklickmenü mit den Einträgen DICOM-Converter 3"><figcaption>Mac: Rechtsklick auf den Ordner → die Einträge „DICOM-Converter 3 – …“ stehen ganz unten</figcaption></figure>
+
+<p>Ein kleines Fenster zeigt, wie weit die Umwandlung ist, und listet am Ende jede Datei mit ihrem Ergebnis auf.
+Mit <b>Zielordner öffnen</b> sehen Sie die fertigen Filme.</p>
+<figure><img src="img/win-fortschritt.jpg" alt="Fortschrittsfenster unter Windows"><figcaption>Windows: Fortschrittsfenster nach dem Lauf</figcaption></figure>
+<figure><img src="img/mac-fortschritt.jpg" alt="Fortschrittsfenster auf dem Mac"><figcaption>Mac: dasselbe Fenster – je Datei „Quelle → Ergebnis“</figcaption></figure>
+
+<h2 id="fenster">Mit dem Programmfenster</h2>
+<p>„DICOM-Converter“ im Startmenü (Windows) bzw. im Ordner Programme (Mac) öffnen. Dann:</p>
+<ol>
+  <li><b>Quelle:</b> den DICOM-Ordner in das Fenster ziehen – oder auf <b>Ordner…</b> klicken.</li>
+  <li><b>Start</b> klicken. Die Balken zeigen den Fortschritt, darunter steht das Protokoll.</li>
+  <li><b>Zielordner öffnen</b> zeigt die Ergebnisse.</li>
+</ol>
+<p>Alles andere kann normalerweise so bleiben. Die fertigen Dateien landen im Ordner <b>EXAMS auf dem Schreibtisch</b>.</p>
+<figure><img src="img/win-hauptfenster.jpg" alt="Hauptfenster unter Windows nach der Umwandlung"><figcaption>Windows: fertig – 6 Dateien von 2 Patienten umgewandelt</figcaption></figure>
+<figure><img src="img/mac-hauptfenster.jpg" alt="Hauptfenster auf dem Mac während der Umwandlung"><figcaption>Mac: während der Umwandlung</figcaption></figure>
+
+<div class="box">
+<p><b>Die Schalter in einfachen Worten</b></p>
+<table>
+  <tr><td><b>Filmformat</b></td><td>„Automatisch“ liefert die beste Qualität. Für PowerPoint oder E-Mail gibt es kleinere MP4-Varianten.</td></tr>
+  <tr><td><b>Filme zusammenfügen</b></td><td>Alle Loops einer Untersuchung werden ein einziger Film.</td></tr>
+  <tr><td><b>Banner abschneiden</b></td><td>Die Kopfzeile mit den Gerätedaten wird ganz abgeschnitten statt überdeckt.</td></tr>
+  <tr><td><b>PID im Namen</b></td><td>Die Patienten-ID steht zusätzlich im Ordnernamen.</td></tr>
+  <tr><td><b>Anonymisierung prüfen</b></td><td>Liest die fertigen Bilder noch einmal per Texterkennung und warnt, falls doch Patientendaten zu sehen sind (dauert länger).</td></tr>
+  <tr><td><b>keine Anonymisierung</b></td><td>⚠ Patientendaten bleiben im Bild – nur für interne Zwecke.</td></tr>
+</table>
+</div>
+
+<h2 id="ergebnis">So sieht das Ergebnis aus</h2>
+<pre>EXAMS
+└── MUSTERMANN MAX
+    └── US 13.05.2024
+        ├── P MUSTERMANN MAX 54J 13.05.2024 101501.mov   ← Film
+        ├── P MUSTERMANN MAX 54J 13.05.2024 101512.png   ← Standbild
+        └── P MUSTERMANN MAX 54J 13.05.2024 101530.mov   ← Film</pre>
+<p>Der Dateiname nennt Gerätehersteller (hier P = Philips), Name, Alter, Datum und Uhrzeit der Aufnahme.
+Der Name steht <b>nur im Dateinamen, nicht im Bild</b>. Sortiert nach Datum erscheinen die Dateien in der
+Reihenfolge der Untersuchung.</p>
+<figure><img src="img/win-ergebnis.jpg" alt="Ergebnisordner im Windows-Explorer"><figcaption>Der Ergebnisordner im Windows-Explorer</figcaption></figure>
+
+<h2 id="mehr">Was er noch kann</h2>
+<table>
+  <tr><th>Funktion</th><th>Wozu</th></tr>
+  <tr><td><b>Konvertieren mit Glue</b></td><td>Wie Konvertieren, aber alle Loops einer Untersuchung als ein Film.</td></tr>
+  <tr><td><b>Filme zusammensetzen</b></td><td>Alle Filme eines Ordners zu einem Film verbinden.</td></tr>
+  <tr><td><b>Film in Einzelbilder zerlegen</b></td><td>Jedes Bild eines Films als PNG speichern, z.&nbsp;B. für Abbildungen.</td></tr>
+  <tr><td><b>Filme reparieren</b></td><td>Filme, die sich nicht abspielen lassen, neu speichern.</td></tr>
+  <tr><td><b>Dateinamen anonymisieren für Versand</b></td><td>Entfernt Namen aus den Dateinamen, auf Wunsch gleich als ZIP zum Verschicken.</td></tr>
+  <tr><td><b>Filme nachträglich anonymisieren</b></td><td>Für Filme und Bilder, die direkt vom Gerät als AVI/MP4 exportiert wurden: Hersteller und Patientendaten werden am Bild erkannt und überdeckt.</td></tr>
+  <tr><td><b>In Keynote einfügen</b></td><td>Nur Mac: Filme direkt in eine Keynote-Präsentation.</td></tr>
+  <tr><td><b>In PowerPoint einfügen</b></td><td>Mac und Windows: Bilder und Filme direkt in eine PowerPoint-Präsentation – auch einen ganzen Ordner.</td></tr>
+  <tr><td><b>Empfänger</b></td><td>Das Ultraschallgerät schickt Untersuchungen direkt per Netzwerk an den Rechner; sie werden automatisch umgewandelt.</td></tr>
+</table>
+<p>Alle diese Funktionen gibt es im Rechtsklick-Menü bzw. im Programmfenster auf den Reitern <b>Werkzeuge</b> und <b>Empfänger</b>.</p>
+<figure><img src="img/win-werkzeuge.jpg" alt="Reiter Werkzeuge"><figcaption>Reiter „Werkzeuge“: Werkzeug wählen, Datei oder Ordner angeben, Ausführen</figcaption></figure>
+<figure><img src="img/win-empfaenger.jpg" alt="Reiter Empfänger"><figcaption>Reiter „Empfänger“: am Ultraschallgerät diesen Rechner mit AE-Titel und Port als Ziel eintragen</figcaption></figure>
+
+<h2 id="datenschutz">Datenschutz – bitte beachten</h2>
+<div class="warn">
+<ul>
+  <li>Meldet das Programm <b>„generisch anonymisiert – bitte prüfen“</b> oder <b>„Mögliche unzureichende Anonymisierung“</b>, die genannten Dateien vor der Weitergabe ansehen.</li>
+  <li>Von Hand ins Bild getippte Bemerkungen kann das Programm nicht erkennen.</li>
+  <li>Der Ordner <b>EXAMS/unsupp_res</b> enthält Beispieldateien unbekannter Geräte <b>mit allen Patientendaten</b> – nicht weitergeben.</li>
+  <li>Der Patientenname steht im <b>Dateinamen</b>. Vor dem Verschicken „Dateinamen anonymisieren für Versand“ benutzen.</li>
+</ul>
+</div>
+
+<h2 id="hilfe">Hilfe</h2>
+<p>Im Programm unter <b>Hilfe → Kurzanleitung</b> bzw. <b>Hilfe → Handbuch</b> steht alles ausführlich
+(unter Windows auch im Startmenü unter „DICOM-Converter“).</p>
+<table>
+  <tr><th>Problem</th><th>Lösung</th></tr>
+  <tr><td>Mac: „… kann nicht geöffnet werden“</td><td>Rechtsklick auf das Programm → <b>Öffnen</b></td></tr>
+  <tr><td>Windows: SmartScreen blockiert</td><td><b>Weitere Informationen → Trotzdem ausführen</b></td></tr>
+  <tr><td>Eine Datei ist „nicht unterstützt“</td><td>Das Gerät ist noch nicht eingerichtet – bitte melden.</td></tr>
+  <tr><td>Im Bild ist noch ein Name zu sehen</td><td>Datei nicht weitergeben und melden.</td></tr>
+</table>
+
+
+<h2 id="unterstuetzen">Unterstützen</h2>
+<p>Der DICOM-Converter ist kostenlos. Wer die Weiterentwicklung unterstützen möchte, kann das gern über
+<a href="https://www.paypal.com/paypalme/DicomConverter" data-goatcounter-click="paypal" data-goatcounter-title="PayPal">PayPal</a> tun – vielen Dank!</p>
+<p class="muted">Diese Seite zählt Aufrufe und Downloads anonym (GoatCounter, ohne Cookies, ohne Speicherung von IP-Adressen).</p>
+
+
+<p class="muted" style="margin-top:3em">Alle Bilder auf dieser Seite zeigen erfundene Beispieldaten („Mustermann“).<br>
+DICOM-Converter 3.0.0.86 · Copyright Dr. Jens Berger (2012-2026)</p>
+
+</main>
+</body>
+</html>
