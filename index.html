@@ -49,11 +49,12 @@ s("view");document.addEventListener("click",function(e){var a=e.target.closest&&
 <main>
 
 <h1>DICOM-Converter</h1>
-<p class="muted">Version 3.0.0.126 · Stand 21.10.2026 · für macOS und Windows</p>
+<p class="muted">Version 3.0.0.143 · Stand 23.10.2026 · für macOS und Windows</p>
 
-<p class="lead">Der DICOM-Converter macht aus Ultraschall-Untersuchungen ganz normale <b>Filme und Bilder</b>,
+<p class="lead">Der DICOM-Converter macht aus Ultraschall-Untersuchungen – und auch aus CT, MRT, Röntgen und anderen
+DICOM-Daten – ganz normale <b>Filme und Bilder</b>,
 die man mit jedem Programm ansehen, in PowerPoint oder Keynote einbauen oder weitergeben kann –
-und er <b>entfernt dabei Name, Patienten-ID und Geburtsdatum aus dem Bild</b>.</p>
+und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum aus dem Bild</b>.</p>
 
 <nav>
   <a href="#was">Was er macht</a>
@@ -61,6 +62,7 @@ und er <b>entfernt dabei Name, Patienten-ID und Geburtsdatum aus dem Bild</b>.</
   <a href="#rechtsklick">Rechtsklick</a>
   <a href="#fenster">Programmfenster</a>
   <a href="#ergebnis">Ergebnis</a>
+  <a href="#andere">CT, MRT, Röntgen</a>
   <a href="#mehr">Was er noch kann</a>
   <a href="#datenschutz">Datenschutz</a>
   <a href="#hilfe">Hilfe</a>
@@ -73,7 +75,7 @@ und er <b>entfernt dabei Name, Patienten-ID und Geburtsdatum aus dem Bild</b>.</
   <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-Setup.exe" data-goatcounter-click="download-windows" data-goatcounter-title="Download Windows">Für Windows<small>DICOM-Converter-Windows-Setup.exe</small></a>
 </div>
 <p class="muted">Mac ab macOS 11 (Apple Silicon und Intel), von Apple signiert · Windows 10 oder 11 (64 Bit) · <a href="#voraussetzungen">Systemvoraussetzungen</a></p>
-<p class="muted">Version 3.0.0.126 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
+<p class="muted">Version 3.0.0.143 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
 <div class="support">
   <span>Der DICOM-Converter ist kostenlos. Seine Weiterentwicklung kostet aber Geld – für das Apple-Entwicklerprogramm (damit der Mac das Programm ohne Warnung startet) und für den KI-Assistenten Claude, mit dem er entwickelt wird. Über eine Unterstützung freue ich mich sehr.</span>
   <a class="button secondary" href="https://www.paypal.com/paypalme/DicomConverter" data-goatcounter-click="paypal" data-goatcounter-title="PayPal">Unterstützen mit PayPal</a>
@@ -170,6 +172,30 @@ Der Name steht <b>nur im Dateinamen, nicht im Bild</b>. Sortiert nach Datum ersc
 Reihenfolge der Untersuchung.</p>
 <figure><img src="img/win-ergebnis.jpg" alt="Ergebnisordner im Windows-Explorer"><figcaption>Der Ergebnisordner im Windows-Explorer</figcaption></figure>
 
+<h2 id="andere">Auch CT, MRT, Röntgen und andere DICOM-Daten</h2>
+<p>Neben Ultraschall wandelt der DICOM-Converter auch die übrigen gängigen DICOM-Daten um – zum Beispiel die CD
+einer CT- oder MRT-Untersuchung. Bedienung, Ordner und Dateinamen sind dieselben wie beim Ultraschall.</p>
+<table>
+  <tr><th>Daten</th><th>Ergebnis</th></tr>
+  <tr><td><b>CT, MRT, PET, Angiographie</b></td><td>Jede Serie wird ein <b>Film</b>, in dem man durch die Schichten blättert. Übersichtsaufnahmen (Topogramm, Localizer) werden weggelassen.</td></tr>
+  <tr><td><b>Durchleuchtung</b></td><td>Jede Serie wird ein Film.</td></tr>
+  <tr><td><b>Röntgen, Mammographie, Fotos, Endoskopie</b></td><td>Jedes Bild wird ein <b>PNG-Bild</b>, Videos werden Filme.</td></tr>
+</table>
+<p>CT- und MRT-Filme bekommen <b>sprechende Namen</b> aus den Angaben in den DICOM-Dateien: Schnittebene,
+Kontrastmittel-Phase (nativ, arteriell, portalvenös, venös, Spätphase; bei der Leber-MRT mit Primovist bis zur
+hepatobiliären Phase) und bei der MRT In-Phase und Opposed-Phase.</p>
+<pre>EXAMS
+└── MUSTERMANN MANFRED
+    ├── CT 16.04.2025
+    │   ├── CT MUSTERMANN MANFRED 16.04.2025 Abdomen axial portalvenoes 0,6 mm Weichteil.mov
+    │   └── CT MUSTERMANN MANFRED 16.04.2025 Thorax koronal KM 1 mm arteriell.mov
+    └── MR 17.04.2025
+        ├── MR MUSTERMANN MANFRED 17.04.2025 093312 T1 VIBE Dixon tra Opposed-Phase nativ.mov
+        ├── MR MUSTERMANN MANFRED 17.04.2025 094020 T1 VIBE Dixon tra arteriell.mov
+        └── MR MUSTERMANN MANFRED 17.04.2025 095136 T1 VIBE Dixon tra 15 min hepatobiliaer.mov</pre>
+<p>Im Bild wird bei diesen Daten <b>nichts überdeckt</b> – CT-, MRT- und Röntgenbilder zeigen den Namen normalerweise
+nicht im Bild (siehe <a href="#datenschutz">Datenschutz</a>).</p>
+
 <h2 id="mehr">Was er noch kann</h2>
 <table>
   <tr><th>Funktion</th><th>Wozu</th></tr>
@@ -193,6 +219,7 @@ Reihenfolge der Untersuchung.</p>
 <ul>
   <li>Meldet das Programm <b>„generisch anonymisiert – bitte prüfen“</b> oder <b>„Mögliche unzureichende Anonymisierung“</b>, die genannten Dateien vor der Weitergabe ansehen.</li>
   <li>Von Hand ins Bild getippte Bemerkungen kann das Programm nicht erkennen.</li>
+  <li>Bei <b>CT, MRT, Röntgen und anderen Nicht-Ultraschall-Daten</b> wird im Bild nichts überdeckt. Eingescannte Dokumente, Bildschirmfotos oder Beschriftungen im Bild (manchmal bei Angiographie und Durchleuchtung) können den Namen zeigen – vor der Weitergabe ansehen.</li>
   <li>Der Ordner <b>EXAMS/unsupp_res</b> enthält Beispieldateien unbekannter Geräte als unveränderte Originale <b>mit allen Patientendaten</b> – diesen Ordner nicht weitergeben.</li>
   <li>Zum Einschicken legt das Programm bei neuen Geräten automatisch <b>EXAMS/DICOM-Converter-Proben-&lt;Datum&gt;.zip</b> an. Darin sind Name, Patienten-ID, Geburtsdatum und Arztnamen aus den Dateien entfernt – <b>diese ZIP-Datei</b> bitte an Dr. Jens Berger schicken. Die Bilder selbst sind unverändert und können noch Namen zeigen; daher nur auf sicherem Weg verschicken.</li>
   <li>Der Patientenname steht im <b>Dateinamen</b>. Vor dem Verschicken „Dateinamen anonymisieren für Versand“ benutzen.</li>
@@ -221,7 +248,7 @@ Weiterentwicklung unterstützen möchte, kann das gern über
 
 
 <p class="muted" style="margin-top:3em">Alle Bilder auf dieser Seite zeigen Testpatienten („Mustermann“), keine echten Patientendaten.<br>
-DICOM-Converter 3.0.0.126 · Copyright Dr. Jens Berger (2012-2026)</p>
+DICOM-Converter 3.0.0.143 · Copyright Dr. Jens Berger (2012-2026)</p>
 
 </main>
 </body>
