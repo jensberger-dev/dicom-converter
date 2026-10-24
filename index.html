@@ -49,7 +49,7 @@ s("view");document.addEventListener("click",function(e){var a=e.target.closest&&
 <main>
 
 <h1>DICOM-Converter</h1>
-<p class="muted">Version 3.0.0.150 · Stand 23.10.2026 · für macOS und Windows</p>
+<p class="muted">Version 3.0.0.158 · Stand 24.10.2026 · für macOS und Windows</p>
 
 <p class="lead">Der DICOM-Converter macht aus Ultraschall-Untersuchungen – und auch aus CT, MRT, Röntgen und anderen
 DICOM-Daten – ganz normale <b>Filme und Bilder</b>,
@@ -75,7 +75,7 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
   <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-Setup.exe" data-goatcounter-click="download-windows" data-goatcounter-title="Download Windows">Für Windows<small>DICOM-Converter-Windows-Setup.exe</small></a>
 </div>
 <p class="muted">Mac ab macOS 11 (Apple Silicon und Intel), von Apple signiert · Windows 10 oder 11 (64 Bit) · <a href="#voraussetzungen">Systemvoraussetzungen</a></p>
-<p class="muted">Version 3.0.0.150 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
+<p class="muted">Version 3.0.0.158 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
 <div class="support">
   <span>Der DICOM-Converter ist kostenlos. Seine Weiterentwicklung kostet aber Geld – für das Apple-Entwicklerprogramm (damit der Mac das Programm ohne Warnung startet) und für den KI-Assistenten Claude, mit dem er entwickelt wird. Über eine Unterstützung freue ich mich sehr.</span>
   <a class="button secondary" href="https://www.paypal.com/paypalme/DicomConverter" data-goatcounter-click="paypal" data-goatcounter-title="PayPal">Unterstützen mit PayPal</a>
@@ -129,7 +129,7 @@ Computer kaum öffnen, und im Bild stehen die Patientendaten. Der DICOM-Converte
   <li><b>Mac:</b> <i>DICOM-Converter 3 – Konvertieren</i> ganz unten im Menü (bei manchen Macs im Untermenü <i>Schnellaktionen</i>).</li>
 </ul>
 <figure><img src="img/win-kontextmenue.jpg" alt="Windows-Rechtsklickmenü mit Untermenü DICOM-Converter 3"><figcaption>Windows: Rechtsklick auf den Ordner „DICOM“ → DICOM-Converter 3</figcaption></figure>
-<figure style="max-width:468px"><img src="img/mac-kontextmenue.jpg" alt="Mac-Rechtsklickmenü mit den Einträgen DICOM-Converter 3"><figcaption>Mac: Rechtsklick auf den Ordner → die Einträge „DICOM-Converter 3 – …“ stehen ganz unten</figcaption></figure>
+<figure style="max-width:523px"><img src="img/mac-kontextmenue.jpg" alt="Mac-Rechtsklickmenü mit den Einträgen DICOM-Converter 3"><figcaption>Mac: Rechtsklick auf den Ordner → die Einträge „DICOM-Converter 3 – …“ stehen ganz unten</figcaption></figure>
 
 <p>Ein kleines Fenster zeigt, wie weit die Umwandlung ist, und listet am Ende jede Datei mit ihrem Ergebnis auf.
 Mit <b>Zielordner öffnen</b> sehen Sie die fertigen Filme.</p>
@@ -144,8 +144,8 @@ Mit <b>Zielordner öffnen</b> sehen Sie die fertigen Filme.</p>
   <li><b>Zielordner öffnen</b> zeigt die Ergebnisse.</li>
 </ol>
 <p>Alles andere kann normalerweise so bleiben. Die fertigen Dateien landen im Ordner <b>EXAMS auf dem Schreibtisch</b>.</p>
-<figure><img src="img/win-hauptfenster.jpg" alt="Hauptfenster unter Windows während der Umwandlung"><figcaption>Windows: während der Umwandlung</figcaption></figure>
-<figure><img src="img/mac-hauptfenster.jpg" alt="Hauptfenster auf dem Mac während der Umwandlung"><figcaption>Mac: während der Umwandlung</figcaption></figure>
+<figure><img src="img/win-hauptfenster.jpg" alt="Hauptfenster unter Windows nach der Umwandlung"><figcaption>Windows: nach der Umwandlung</figcaption></figure>
+<figure><img src="img/mac-hauptfenster.jpg" alt="Hauptfenster auf dem Mac nach der Umwandlung"><figcaption>Mac: nach der Umwandlung</figcaption></figure>
 
 <div class="box">
 <p><b>Die Schalter in einfachen Worten</b></p>
@@ -162,12 +162,13 @@ Mit <b>Zielordner öffnen</b> sehen Sie die fertigen Filme.</p>
 <h2 id="ergebnis">So sieht das Ergebnis aus</h2>
 <pre>EXAMS
 └── MUSTERMANN MANFRED
-    └── US 15.04.2025
-        ├── T MUSTERMANN MANFRED 15.04.2025 180703175.png   ← Standbild
-        ├── T MUSTERMANN MANFRED 15.04.2025 180708910.mov   ← Film
+    └── US 15.04.2025 B-Bild
+        ├── T MUSTERMANN MANFRED 15.04.2025 B-Bild 180703175.png   ← Standbild
+        ├── T MUSTERMANN MANFRED 15.04.2025 B-Bild 180708910.mov   ← Film
         └── …</pre>
 <p>Der Dateiname nennt Gerätehersteller (hier T = Toshiba/Canon), Name, Alter (wenn das Geburtsdatum bekannt ist –
-beim Testpatienten fehlt es), Datum und Uhrzeit der Aufnahme.
+beim Testpatienten fehlt es), Datum, Art der Untersuchung und Uhrzeit der Aufnahme. Alle Untersuchungen eines Patienten
+liegen in einem Ordner „NAME VORNAME ALTER“; Ultraschall-Ordner heißen nach der Art: CEUS, Punktion oder B-Bild.
 Der Name steht <b>nur im Dateinamen, nicht im Bild</b>. Sortiert nach Datum erscheinen die Dateien in der
 Reihenfolge der Untersuchung.</p>
 <figure><img src="img/win-ergebnis.jpg" alt="Ergebnisordner im Windows-Explorer"><figcaption>Der Ergebnisordner im Windows-Explorer</figcaption></figure>
@@ -221,7 +222,7 @@ nicht im Bild (siehe <a href="#datenschutz">Datenschutz</a>).</p>
   <li>Von Hand ins Bild getippte Bemerkungen kann das Programm nicht erkennen.</li>
   <li>Bei <b>CT, MRT, Röntgen und anderen Nicht-Ultraschall-Daten</b> wird im Bild nichts überdeckt. Eingescannte Dokumente, Bildschirmfotos oder Beschriftungen im Bild (manchmal bei Angiographie und Durchleuchtung) können den Namen zeigen – vor der Weitergabe ansehen.</li>
   <li>Der Ordner <b>EXAMS/unsupp_res</b> enthält Beispieldateien unbekannter Geräte als unveränderte Originale <b>mit allen Patientendaten</b> – diesen Ordner nicht weitergeben.</li>
-  <li>Zum Einschicken legt das Programm bei neuen Geräten automatisch <b>EXAMS/DICOM-Converter-Proben-&lt;Datum&gt;.zip</b> an. Darin sind Name, Patienten-ID, Geburtsdatum und Arztnamen aus den Dateien entfernt – <b>diese ZIP-Datei</b> bitte an Dr. Jens Berger schicken. Die Bilder selbst sind unverändert und können noch Namen zeigen; daher nur auf sicherem Weg verschicken.</li>
+  <li>Zum Einschicken legt das Programm bei neuen Geräten automatisch <b>EXAMS/DICOM-Converter-Proben-&lt;Datum&gt;.zip</b> an. Darin sind Name, Patienten-ID, Geburtsdatum und Arztnamen aus den Dateien entfernt – <b>diese ZIP-Datei</b> bitte an Dr. Jens Berger schicken (<a href="mailto:dicom-converter@gmx.net">dicom-converter@gmx.net</a>). Die Bilder selbst sind unverändert und können noch Namen zeigen; daher nur auf sicherem Weg verschicken.</li>
   <li>Der Patientenname steht im <b>Dateinamen</b>. Vor dem Verschicken „Dateinamen anonymisieren für Versand“ benutzen.</li>
 </ul>
 </div>
@@ -229,10 +230,12 @@ nicht im Bild (siehe <a href="#datenschutz">Datenschutz</a>).</p>
 <h2 id="hilfe">Hilfe</h2>
 <p>Im Programm unter <b>Hilfe → Kurzanleitung</b> bzw. <b>Hilfe → Handbuch</b> steht alles ausführlich
 (unter Windows auch im Startmenü unter „DICOM-Converter“).</p>
+<p><b>Kontakt:</b> Fragen, Fehlermeldungen und Wünsche bitte per E-Mail an
+<a href="mailto:dicom-converter@gmx.net">dicom-converter@gmx.net</a> – bitte ohne Patientendaten.</p>
 <table>
   <tr><th>Problem</th><th>Lösung</th></tr>
   <tr><td>Windows: SmartScreen blockiert</td><td><b>Weitere Informationen → Trotzdem ausführen</b></td></tr>
-  <tr><td>Eine Datei ist „nicht unterstützt“</td><td>Das Gerät ist noch nicht eingerichtet – bitte melden.</td></tr>
+  <tr><td>Eine Datei ist „nicht unterstützt“</td><td>Das Gerät ist noch nicht eingerichtet – bitte melden (<a href="mailto:dicom-converter@gmx.net">dicom-converter@gmx.net</a>).</td></tr>
   <tr><td>Im Bild ist noch ein Name zu sehen</td><td>Datei nicht weitergeben und melden.</td></tr>
 </table>
 
@@ -248,7 +251,7 @@ Weiterentwicklung unterstützen möchte, kann das gern über
 
 
 <p class="muted" style="margin-top:3em">Alle Bilder auf dieser Seite zeigen Testpatienten („Mustermann“), keine echten Patientendaten.<br>
-DICOM-Converter 3.0.0.150 · Copyright Dr. Jens Berger (2012-2026)</p>
+DICOM-Converter 3.0.0.158 · Copyright Dr. Jens Berger (2012-2026)</p>
 
 </main>
 </body>
