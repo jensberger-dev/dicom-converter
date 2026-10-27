@@ -49,7 +49,7 @@ s("view");document.addEventListener("click",function(e){var a=e.target.closest&&
 <main>
 
 <h1>DICOM-Converter</h1>
-<p class="muted">Version 3.0.0.169 · Stand 25.10.2026 · für macOS und Windows</p>
+<p class="muted">Version 3.0.0.223 · Stand 27.10.2026 · für macOS und Windows</p>
 
 <p class="lead">Der DICOM-Converter macht aus Ultraschall-Untersuchungen – und auch aus CT, MRT, Röntgen und anderen
 DICOM-Daten – ganz normale <b>Filme und Bilder</b>,
@@ -75,7 +75,7 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
   <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-Setup.exe" data-goatcounter-click="download-windows" data-goatcounter-title="Download Windows">Für Windows<small>DICOM-Converter-Windows-Setup.exe</small></a>
 </div>
 <p class="muted">Mac ab macOS 11 (Apple Silicon und Intel), von Apple signiert · Windows 10 oder 11 (64 Bit) · <a href="#voraussetzungen">Systemvoraussetzungen</a></p>
-<p class="muted">Version 3.0.0.169 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
+<p class="muted">Version 3.0.0.223 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
 <div class="support">
   <span>Der DICOM-Converter ist kostenlos. Seine Weiterentwicklung kostet aber Geld – für das Apple-Entwicklerprogramm (damit der Mac das Programm ohne Warnung startet) und für den KI-Assistenten Claude, mit dem er entwickelt wird. Über eine Unterstützung freue ich mich sehr.</span>
   <a class="button secondary" href="https://www.paypal.com/paypalme/DicomConverter" data-goatcounter-click="paypal" data-goatcounter-title="PayPal">Unterstützen mit PayPal</a>
@@ -150,7 +150,7 @@ Mit <b>Zielordner öffnen</b> sehen Sie die fertigen Filme.</p>
 <div class="box">
 <p><b>Die Schalter in einfachen Worten</b></p>
 <table>
-  <tr><td><b>Filmformat</b></td><td>„Automatisch“ liefert auf dem Mac die beste Qualität (MOV), unter Windows MP4 in hoher Qualität. Für PowerPoint oder E-Mail gibt es kleinere MP4-Varianten.</td></tr>
+  <tr><td><b>Filmformat</b></td><td>„Automatisch“ liefert MP4 in hoher Qualität – etwa halb so groß wie früher, spielt überall. Für E-Mail gibt es kleinere MP4-Varianten.</td></tr>
   <tr><td><b>Filme zusammenfügen</b></td><td>Alle Loops einer Untersuchung werden ein einziger Film.</td></tr>
   <tr><td><b>Banner abschneiden</b></td><td>Die Kopfzeile mit den Gerätedaten wird ganz abgeschnitten statt überdeckt.</td></tr>
   <tr><td><b>PID im Namen</b></td><td>Die Patienten-ID steht zusätzlich im Ordnernamen.</td></tr>
@@ -164,7 +164,7 @@ Mit <b>Zielordner öffnen</b> sehen Sie die fertigen Filme.</p>
 └── MUSTERMANN MANFRED
     └── US 15.04.2025 B-Bild
         ├── T MUSTERMANN MANFRED 15.04.2025 B-Bild 180703175.png   ← Standbild
-        ├── T MUSTERMANN MANFRED 15.04.2025 B-Bild 180708910.mov   ← Film
+        ├── T MUSTERMANN MANFRED 15.04.2025 B-Bild 180708910.mp4   ← Film
         └── …</pre>
 <p>Der Dateiname nennt Gerätehersteller (hier T = Toshiba/Canon), Name, Alter (wenn das Geburtsdatum bekannt ist –
 beim Testpatienten fehlt es), Datum, Art der Untersuchung und Uhrzeit der Aufnahme. Alle Untersuchungen eines Patienten
@@ -188,12 +188,12 @@ hepatobiliären Phase) und bei der MRT In-Phase und Opposed-Phase.</p>
 <pre>EXAMS
 └── MUSTERMANN MANFRED
     ├── CT 16.04.2025
-    │   ├── CT MUSTERMANN MANFRED 16.04.2025 Abdomen axial portalvenoes 0,6 mm Weichteil.mov
-    │   └── CT MUSTERMANN MANFRED 16.04.2025 Thorax koronal KM 1 mm arteriell.mov
+    │   ├── CT MUSTERMANN MANFRED 16.04.2025 Abdomen axial portalvenoes 0,6 mm Weichteil.mp4
+    │   └── CT MUSTERMANN MANFRED 16.04.2025 Thorax koronal KM 1 mm arteriell.mp4
     └── MR 17.04.2025
-        ├── MR MUSTERMANN MANFRED 17.04.2025 093312 T1 VIBE Dixon tra Opposed-Phase nativ.mov
-        ├── MR MUSTERMANN MANFRED 17.04.2025 094020 T1 VIBE Dixon tra arteriell.mov
-        └── MR MUSTERMANN MANFRED 17.04.2025 095136 T1 VIBE Dixon tra 15 min hepatobiliaer.mov</pre>
+        ├── MR MUSTERMANN MANFRED 17.04.2025 093312 T1 VIBE Dixon tra Opposed-Phase nativ.mp4
+        ├── MR MUSTERMANN MANFRED 17.04.2025 094020 T1 VIBE Dixon tra arteriell.mp4
+        └── MR MUSTERMANN MANFRED 17.04.2025 095136 T1 VIBE Dixon tra 15 min hepatobiliaer.mp4</pre>
 <p>Im Bild wird bei diesen Daten <b>nichts überdeckt</b> – CT-, MRT- und Röntgenbilder zeigen den Namen normalerweise
 nicht im Bild (siehe <a href="#datenschutz">Datenschutz</a>).</p>
 
@@ -203,10 +203,11 @@ nicht im Bild (siehe <a href="#datenschutz">Datenschutz</a>).</p>
   <tr><td><b>Konvertieren mit Glue</b></td><td>Wie Konvertieren, aber alle Loops einer Untersuchung als ein Film.</td></tr>
   <tr><td><b>Filme zusammensetzen</b></td><td>Alle Filme eines Ordners zu einem Film verbinden.</td></tr>
   <tr><td><b>Film in Einzelbilder zerlegen</b></td><td>Jedes Bild eines Films als PNG speichern, z.&nbsp;B. für Abbildungen.</td></tr>
-  <tr><td><b>Filme reparieren</b></td><td>Filme, die sich nicht abspielen lassen, neu speichern.</td></tr>
+  <tr><td><b>Filme reparieren</b></td><td>Filme, die auf heutigen Rechnern nicht mehr spielen (alte QuickTime-Filme, AVI, alte Formate) oder beschädigt sind, wieder abspielbar machen.</td></tr>
   <tr><td><b>Dateinamen anonymisieren für Versand</b></td><td>Entfernt Namen aus den Dateinamen, auf Wunsch gleich als ZIP zum Verschicken.</td></tr>
   <tr><td><b>Patientenliste aus DICOM-Ordner erstellen</b></td><td>Liste aller Untersuchungen eines Ordners (Patient, Datum, Gerät, Untersucher, Anforderer, Fragestellung) als PDF und als Tabelle für Excel.</td></tr>
   <tr><td><b>Filme nachträglich anonymisieren</b></td><td>Für Filme und Bilder, die direkt vom Gerät als AVI/MP4 exportiert wurden: Hersteller und Patientendaten werden am Bild erkannt und überdeckt.</td></tr>
+  <tr><td><b>Alte Keynotes reparieren</b></td><td>Nur Mac: Präsentationen mit alten Filmen reparieren – Filme halb so groß und überall abspielbar, Philips-Filme anonymisiert, Keynote-'09 ins neue Format; mit Bericht.</td></tr>
   <tr><td><b>In Keynote einfügen</b></td><td>Nur Mac: Filme direkt in eine Keynote-Präsentation.</td></tr>
   <tr><td><b>In PowerPoint einfügen</b></td><td>Mac und Windows: Bilder und Filme direkt in eine PowerPoint-Präsentation – auch einen ganzen Ordner.</td></tr>
   <tr><td><b>Empfänger</b></td><td>Das Ultraschallgerät schickt Untersuchungen direkt per Netzwerk an den Rechner; sie werden automatisch umgewandelt.</td></tr>
@@ -251,7 +252,7 @@ Weiterentwicklung unterstützen möchte, kann das gern über
 
 
 <p class="muted" style="margin-top:3em">Alle Bilder auf dieser Seite zeigen Testpatienten („Mustermann“), keine echten Patientendaten.<br>
-DICOM-Converter 3.0.0.169 · Copyright Dr. Jens Berger (2012-2026)</p>
+DICOM-Converter 3.0.0.223 · Copyright Dr. Jens Berger (2012-2026)</p>
 
 </main>
 </body>
