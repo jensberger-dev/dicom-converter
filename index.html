@@ -38,6 +38,9 @@
   .button.secondary { background: transparent; color: var(--accent); border: 2px solid var(--accent); padding: 8px 18px; white-space: nowrap; }
   .support { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; background: var(--box); border-radius: 8px; padding: 12px 16px; margin: 14px 0 4px; }
   .support span { flex: 1 1 320px; }
+  #neu + h3 { margin-top: 0.6em; }
+  h3 .muted { font-weight: 400; }
+  details summary { cursor: pointer; color: var(--accent); margin: 0.6em 0; }
 </style>
 <!-- Zähler ohne Cookies und ohne persönliche Daten (GoatCounter); zählt Aufrufe und Klicks auf die Download-Knöpfe -->
 <script data-goatcounter="https://dicom-converter.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
@@ -49,7 +52,7 @@ s("view");document.addEventListener("click",function(e){var a=e.target.closest&&
 <main>
 
 <h1>DICOM-Converter</h1>
-<p class="muted">Version 3.0.0.223 · Stand 27.10.2026 · für macOS und Windows</p>
+<p class="muted">Version 3.0.0.235 · Stand 28.10.2026 · für macOS, Windows und Linux</p>
 
 <p class="lead">Der DICOM-Converter macht aus Ultraschall-Untersuchungen – und auch aus CT, MRT, Röntgen und anderen
 DICOM-Daten – ganz normale <b>Filme und Bilder</b>,
@@ -57,6 +60,7 @@ die man mit jedem Programm ansehen, in PowerPoint oder Keynote einbauen oder wei
 und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum aus dem Bild</b>.</p>
 
 <nav>
+  <a href="#neu">Neu</a>
   <a href="#was">Was er macht</a>
   <a href="#installieren">Installieren</a>
   <a href="#rechtsklick">Rechtsklick</a>
@@ -73,14 +77,96 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
 <div class="downloads">
   <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-macOS.pkg" data-goatcounter-click="download-macos" data-goatcounter-title="Download macOS">Für Mac<small>DICOM-Converter-macOS.pkg</small></a>
   <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-Setup.exe" data-goatcounter-click="download-windows" data-goatcounter-title="Download Windows">Für Windows<small>DICOM-Converter-Windows-Setup.exe</small></a>
+  <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Linux-x86_64.AppImage" data-goatcounter-click="download-linux-x86_64" data-goatcounter-title="Download Linux">Für Linux<small>DICOM-Converter-Linux-x86_64.AppImage</small></a>
 </div>
-<p class="muted">Mac ab macOS 11 (Apple Silicon und Intel), von Apple signiert · Windows 10 oder 11 (64 Bit) · <a href="#voraussetzungen">Systemvoraussetzungen</a></p>
-<p class="muted">Version 3.0.0.223 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
+<p class="muted">Mac ab macOS 11 (Apple Silicon und Intel), von Apple signiert · Windows 10 oder 11 (64 Bit) · Linux (x64; für ARM-Rechner: <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Linux-aarch64.AppImage" data-goatcounter-click="download-linux-aarch64" data-goatcounter-title="Download Linux ARM">AppImage für ARM</a>) · <a href="#voraussetzungen">Systemvoraussetzungen</a></p>
+<p class="muted">Version 3.0.0.235 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
 <div class="support">
   <span>Der DICOM-Converter ist kostenlos. Seine Weiterentwicklung kostet aber Geld – für das Apple-Entwicklerprogramm (damit der Mac das Programm ohne Warnung startet) und für den KI-Assistenten Claude, mit dem er entwickelt wird. Über eine Unterstützung freue ich mich sehr.</span>
   <a class="button secondary" href="https://www.paypal.com/paypalme/DicomConverter" data-goatcounter-click="paypal" data-goatcounter-title="PayPal">Unterstützen mit PayPal</a>
 </div>
 
+
+<h2 id="neu">Neu in den letzten Versionen</h2>
+<h3>Version 3.0.0.235 <span class="muted">· 28.10.2026</span></h3>
+<ul>
+  <li>Neu: DICOM-Converter für Linux (AppImage für x64- und ARM-Rechner) – mit Programmfenster, Befehl <code>dicomconverter</code> und Eintrag im Anwendungsmenü.</li>
+  <li>Neu: „Was ist neu?“ im Menü Hilfe – die Änderungen jeder Version in Kürze. Nach einem Update erscheint die Übersicht einmal von selbst.</li>
+  <li>Die Webseite zeigt die letzten Neuerungen gleich oben.</li>
+  <li>Patientenordner beginnen mit der Art ihrer Ultraschall-Untersuchungen: „CEUS“, sonst „B-Bild“, sonst „Punktion“.</li>
+  <li>CT, MRT, Röntgen und andere: Im Untersuchungsordner steht die untersuchende Einrichtung, z. B. „MR 12.12.2025 Praxis Beispiel“.</li>
+  <li>Behoben: Einzelne CT- und MRT-Serien mit nicht quadratischen Bildpunkten wurden als MP4 nicht umgewandelt.</li>
+</ul>
+<h3>Version 3.0.0.223 <span class="muted">· 27.10.2026</span></h3>
+<ul>
+  <li>Filme werden jetzt überall als MP4 in hoher Qualität gespeichert: etwa halb so groß wie bisher und auf jedem Gerät abspielbar. Das alte Format von Version 2 gibt es weiter unter Filmformat „mjpeg (mov)“.</li>
+  <li>Neu (nur Mac): „Alte Keynotes reparieren …“ – Präsentationen mit alten Filmen werden kleiner und laufen wieder überall; ein Bericht nennt die Foliennummern.</li>
+  <li>Neu: „Alte Filme in MP4 umwandeln (Platz sparen) …“ für ganze Ordner – nennt vorher Ersparnis und Dauer.</li>
+  <li>„Filme reparieren“ setzt alte QuickTime-Filme aus mehreren Teilen richtig zusammen – jetzt auch unter Windows.</li>
+  <li>In MP4-Filmen lässt sich flüssig vor- und zurückspulen.</li>
+  <li>Anonymisierung im Bild noch genauer, die Abdeckungen so knapp wie möglich.</li>
+  <li>Die Werkzeuge lassen Keynote-Präsentationen, die Fotos-Mediathek und andere Pakete in Ruhe.</li>
+</ul>
+<h3>Version 3.0.0.169 <span class="muted">· 25.10.2026</span></h3>
+<ul>
+  <li>Kleine Verbesserungen im Hintergrund.</li>
+</ul>
+<details><summary>Ältere Versionen</summary>
+<h3>Version 3.0.0.165 <span class="muted">· 24.10.2026</span></h3>
+<ul>
+  <li>Am Ende jedes Laufs eine Ergebnistabelle mit der benötigten Zeit je Bildart und insgesamt.</li>
+  <li>Das Protokoll ist übersichtlicher und nach Bildarten (Ultraschall, CT, MRT …) geordnet.</li>
+  <li>In DICOM verpackte PDF-Befunde werden ausgelesen und einsortiert. Zugangsblätter von Bildportalen (mit Zugangscode oder PIN) werden nie übernommen.</li>
+</ul>
+<h3>Version 3.0.0.158 <span class="muted">· 24.10.2026</span></h3>
+<ul>
+  <li>Das Programmfenster öffnet groß und mittig.</li>
+  <li>Die Texterkennung liefert auf allen Rechnern dasselbe Ergebnis.</li>
+  <li>Bei neuen Geräten nennt das Programm die Kontaktadresse dicom-converter@gmx.net.</li>
+</ul>
+<h3>Version 3.0.0.150 <span class="muted">· 23.10.2026</span></h3>
+<ul>
+  <li>Neue, einheitliche Ordner: ein Ordner je Patient („NAME VORNAME ALTER“), darin der Ultraschall als „US &lt;Datum&gt; CEUS“, „… Punktion“ oder „… B-Bild“ sowie CT, MRT und Befunde.</li>
+  <li>Verschiedene Patienten mit gleichem Namen bekommen getrennte Ordner.</li>
+</ul>
+<h3>Version 3.0.0.143 <span class="muted">· 23.10.2026</span></h3>
+<ul>
+  <li>Einstellungen im Programmfenster unter einem Namen speichern und wieder abrufen; beim Start ist der letzte Stand vorbelegt.</li>
+  <li>CT und MRT: verständliche Dateinamen mit Schnittebene, ohne zufällige Kürzel.</li>
+  <li>Die vollständige Serienbeschreibung steht im Dateinamen.</li>
+  <li>Handbuch und Kurzanleitung als PDF besser lesbar.</li>
+</ul>
+<h3>Version 3.0.0.126 <span class="muted">· 21.10.2026</span></h3>
+<ul>
+  <li>Neu: „Patientenliste aus DICOM-Ordner erstellen (PDF und CSV)“ – wer wann mit welchem Gerät untersucht wurde.</li>
+  <li>Neue Geräte: GE LOGIQ E10, LOGIQ E9 und Venue.</li>
+</ul>
+<h3>Version 3.0.0.121 <span class="muted">· 20.10.2026</span></h3>
+<ul>
+  <li>Windows: „Im Ordner zeigen“ funktioniert wieder.</li>
+  <li>Weniger technische Meldungen im Protokoll.</li>
+</ul>
+<h3>Version 3.0.0.119 <span class="muted">· 20.10.2026</span></h3>
+<ul>
+  <li>Windows: Filme standardmäßig als MP4.</li>
+  <li>Systemvoraussetzungen in Anleitung und auf der Webseite.</li>
+</ul>
+<h3>Version 3.0.0.115 <span class="muted">· 19.10.2026</span></h3>
+<ul>
+  <li>Neue Geräte werden automatisch erkannt und anonymisiert; Proben zum Einschicken liegen als ZIP in EXAMS.</li>
+  <li>Viele weitere Hersteller werden erkannt (Esaote, Mindray, BK Medical, Butterfly, Clarius und andere).</li>
+  <li>Der Befehl im Terminal heißt jetzt <code>dicomconverter</code>.</li>
+  <li>Das Mac-Paket ist von Apple signiert und beglaubigt: keine Warnung mehr beim Öffnen.</li>
+</ul>
+<h3>Version 3.0.0.96 <span class="muted">· 19.10.2026</span></h3>
+<ul>
+  <li>Neue Webseite mit Downloads, Impressum und Datenschutz.</li>
+</ul>
+<h3>Version 3.0.0.86 <span class="muted">· 19.10.2026</span></h3>
+<ul>
+  <li>Erste Version 3 zum Herunterladen: Installationsprogramm für Mac und Windows, eigenes Programmfenster, Rechtsklick-Menü und Anonymisierung für alle gängigen Hersteller.</li>
+</ul>
+</details>
 
 <h2 id="was">Was er macht</h2>
 <p>Ultraschallgeräte speichern ihre Bilder im Format <b>DICOM</b>. Diese Dateien lassen sich auf einem normalen
@@ -100,12 +186,12 @@ Computer kaum öffnen, und im Bild stehen die Patientendaten. Der DICOM-Converte
 
 <h3 id="voraussetzungen">Systemvoraussetzungen</h3>
 <table>
-  <tr><th></th><th>Mac</th><th>Windows</th></tr>
-  <tr><td>System</td><td>macOS 11 (Big Sur) oder neuer</td><td>Windows 10 oder 11, 64 Bit</td></tr>
-  <tr><td>Rechner</td><td>Apple Silicon (M1 und neuer) und Intel – ein Paket für beide</td><td>Intel/AMD (x64); Windows auf ARM über die eingebaute x64-Emulation</td></tr>
-  <tr><td>Speicherplatz</td><td>ca. 220 MB</td><td>ca. 130 MB</td></tr>
-  <tr><td>Installation</td><td>Administratorkennwort</td><td>Administratorrechte</td></tr>
-  <tr><td>Signatur</td><td>mit Apple-Entwickler-ID signiert und von Apple beglaubigt (notarisiert) – startet ohne Warnung</td><td>nicht signiert – Windows warnt beim ersten Start (siehe unten)</td></tr>
+  <tr><th></th><th>Mac</th><th>Windows</th><th>Linux</th></tr>
+  <tr><td>System</td><td>macOS 11 (Big Sur) oder neuer</td><td>Windows 10 oder 11, 64 Bit</td><td>Distributionen ab etwa 2022 mit grafischer Oberfläche (z.&nbsp;B. Ubuntu 22.04, Debian 12, Fedora 36, Linux Mint 21 und neuer)</td></tr>
+  <tr><td>Rechner</td><td>Apple Silicon (M1 und neuer) und Intel – ein Paket für beide</td><td>Intel/AMD (x64); Windows auf ARM über die eingebaute x64-Emulation</td><td>Intel/AMD (x64) oder ARM (aarch64) – je eine Datei</td></tr>
+  <tr><td>Speicherplatz</td><td>ca. 220 MB</td><td>ca. 130 MB</td><td>ca. 61 MB</td></tr>
+  <tr><td>Installation</td><td>Administratorkennwort</td><td>Administratorrechte</td><td>keine Rechte nötig</td></tr>
+  <tr><td>Signatur</td><td>mit Apple-Entwickler-ID signiert und von Apple beglaubigt (notarisiert) – startet ohne Warnung</td><td>nicht signiert – Windows warnt beim ersten Start (siehe unten)</td><td>nicht signiert</td></tr>
 </table>
 <p>Weitere Software ist nicht nötig; alles Benötigte steckt im Programm.</p>
 
@@ -121,6 +207,14 @@ Computer kaum öffnen, und im Bild stehen die Patientendaten. Der DICOM-Converte
   <li>Warnt Windows („Der Computer wurde durch Windows geschützt“): <b>Weitere Informationen → Trotzdem ausführen</b>, dann die Frage nach Administratorrechten mit <b>Ja</b> beantworten.</li>
   <li>Ist noch ein alter DICOM-Converter da, fragt das Installationsprogramm, ob er entfernt werden soll – Ihre Untersuchungen bleiben erhalten.</li>
 </ol>
+
+<h3>Linux (AppImage)</h3>
+<ol>
+  <li><b>DICOM-Converter-Linux-x86_64.AppImage</b> (auf ARM-Rechnern <b>…-aarch64.AppImage</b>) an einen festen Ort legen, z.&nbsp;B. in den Persönlichen Ordner unter <i>Programme</i>.</li>
+  <li>Ausführbar machen: Rechtsklick → <i>Eigenschaften</i> → <i>Als Programm ausführen</i> (oder im Terminal <code>chmod +x DICOM-Converter-Linux-*.AppImage</code>).</li>
+  <li>Doppelklicken. Beim ersten Start fragt der DICOM-Converter, ob er das Rechtsklick-Menü im Dateimanager, den Befehl <code>dicomconverter</code> und einen Eintrag im Anwendungsmenü einrichten soll.</li>
+</ol>
+<p class="muted">Das Rechtsklick-Menü gibt es im Dateimanager Nautilus (GNOME, Ubuntu). Startet das AppImage nicht, fehlt auf manchen Systemen FUSE – dann hilft <code>sudo apt install fuse3</code> bzw. das passende Paket der Distribution.</p>
 
 <h2 id="rechtsklick">Am schnellsten: Rechtsklick auf den Ordner</h2>
 <p>Den Ordner mit den DICOM-Daten (z.&nbsp;B. vom USB-Stick oder von der CD) mit der <b>rechten Maustaste</b> anklicken:</p>
@@ -161,21 +255,23 @@ Mit <b>Zielordner öffnen</b> sehen Sie die fertigen Filme.</p>
 
 <h2 id="ergebnis">So sieht das Ergebnis aus</h2>
 <pre>EXAMS
-└── MUSTERMANN MANFRED
+└── B-Bild MUSTERMANN MANFRED
     └── US 15.04.2025 B-Bild
         ├── T MUSTERMANN MANFRED 15.04.2025 B-Bild 180703175.png   ← Standbild
         ├── T MUSTERMANN MANFRED 15.04.2025 B-Bild 180708910.mp4   ← Film
         └── …</pre>
 <p>Der Dateiname nennt Gerätehersteller (hier T = Toshiba/Canon), Name, Alter (wenn das Geburtsdatum bekannt ist –
 beim Testpatienten fehlt es), Datum, Art der Untersuchung und Uhrzeit der Aufnahme. Alle Untersuchungen eines Patienten
-liegen in einem Ordner „NAME VORNAME ALTER“; Ultraschall-Ordner heißen nach der Art: CEUS, Punktion oder B-Bild.
+liegen in einem Ordner „NAME VORNAME ALTER“; Ultraschall-Ordner heißen nach der Art: CEUS, Punktion oder B-Bild, und der
+Patientenordner beginnt mit der Art seiner Ultraschall-Untersuchungen (CEUS vor B-Bild vor Punktion).
 Der Name steht <b>nur im Dateinamen, nicht im Bild</b>. Sortiert nach Datum erscheinen die Dateien in der
 Reihenfolge der Untersuchung.</p>
 <figure><img src="img/win-ergebnis.jpg" alt="Ergebnisordner im Windows-Explorer"><figcaption>Der Ergebnisordner im Windows-Explorer</figcaption></figure>
 
 <h2 id="andere">Auch CT, MRT, Röntgen und andere DICOM-Daten</h2>
 <p>Neben Ultraschall wandelt der DICOM-Converter auch die übrigen gängigen DICOM-Daten um – zum Beispiel die CD
-einer CT- oder MRT-Untersuchung. Bedienung, Ordner und Dateinamen sind dieselben wie beim Ultraschall.</p>
+einer CT- oder MRT-Untersuchung. Bedienung, Ordner und Dateinamen sind dieselben wie beim Ultraschall; im Ordnernamen steht
+zusätzlich die untersuchende Einrichtung, wenn die Daten sie nennen.</p>
 <table>
   <tr><th>Daten</th><th>Ergebnis</th></tr>
   <tr><td><b>CT, MRT, PET, Angiographie</b></td><td>Jede Serie wird ein <b>Film</b>, in dem man durch die Schichten blättert. Übersichtsaufnahmen (Topogramm, Localizer) werden weggelassen.</td></tr>
@@ -187,10 +283,10 @@ Kontrastmittel-Phase (nativ, arteriell, portalvenös, venös, Spätphase; bei de
 hepatobiliären Phase) und bei der MRT In-Phase und Opposed-Phase.</p>
 <pre>EXAMS
 └── MUSTERMANN MANFRED
-    ├── CT 16.04.2025
+    ├── CT 16.04.2025 Radiologie Musterstadt
     │   ├── CT MUSTERMANN MANFRED 16.04.2025 Abdomen axial portalvenoes 0,6 mm Weichteil.mp4
     │   └── CT MUSTERMANN MANFRED 16.04.2025 Thorax koronal KM 1 mm arteriell.mp4
-    └── MR 17.04.2025
+    └── MR 17.04.2025 Radiologie Musterstadt
         ├── MR MUSTERMANN MANFRED 17.04.2025 093312 T1 VIBE Dixon tra Opposed-Phase nativ.mp4
         ├── MR MUSTERMANN MANFRED 17.04.2025 094020 T1 VIBE Dixon tra arteriell.mp4
         └── MR MUSTERMANN MANFRED 17.04.2025 095136 T1 VIBE Dixon tra 15 min hepatobiliaer.mp4</pre>
@@ -252,7 +348,7 @@ Weiterentwicklung unterstützen möchte, kann das gern über
 
 
 <p class="muted" style="margin-top:3em">Alle Bilder auf dieser Seite zeigen Testpatienten („Mustermann“), keine echten Patientendaten.<br>
-DICOM-Converter 3.0.0.223 · Copyright Dr. Jens Berger (2012-2026)</p>
+DICOM-Converter 3.0.0.235 · Copyright Dr. Jens Berger (2012-2026)</p>
 
 </main>
 </body>
