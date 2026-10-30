@@ -52,7 +52,7 @@ s("view");document.addEventListener("click",function(e){var a=e.target.closest&&
 <main>
 
 <h1>DICOM-Converter</h1>
-<p class="muted">Version 3.0.0.248 · Stand 29.10.2026 · für macOS, Windows und Linux</p>
+<p class="muted">Version 3.0.0.254 · Stand 30.10.2026 · für macOS, Windows und Linux</p>
 
 <p class="lead">Der DICOM-Converter macht aus Ultraschall-Untersuchungen – und auch aus CT, MRT, Röntgen und anderen
 DICOM-Daten – ganz normale <b>Filme und Bilder</b>,
@@ -80,7 +80,7 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
   <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Linux-x86_64.AppImage" data-goatcounter-click="download-linux-x86_64" data-goatcounter-title="Download Linux">Für Linux<small>DICOM-Converter-Linux-x86_64.AppImage</small></a>
 </div>
 <p class="muted">Mac ab macOS 11 (Apple Silicon und Intel), von Apple signiert · Windows 10 oder 11 (64 Bit) · Linux (x64; für ARM-Rechner: <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Linux-aarch64.AppImage" data-goatcounter-click="download-linux-aarch64" data-goatcounter-title="Download Linux ARM">AppImage für ARM</a>) · <a href="#voraussetzungen">Systemvoraussetzungen</a></p>
-<p class="muted">Version 3.0.0.248 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
+<p class="muted">Version 3.0.0.254 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
 <div class="support">
   <span>Der DICOM-Converter ist kostenlos. Seine Weiterentwicklung kostet aber Geld – für das Apple-Entwicklerprogramm (damit der Mac das Programm ohne Warnung startet) und für den KI-Assistenten Claude, mit dem er entwickelt wird. Über eine Unterstützung freue ich mich sehr.</span>
   <a class="button secondary" href="https://www.paypal.com/paypalme/DicomConverter" data-goatcounter-click="paypal" data-goatcounter-title="PayPal">Unterstützen mit PayPal</a>
@@ -88,6 +88,12 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
 
 
 <h2 id="neu">Neu in den letzten Versionen</h2>
+<h3>Version 3.0.0.254 <span class="muted">· 30.10.2026</span></h3>
+<ul>
+  <li>Der DICOM-Empfänger startet nicht mehr ungefragt bei jeder Anmeldung. Die Installation fragt einmal danach – nötig ist er nur, wenn Ultraschallgeräte direkt an diesen Rechner senden. Ein früher eingerichteter Autostart bleibt, bis man ihn bei dieser Frage abwählt.</li>
+  <li>„Alte Keynotes reparieren“: Das Protokoll nennt zu jedem Film und Bild die Folie und ist kürzer; ein beschädigtes Bild bricht die Reparatur einer Präsentation nicht mehr ab.</li>
+  <li>Übersichtlichere Filmformate im Programmfenster: „MP4 – hohe / mittlere / geringe Qualität“ und „MOV – MJPEG wie Version 2“. Nahezu verlustfreies MOV, AVI und WMV gibt es nur noch im Terminal (<code>--preset</code>).</li>
+</ul>
 <h3>Version 3.0.0.248 <span class="muted">· 29.10.2026</span></h3>
 <ul>
   <li>Linux: Die Ergebnisse landen wie auf Mac und Windows im Ordner „EXAMS“ auf dem Schreibtisch (deutsch „Schreibtisch“), auch über das Rechtsklick-Menü.</li>
@@ -109,6 +115,7 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
   <li>CT, MRT, Röntgen und andere: Im Untersuchungsordner steht die untersuchende Einrichtung, z. B. „MR 12.12.2025 Praxis Beispiel“.</li>
   <li>Behoben: Einzelne CT- und MRT-Serien mit nicht quadratischen Bildpunkten wurden als MP4 nicht umgewandelt.</li>
 </ul>
+<details><summary>Ältere Versionen</summary>
 <h3>Version 3.0.0.223 <span class="muted">· 27.10.2026</span></h3>
 <ul>
   <li>Filme werden jetzt überall als MP4 in hoher Qualität gespeichert: etwa halb so groß wie bisher und auf jedem Gerät abspielbar. Das alte Format von Version 2 gibt es weiter unter Filmformat „mjpeg (mov)“.</li>
@@ -119,7 +126,6 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
   <li>Anonymisierung im Bild noch genauer, die Abdeckungen so knapp wie möglich.</li>
   <li>Die Werkzeuge lassen Keynote-Präsentationen, die Fotos-Mediathek und andere Pakete in Ruhe.</li>
 </ul>
-<details><summary>Ältere Versionen</summary>
 <h3>Version 3.0.0.169 <span class="muted">· 25.10.2026</span></h3>
 <ul>
   <li>Kleine Verbesserungen im Hintergrund.</li>
@@ -233,17 +239,20 @@ Computer kaum öffnen, und im Bild stehen die Patientendaten. Der DICOM-Converte
 <ul>
   <li><b>Windows:</b> <i>DICOM-Converter 3</i> → <i>Konvertieren</i>. Unter Windows 11 erst auf <i>Weitere Optionen anzeigen</i> klicken.</li>
   <li><b>Mac:</b> <i>DICOM-Converter 3 – Konvertieren</i> ganz unten im Menü (bei manchen Macs im Untermenü <i>Schnellaktionen</i>).</li>
+  <li><b>Linux:</b> <i>Skripte</i> → <i>DICOM-Converter 3 – Konvertieren</i> (Dateimanager „Dateien“).</li>
 </ul>
 <figure><img src="img/win-kontextmenue.jpg" alt="Windows-Rechtsklickmenü mit Untermenü DICOM-Converter 3"><figcaption>Windows: Rechtsklick auf den Ordner „DICOM“ → DICOM-Converter 3</figcaption></figure>
 <figure style="max-width:523px"><img src="img/mac-kontextmenue.jpg" alt="Mac-Rechtsklickmenü mit den Einträgen DICOM-Converter 3"><figcaption>Mac: Rechtsklick auf den Ordner → die Einträge „DICOM-Converter 3 – …“ stehen ganz unten</figcaption></figure>
+<figure style="max-width:550px"><img src="img/linux-kontextmenue.jpg" alt="Linux-Rechtsklickmenü, Untermenü Skripte mit den Einträgen DICOM-Converter 3"><figcaption>Linux: Rechtsklick auf den Ordner → Skripte → die Einträge „DICOM-Converter 3 – …“</figcaption></figure>
 
 <p>Ein kleines Fenster zeigt, wie weit die Umwandlung ist, und listet am Ende jede Datei mit ihrem Ergebnis auf.
 Mit <b>Zielordner öffnen</b> sehen Sie die fertigen Filme.</p>
 <figure><img src="img/win-fortschritt.jpg" alt="Fortschrittsfenster unter Windows"><figcaption>Windows: Fortschrittsfenster nach dem Lauf</figcaption></figure>
 <figure><img src="img/mac-fortschritt.jpg" alt="Fortschrittsfenster auf dem Mac"><figcaption>Mac: dasselbe Fenster – je Datei „Quelle → Ergebnis“</figcaption></figure>
+<figure><img src="img/linux-fortschritt.jpg" alt="Fortschrittsfenster unter Linux"><figcaption>Linux: dasselbe Fenster, am Ende mit der Ergebnistabelle</figcaption></figure>
 
 <h2 id="fenster">Mit dem Programmfenster</h2>
-<p>„DICOM-Converter“ im Startmenü (Windows) bzw. im Ordner Programme (Mac) öffnen. Dann:</p>
+<p>„DICOM-Converter“ im Startmenü (Windows), im Ordner Programme (Mac) bzw. im Anwendungsmenü (Linux) öffnen. Dann:</p>
 <ol>
   <li><b>Quelle:</b> den DICOM-Ordner in das Fenster ziehen – oder auf <b>Ordner…</b> klicken.</li>
   <li><b>Start</b> klicken. Die Balken zeigen den Fortschritt, darunter steht das Protokoll.</li>
@@ -252,6 +261,7 @@ Mit <b>Zielordner öffnen</b> sehen Sie die fertigen Filme.</p>
 <p>Alles andere kann normalerweise so bleiben. Die fertigen Dateien landen im Ordner <b>EXAMS auf dem Schreibtisch</b>.</p>
 <figure><img src="img/win-hauptfenster.jpg" alt="Hauptfenster unter Windows nach der Umwandlung"><figcaption>Windows: nach der Umwandlung</figcaption></figure>
 <figure><img src="img/mac-hauptfenster.jpg" alt="Hauptfenster auf dem Mac nach der Umwandlung"><figcaption>Mac: nach der Umwandlung</figcaption></figure>
+<figure><img src="img/linux-hauptfenster.jpg" alt="Hauptfenster unter Linux nach der Umwandlung"><figcaption>Linux: nach der Umwandlung</figcaption></figure>
 
 <div class="box">
 <p><b>Die Schalter in einfachen Worten</b></p>
@@ -360,7 +370,7 @@ Weiterentwicklung unterstützen möchte, kann das gern über
 
 
 <p class="muted" style="margin-top:3em">Alle Bilder auf dieser Seite zeigen Testpatienten („Mustermann“), keine echten Patientendaten.<br>
-DICOM-Converter 3.0.0.248 · Copyright Dr. Jens Berger (2012-2026)</p>
+DICOM-Converter 3.0.0.254 · Copyright Dr. Jens Berger (2012-2026)</p>
 
 </main>
 </body>
