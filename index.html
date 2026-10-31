@@ -52,7 +52,7 @@ s("view");document.addEventListener("click",function(e){var a=e.target.closest&&
 <main>
 
 <h1>DICOM-Converter</h1>
-<p class="muted">Version 3.0.0.268 · Stand 31.10.2026 · für macOS, Windows und Linux</p>
+<p class="muted">Version 3.0.0.273 · Stand 31.10.2026 · für macOS, Windows und Linux</p>
 
 <p class="lead">Der DICOM-Converter macht aus Ultraschall-Untersuchungen – und auch aus CT, MRT, Röntgen und anderen
 DICOM-Daten – ganz normale <b>Filme und Bilder</b>,
@@ -80,7 +80,7 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
   <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Linux-x86_64.AppImage" data-goatcounter-click="download-linux-x86_64" data-goatcounter-title="Download Linux">Für Linux<small>DICOM-Converter-Linux-x86_64.AppImage</small></a>
 </div>
 <p class="muted">Mac ab macOS 11 (Apple Silicon und Intel), von Apple signiert · Windows 10 oder 11 (64 Bit) · Linux (x64; für ARM-Rechner: <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Linux-aarch64.AppImage" data-goatcounter-click="download-linux-aarch64" data-goatcounter-title="Download Linux ARM">AppImage für ARM</a>) · <a href="#voraussetzungen">Systemvoraussetzungen</a></p>
-<p class="muted">Version 3.0.0.268 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
+<p class="muted">Version 3.0.0.273 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
 <div class="support">
   <span>Der DICOM-Converter ist kostenlos. Seine Weiterentwicklung kostet aber Geld – für das Apple-Entwicklerprogramm (damit der Mac das Programm ohne Warnung startet) und für den KI-Assistenten Claude, mit dem er entwickelt wird. Über eine Unterstützung freue ich mich sehr.</span>
   <a class="button secondary" href="https://www.paypal.com/paypalme/DicomConverter" data-goatcounter-click="paypal" data-goatcounter-title="PayPal">Unterstützen mit PayPal</a>
@@ -88,6 +88,10 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
 
 
 <h2 id="neu">Neu in den letzten Versionen</h2>
+<h3>Version 3.0.0.273 <span class="muted">· 31.10.2026</span></h3>
+<ul>
+  <li>Filmformat DICOM: Geht DICOM bei einer Datei nicht, entsteht kein MP4 oder PNG mehr; das Protokoll nennt den Grund.</li>
+</ul>
 <h3>Version 3.0.0.268 <span class="muted">· 31.10.2026</span></h3>
 <ul>
   <li>Filmformat DICOM: In Ordner- und Dateinamen stehen keine Namen und Daten zur Person mehr. Jeder Patient bekommt eine zufällige Kennung, damit ein PACS die Patienten auseinanderhalten kann. Der DICOM-Kopf wird nach der vollständigen Tabelle der Norm bereinigt, PDF-Befunde werden nicht mitgegeben. Datum, Alter, Gerät und Beschreibungen bleiben erhalten – das Format ist für Kollegen, Lehre und PACS gedacht, nicht für Studien.</li>
@@ -98,13 +102,13 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
   <li>Neu: Filmformat „DICOM – anonymisiert, verlustfrei“ – alle Bilder bleiben DICOM, persönliche Angaben verschwinden aus dem DICOM-Kopf, beim Ultraschall werden sie auch im Bild abgedeckt (ohne neue Kompression). Gedacht für die Weitergabe an andere Kliniken, PACS oder Studien.</li>
   <li>GE LOGIQ E9 (Bildgröße 1442x802): Name, Geburtsdatum und ID werden abgedeckt statt den Kopf abzuschneiden – Datum, Uhrzeit, Sonde und MI bleiben sichtbar.</li>
 </ul>
+<details><summary>Ältere Versionen</summary>
 <h3>Version 3.0.0.254 <span class="muted">· 30.10.2026</span></h3>
 <ul>
   <li>Der DICOM-Empfänger startet nicht mehr ungefragt bei jeder Anmeldung. Die Installation fragt einmal danach – nötig ist er nur, wenn Ultraschallgeräte direkt an diesen Rechner senden. Ein früher eingerichteter Autostart bleibt, bis man ihn bei dieser Frage abwählt.</li>
   <li>„Alte Keynotes reparieren“: Das Protokoll nennt zu jedem Film und Bild die Folie und ist kürzer; ein beschädigtes Bild bricht die Reparatur einer Präsentation nicht mehr ab.</li>
   <li>Übersichtlichere Filmformate im Programmfenster: „MP4 – hohe / mittlere / geringe Qualität“ und „MOV – MJPEG wie Version 2“. Nahezu verlustfreies MOV, AVI und WMV gibt es nur noch im Terminal (<code>--preset</code>).</li>
 </ul>
-<details><summary>Ältere Versionen</summary>
 <h3>Version 3.0.0.248 <span class="muted">· 29.10.2026</span></h3>
 <ul>
   <li>Linux: Die Ergebnisse landen wie auf Mac und Windows im Ordner „EXAMS“ auf dem Schreibtisch (deutsch „Schreibtisch“), auch über das Rechtsklick-Menü.</li>
@@ -380,7 +384,7 @@ Weiterentwicklung unterstützen möchte, kann das gern über
 
 
 <p class="muted" style="margin-top:3em">Alle Bilder auf dieser Seite zeigen Testpatienten („Mustermann“), keine echten Patientendaten.<br>
-DICOM-Converter 3.0.0.268 · Copyright Dr. Jens Berger (2012-2026)</p>
+DICOM-Converter 3.0.0.273 · Copyright Dr. Jens Berger (2012-2026)</p>
 
 </main>
 </body>
