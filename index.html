@@ -50,7 +50,7 @@ s("view");document.addEventListener("click",function(e){var a=e.target.closest&&
 <main>
 
 <h1>DICOM-Converter</h1>
-<p class="muted">Version 3.0.0.308 · Stand 07.11.2026 · für macOS und Windows</p>
+<p class="muted">Version 3.0.0.311 · Stand 07.11.2026 · für macOS und Windows</p>
 
 <p class="lead">Der DICOM-Converter macht aus Ultraschall-Untersuchungen – und auch aus CT, MRT, Röntgen und anderen
 DICOM-Daten – ganz normale <b>Filme und Bilder</b>,
@@ -77,7 +77,7 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
   <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-Setup.exe" data-goatcounter-click="download-windows" data-goatcounter-title="Download Windows">Für Windows<small>DICOM-Converter-Windows-Setup.exe</small></a>
   </div>
 <p class="muted">Mac ab macOS 11 (Apple Silicon und Intel), von Apple signiert · Windows 10 oder 11 (64 Bit) · <a href="#voraussetzungen">Systemvoraussetzungen</a></p>
-<p class="muted">Version 3.0.0.308 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
+<p class="muted">Version 3.0.0.311 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
 <div class="support">
   <span>Der DICOM-Converter ist kostenlos. Seine Weiterentwicklung kostet aber Geld – für das Apple-Entwicklerprogramm (damit der Mac das Programm ohne Warnung startet) und für den KI-Assistenten Claude, mit dem er entwickelt wird. Über eine Unterstützung freue ich mich sehr.</span>
   <a class="button secondary" href="https://www.paypal.com/paypalme/DicomConverter" data-goatcounter-click="paypal" data-goatcounter-title="PayPal">Unterstützen mit PayPal</a>
@@ -85,6 +85,10 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
 
 
 <h2 id="neu">Neu in den letzten Versionen</h2>
+<h3>Version 3.0.0.311 <span class="muted">· 07.11.2026</span></h3>
+<ul>
+  <li>Windows: Im Rechtsklick-Menü stehen jetzt bei Ordnern und bei Dateien dieselben Einträge wie auf dem Mac – auch „Filme – in Einzelbilder zerlegen“ bei Ordnern und „Filme – in MP4 umwandeln“ oder „Versand – Dateinamen anonymisieren“ bei Dateien (dann für deren Ordner).</li>
+</ul>
 <h3>Version 3.0.0.308 <span class="muted">· 07.11.2026</span></h3>
 <ul>
   <li>Rechtsklick-Menü neu geordnet: Die Einträge beginnen mit ihrer Gruppe – „DICOM“, „Filme“, „Versand“, „Vortrag“ – und stehen auf Mac und Windows gleich benannt in derselben Reihenfolge, z. B. „DICOM – konvertieren“, „Filme – reparieren“, „Versand – Dateinamen anonymisieren“. „Alte Filme in MP4 umwandeln“ heißt jetzt „Filme – in MP4 umwandeln (Platz sparen)“, „Alte Keynotes reparieren“ heißt „Vortrag – Keynotes reparieren“. Die alten Einträge verschwinden beim Update von selbst.</li>
@@ -99,6 +103,7 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
   <li>Siemens ACUSON Sequoia (ältere Software) und Redwood: Ist am Gerät keine Patienteneinblendung eingeschaltet, bleibt die Sondenbezeichnung oben rechts (z. B. „5C1“) jetzt sichtbar. Steht dort etwas anderes, wird weiterhin abgedeckt.</li>
   <li>Programmfenster: Das Format „DICOM – anonymisiert, verlustfrei“ heißt jetzt „DICOM zu DICOM (anonymisiert)“ – wie der Eintrag im Rechtsklick-Menü.</li>
 </ul>
+<details><summary>Ältere Versionen</summary>
 <h3>Version 3.0.0.296 <span class="muted">· 05.11.2026</span></h3>
 <ul>
   <li>Neu im Rechtsklick-Menü: „DICOM zu DICOM anonymisieren“ – die Bilder bleiben DICOM, ohne Namen und persönliche Angaben, z. B. für Kollegen, Lehre oder ein anderes PACS.</li>
@@ -106,7 +111,6 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
   <li>Programmfenster: Ein Doppelklick auf eine Zeile im Protokoll findet die Datei auch dann, wenn der Patientenordner am Ende der Umwandlung umbenannt wurde (Vorsatz „CEUS“, „B-Bild“, „Punktion“).</li>
   <li>Format „DICOM – anonymisiert“: Der Vermerk im DICOM-Kopf und das Handbuch beschreiben genauer, was mit Ultraschallbildern geschieht – außerhalb der Abdeckungen bleibt das Bild exakt gleich, die Datei wird aber neu geschrieben.</li>
 </ul>
-<details><summary>Ältere Versionen</summary>
 <h3>Version 3.0.0.283 <span class="muted">· 02.11.2026</span></h3>
 <ul>
   <li>„Alte Filme in MP4 umwandeln“ nimmt jetzt auch MOV-Filme in H.264 mit: Sie werden ohne Qualitätsverlust umgepackt und bleiben gleich groß, damit das Archiv einheitlich MP4 wird.</li>
@@ -406,7 +410,7 @@ Weiterentwicklung unterstützen möchte, kann das gern über
 
 
 <p class="muted" style="margin-top:3em">Alle Bilder auf dieser Seite zeigen Testpatienten („Mustermann“), keine echten Patientendaten.<br>
-DICOM-Converter 3.0.0.308 · Copyright Dr. Jens Berger (2012-2026)</p>
+DICOM-Converter 3.0.0.311 · Copyright Dr. Jens Berger (2012-2026)</p>
 
 </main>
 </body>
