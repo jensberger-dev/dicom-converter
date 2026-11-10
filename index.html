@@ -42,9 +42,9 @@
   h3 .muted { font-weight: 400; }
   details summary { cursor: pointer; color: var(--accent); margin: 0.6em 0; }
 </style>
-<!-- eigener Zähler (Cloudflare, ohne Cookies, ohne Speicherung von IP-Adressen): Aufruf und Klicks auf Knöpfe mit data-goatcounter-click -->
+<!-- eigener Zähler (Cloudflare, ohne Cookies, ohne Speicherung von IP-Adressen): Aufruf und Klicks auf Knöpfe mit data-klick -->
 <script>(function(){var u="https://dicom-converter-zaehler.jensberger-dev.workers.dev/hit";function s(k){try{navigator.sendBeacon(u,new Blob([JSON.stringify({k:k,p:location.pathname,r:document.referrer})],{type:"text/plain"}))}catch(e){}}
-s("view");document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("[data-goatcounter-click]");if(a)s(a.getAttribute("data-goatcounter-click"))},true)})();</script>
+s("view");document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("[data-klick]");if(a)s(a.getAttribute("data-klick"))},true)})();</script>
 </head>
 <body>
 <main>
@@ -73,15 +73,15 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
 
 <h2 id="download" style="border-top:0; margin-top:1em; padding-top:0">Herunterladen</h2>
 <div class="downloads">
-  <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-macOS.pkg" data-goatcounter-click="download-macos" data-goatcounter-title="Download macOS">Für Mac<small>DICOM-Converter-macOS.pkg</small></a>
-  <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-Setup.exe" data-goatcounter-click="download-windows" data-goatcounter-title="Download Windows">Für Windows<small>DICOM-Converter-Windows-Setup.exe</small></a>
+  <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-macOS.pkg" data-klick="download-macos">Für Mac<small>DICOM-Converter-macOS.pkg</small></a>
+  <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-Setup.exe" data-klick="download-windows">Für Windows<small>DICOM-Converter-Windows-Setup.exe</small></a>
   </div>
-<p class="muted">Windows ohne Administratorrechte (z.&nbsp;B. von der IT verwalteter Klinik-PC): <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-ohne-Admin.zip" data-goatcounter-click="download-windows-zip" data-goatcounter-title="Download Windows ZIP">ZIP-Fassung</a> – entpacken und starten (<a href="#windows-zip">so geht’s</a>)</p>
+<p class="muted">Windows ohne Administratorrechte (z.&nbsp;B. von der IT verwalteter Klinik-PC): <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-ohne-Admin.zip" data-klick="download-windows">ZIP-Fassung</a> – entpacken und starten (<a href="#windows-zip">so geht’s</a>)</p>
 <p class="muted">Mac ab macOS 11 (Apple Silicon und Intel), von Apple signiert · Windows 10 oder 11 (64 Bit) · <a href="#voraussetzungen">Systemvoraussetzungen</a></p>
-<p class="muted">Version 3.0.0.373 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
+<p class="muted">Version 3.0.0.373 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-klick="download-neuerungen">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
 <div class="support">
   <span>Der DICOM-Converter ist kostenlos. Seine Weiterentwicklung kostet aber Geld – für das Apple-Entwicklerprogramm (damit der Mac das Programm ohne Warnung startet) und für den KI-Assistenten Claude, mit dem er entwickelt wird. Über eine Unterstützung freue ich mich sehr.</span>
-  <a class="button secondary" href="https://www.paypal.com/paypalme/DicomConverter" data-goatcounter-click="paypal" data-goatcounter-title="PayPal">Unterstützen mit PayPal</a>
+  <a class="button secondary" href="https://www.paypal.com/paypalme/DicomConverter" data-klick="paypal">Unterstützen mit PayPal</a>
 </div>
 
 
@@ -311,7 +311,7 @@ Computer kaum öffnen, und im Bild stehen die Patientendaten. Der DICOM-Converte
   <li>Warnt Windows („Der Computer wurde durch Windows geschützt“): <b>Weitere Informationen → Trotzdem ausführen</b>, dann die Frage nach Administratorrechten mit <b>Ja</b> beantworten.</li>
   <li>Ist noch ein alter DICOM-Converter da, fragt das Installationsprogramm, ob er entfernt werden soll – Ihre Untersuchungen bleiben erhalten.</li>
 </ol>
-<p id="windows-zip"><b>Ohne Administratorrechte</b> (z.&nbsp;B. auf einem von der IT verwalteten Klinik-PC): <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-ohne-Admin.zip" data-goatcounter-click="download-windows-zip" data-goatcounter-title="Download Windows ZIP">DICOM-Converter-Windows-ohne-Admin.zip</a> herunterladen und an einen Ort entpacken, an dem Sie schreiben dürfen (z.&nbsp;B. <i>Dokumente\DICOM-Converter</i>, nicht <i>C:\Programme</i>). <b>DICOM-Converter.exe</b> startet das Programm, ein Doppelklick auf <b>Rechtsklick einrichten.cmd</b> richtet das Rechtsklick-Menü ein. Nur die Firewall-Freigabe für den DICOM-Empfang muss dann die IT einrichten. Einzelheiten stehen in <i>LIESMICH.txt</i> im ZIP.</p>
+<p id="windows-zip"><b>Ohne Administratorrechte</b> (z.&nbsp;B. auf einem von der IT verwalteten Klinik-PC): <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-ohne-Admin.zip" data-klick="download-windows">DICOM-Converter-Windows-ohne-Admin.zip</a> herunterladen und an einen Ort entpacken, an dem Sie schreiben dürfen (z.&nbsp;B. <i>Dokumente\DICOM-Converter</i>, nicht <i>C:\Programme</i>). <b>DICOM-Converter.exe</b> startet das Programm, ein Doppelklick auf <b>Rechtsklick einrichten.cmd</b> richtet das Rechtsklick-Menü ein. Nur die Firewall-Freigabe für den DICOM-Empfang muss dann die IT einrichten. Einzelheiten stehen in <i>LIESMICH.txt</i> im ZIP.</p>
 
 <h2 id="rechtsklick">Am schnellsten: Rechtsklick auf den Ordner</h2>
 <p>Den Ordner mit den DICOM-Daten (z.&nbsp;B. vom USB-Stick oder von der CD) mit der <b>rechten Maustaste</b> anklicken:</p>
@@ -443,7 +443,7 @@ nicht im Bild (siehe <a href="#datenschutz">Datenschutz</a>).</p>
 Jahresgebühr für das Apple-Entwicklerprogramm (Signatur und Prüfung durch Apple, damit der Mac das Programm ohne
 Warnung startet) und das Abonnement für den KI-Assistenten Claude, mit dem das Programm entwickelt wird. Wer die
 Weiterentwicklung unterstützen möchte, kann das gern über
-<a href="https://www.paypal.com/paypalme/DicomConverter" data-goatcounter-click="paypal" data-goatcounter-title="PayPal">PayPal</a> tun – vielen Dank!</p>
+<a href="https://www.paypal.com/paypalme/DicomConverter" data-klick="paypal">PayPal</a> tun – vielen Dank!</p>
 <p class="muted">Diese Seite zählt Aufrufe und Downloads anonym (eigener Zähler bei Cloudflare, ohne Cookies, ohne Speicherung von IP-Adressen).</p>
 <p class="muted"><a href="rechtliches.html#impressum">Impressum</a> · <a href="rechtliches.html#datenschutz">Datenschutz</a></p>
 
