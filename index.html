@@ -50,7 +50,7 @@ s("view");document.addEventListener("click",function(e){var a=e.target.closest&&
 <main>
 
 <h1>DICOM-Converter</h1>
-<p class="muted">Version 3.0.0.368 · Stand 10.11.2026 · für macOS und Windows</p>
+<p class="muted">Version 3.0.0.373 · Stand 10.11.2026 · für macOS und Windows</p>
 
 <p class="lead">Der DICOM-Converter macht aus Ultraschall-Untersuchungen – und auch aus CT, MRT, Röntgen und anderen
 DICOM-Daten – ganz normale <b>Filme und Bilder</b>,
@@ -77,7 +77,7 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
   <a class="button" href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-Setup.exe" data-goatcounter-click="download-windows" data-goatcounter-title="Download Windows">Für Windows<small>DICOM-Converter-Windows-Setup.exe</small></a>
   </div>
 <p class="muted">Mac ab macOS 11 (Apple Silicon und Intel), von Apple signiert · Windows 10 oder 11 (64 Bit) · <a href="#voraussetzungen">Systemvoraussetzungen</a></p>
-<p class="muted">Version 3.0.0.368 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
+<p class="muted">Version 3.0.0.373 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-goatcounter-click="download-neuerungen" data-goatcounter-title="Neuerungen (PDF)">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
 <div class="support">
   <span>Der DICOM-Converter ist kostenlos. Seine Weiterentwicklung kostet aber Geld – für das Apple-Entwicklerprogramm (damit der Mac das Programm ohne Warnung startet) und für den KI-Assistenten Claude, mit dem er entwickelt wird. Über eine Unterstützung freue ich mich sehr.</span>
   <a class="button secondary" href="https://www.paypal.com/paypalme/DicomConverter" data-goatcounter-click="paypal" data-goatcounter-title="PayPal">Unterstützen mit PayPal</a>
@@ -85,6 +85,13 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
 
 
 <h2 id="neu">Neu in den letzten Versionen</h2>
+<h3>Version 3.0.0.373 <span class="muted">· 10.11.2026</span></h3>
+<ul>
+  <li>Filme zusammenfügen: Hat eine Untersuchung nur einen Loop, wird er nicht mehr „zusammengefügt“, sondern bleibt ein normaler Film mit Uhrzeit im Namen. Zusammengefügte Filme nennen „CEUS“ bzw. „B-Bild“ nur noch einmal im Namen.</li>
+  <li>„Vortrag – in Präsentation einfügen“: Für eine neue Präsentation wählst du das Thema aus einer kleinen Liste – eigene Themes und Vorlagen, Schwarz mit weißer Schrift, Weiß und (Keynote) alle übrigen Themes. Die Wahl vom letzten Mal ist vorgewählt. Unter Windows ersetzt die Liste die bisherige Ja/Nein-Frage.</li>
+  <li>Ausgabe-Prüfung: Bearbeitet ein anderes Werkzeug (etwa „nachträglich anonymisieren“) Dateien schon während der Umwandlung, meldet die Prüfung das als „Inzwischen verändert“ mit der neuen Fassung statt als Fehler. Fehlt eine Datei wirklich, steht dabei, ob der Ordner oder nur die Datei fehlt. Doppelklick auf eine solche Zeile zeigt die Quelldatei.</li>
+  <li>Weniger Rückfragen: Beschneiden, Reparieren, nachträgliches Anonymisieren und Keynotes reparieren fragen nur noch einmal nach den Originalen, zusammen mit dem Überblick – „In ‚zum Löschen‘ aufheben“ oder „Originale löschen“, die letzte Wahl ist vorgewählt. Aufgehobene Originale liegen gesammelt in einem Ordner „zum Löschen“ im gewählten Ordner. Auch die übrigen Rückfragen nennen auf den Knöpfen, was passiert („Als ZIP packen“ / „Ohne ZIP“).</li>
+</ul>
 <h3>Version 3.0.0.368 <span class="muted">· 09.11.2026</span></h3>
 <ul>
   <li>Windows: In Rückfragen waren längere Knopfnamen wie „Zusammenfügen“ abgeschnitten; die Knöpfe passen sich jetzt dem Text an.</li>
@@ -102,6 +109,7 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
   <li>Dateinamen mit Umlauten und Akzenten werden überall gleich erkannt, auch von älteren Mac-Platten oder von dort kopiert. Ein eigener Ordner wie „zum Lernen“ gilt nicht mehr als Löschordner.</li>
   <li>Behoben: Konnte Keynote beim Reparieren eine Präsentation nicht öffnen, blieb das im Hintergrund gestartete Keynote mit einem unsichtbaren Hinweis stehen und ließ sich nicht mehr beenden.</li>
 </ul>
+<details><summary>Ältere Versionen</summary>
 <h3>Version 3.0.0.345 <span class="muted">· 08.11.2026</span></h3>
 <ul>
   <li>„Vortrag – Keynotes reparieren“ rettet viel mehr alte Präsentationen – jetzt auch aus Keynote 1 und 2 und als einzelne Datei gesicherte Keynote-'09-Präsentationen. Große Präsentationen bleiben nicht mehr hängen; klemmt Keynote doch einmal, versucht es das Programm ein zweites Mal und macht sonst mit der nächsten weiter.</li>
@@ -113,7 +121,6 @@ und er <b>entfernt dabei beim Ultraschall Name, Patienten-ID und Geburtsdatum au
   <li>„Filme – reparieren“ und „Filme – in MP4 umwandeln“: Mehr alte Filme werden umgewandelt statt abzubrechen, das letzte Bild behält seine Dauer, Mengen in MB, Protokoll durchgehend deutsch.</li>
   <li>Windows: Nach einem Update zeigen Rechtsklick-Menü, Startmenü und Verknüpfungen sofort das neue Icon.</li>
 </ul>
-<details><summary>Ältere Versionen</summary>
 <h3>Version 3.0.0.314 <span class="muted">· 07.11.2026</span></h3>
 <ul>
   <li>Neues Programm-Icon: ein gezeichneter Schallfächer mit SMI-Gefäßbild über einem Filmstreifen – klar erkennbar auch in kleinen Größen (Dock, Finder, Explorer, Taskleiste). Auch das Symbol im Windows-Rechtsklick-Menü ist neu.</li>
@@ -440,7 +447,7 @@ Weiterentwicklung unterstützen möchte, kann das gern über
 
 
 <p class="muted" style="margin-top:3em">Alle Bilder auf dieser Seite zeigen Testpatienten („Mustermann“), keine echten Patientendaten.<br>
-DICOM-Converter 3.0.0.368 · Copyright Dr. Jens Berger (2012-2026)</p>
+DICOM-Converter 3.0.0.373 · Copyright Dr. Jens Berger (2012-2026)</p>
 
 </main>
 </body>
