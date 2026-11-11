@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wie die Umwandlung schneller wurde – DICOM-Converter</title>
+<meta name="description" content="Technische Erklärung: wie der DICOM-Converter Ultraschall-Filme bei gleichen Ergebnissen viermal schneller umwandelt.">
+<link rel="stylesheet" href="fonts/plex.css">
+<style>
+  /* Layout: eine Lesespalte wie ein technischer Befund; vier Stufen als Abschnitte, ein maßstäblicher Zeitbalken oben, ein Spur-Diagramm unten */
+  :root {
+    --bg: #ffffff;
+    --fg: #1b2430;
+    --muted: #5a6675;
+    --line: #d8dee6;
+    --panel: #eef2f6;
+    --accent: #163452;
+    --accent-2: #3d7bb8;
+    --turn: #c27a2c;
+    --display: "IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+    --body: "IBM Plex Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14181d; --fg: #e3e8ee; --muted: #9aa5b2; --line: #333b45; --panel: #1e242b;
+      --accent: #9cc3ea; --accent-2: #5f9bd6; --turn: #e0a057; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14181d; --fg: #e3e8ee; --muted: #9aa5b2; --line: #333b45; --panel: #1e242b;
+    --accent: #9cc3ea; --accent-2: #5f9bd6; --turn: #e0a057; color-scheme: dark;
+  }
+  body {
+    background: var(--bg); color: var(--fg);
+    font: 16.5px/1.6 var(--body);
+    margin: 0; padding-left: 16px; padding-right: 16px;
+  }
+  main { max-width: 46rem; margin: 0 auto; padding-block: 2.5rem 4rem; display: grid; gap: 0.2rem; }
+  h1, h2, h3 { font-family: var(--display); color: var(--accent); text-wrap: balance; line-height: 1.2; }
+  h1 { font-size: 2.1rem; font-weight: 600; margin: 0 0 0.3rem; }
+  h2 { font-size: 1.45rem; font-weight: 600; margin: 2.4rem 0 0.4rem; padding-top: 1.2rem; border-top: 1px solid var(--line); display: flex; gap: 0.6rem; align-items: baseline; }
+  h2 .nr { font-family: var(--mono); font-size: 0.85rem; font-weight: 500; color: var(--muted); }
+  h3 { font-size: 1.1rem; font-weight: 600; margin: 1.4rem 0 0.2rem; }
+  p, li { max-width: 65ch; }
+  p { margin: 0.5rem 0; }
+  ul { margin: 0.4rem 0; padding-left: 1.2rem; }
+  li { margin: 0.25rem 0; }
+  code { font-family: var(--mono); font-size: 0.88em; background: var(--panel); padding: 0.05em 0.35em; border-radius: 4px; }
+  .lead { font-size: 1.08rem; color: var(--muted); margin-bottom: 1rem; }
+  .label { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+
+  .zeiten { display: grid; gap: 0.55rem; margin: 1rem 0 0.4rem; font-variant-numeric: tabular-nums; }
+  .zeile { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 0.8rem; align-items: center; }
+  .zeile .name { font-size: 0.92rem; }
+  .bahn { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+  .balken { height: 1.15rem; background: var(--accent-2); border-radius: 3px; flex: none; }
+  .zeile.start .balken { background: var(--muted); }
+  .zeile.jetzt .balken { background: var(--accent); }
+  .wert { font-family: var(--mono); font-size: 0.85rem; white-space: nowrap; }
+  @media (max-width: 560px) { .zeile { grid-template-columns: 1fr; gap: 0.15rem; } }
+
+  .kasten { background: var(--panel); border-radius: 8px; padding: 0.9rem 1.1rem; margin: 0.9rem 0; }
+  .kasten p:first-child { margin-top: 0; } .kasten p:last-child { margin-bottom: 0; }
+
+  .fluss { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 1rem 0; font-size: 0.9rem; }
+  .fluss .knoten { border: 1px solid var(--line); border-radius: 6px; padding: 0.45rem 0.7rem; background: var(--bg); }
+  .fluss .knoten b { display: block; font-weight: 600; color: var(--accent); }
+  .fluss .pfeil { color: var(--muted); font-family: var(--mono); }
+  .fluss .stapel { display: grid; gap: 0.4rem; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-weight: 600; color: var(--muted); font-size: 0.82rem; }
+  td.z { font-family: var(--mono); white-space: nowrap; }
+  .tab { overflow-x: auto; margin: 0.8rem 0; }
+
+  .diagramm { overflow-x: auto; margin: 1rem 0 0.3rem; }
+  .diagramm svg { display: block; width: 100%; min-width: 34rem; height: auto; }
+  .legende { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; font-size: 0.85rem; color: var(--muted); }
+  .legende span::before { content: ""; display: inline-block; width: 0.8rem; height: 0.8rem; border-radius: 2px; margin-right: 0.4rem; vertical-align: -0.1rem; }
+  .legende .l-turn::before { background: var(--turn); }
+  .legende .l-calc::before { background: var(--accent-2); }
+  .legende .l-wait::before { background: transparent; border: 1px dashed var(--muted); }
+  footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--muted); }
+  .zurueck { font-size: 0.92rem; margin-bottom: 1.2rem; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <p class="zurueck"><a href="./">← zurück zum DICOM-Converter</a></p>
+  <div class="label">Für Interessierte · seit DICOM-Converter 3.0.0.385</div>
+  <h1>Wie die Umwandlung schneller wurde</h1>
+  <p class="lead">Vier Stufen, gemessen mit dem Ultraschall-Testsatz: 212 Dateien, 15&nbsp;335 Frames, Mac mit Apple-Chip und 10 Kernen.
+  Alle Ausgaben sind nach jeder Stufe dieselben wie vorher – Filme im Videodatenstrom, alles andere Byte für Byte.</p>
+
+  <div class="zeiten" role="list" aria-label="Laufzeit nach jeder Stufe">
+    <div class="zeile start" role="listitem"><span class="name">Ausgangslage</span><span class="bahn"><span class="balken" style="width:72%"></span><span class="wert">6:04 min</span></span></div>
+    <div class="zeile" role="listitem"><span class="name">1 · Nur benötigte Frames lesen</span><span class="bahn"><span class="balken" style="width:41.8%"></span><span class="wert">3:31 min</span></span></div>
+    <div class="zeile" role="listitem"><span class="name">2 · libjpeg-turbo statt DCMTK</span><span class="bahn"><span class="balken" style="width:27.9%"></span><span class="wert">2:21 min</span></span></div>
+    <div class="zeile" role="listitem"><span class="name">3 · Vorab-Dekodieren</span><span class="bahn"><span class="balken" style="width:26.1%"></span><span class="wert">2:12 min</span></span></div>
+    <div class="zeile jetzt" role="listitem"><span class="name">4 · Mehrere Dateien gleichzeitig</span><span class="bahn"><span class="balken" style="width:17.9%"></span><span class="wert">1:30 min</span></span></div>
+  </div>
+  <p class="label">Balkenlänge maßstäblich zur Laufzeit</p>
+
+  <h2><span class="nr">1</span>Nur die benötigten Frames lesen</h2>
+  <p>Vor dem eigentlichen Kodieren schaut sich der DICOM-Converter einzelne Bilder eines Films an:</p>
+  <ul>
+    <li>den <b>letzten Frame</b>, um daraus einmal je Gerät und Tag die Abdeck-Flecken zu schneiden (Masken-Zwischenspeicher),</li>
+    <li>den <b>ersten und letzten Frame</b> für die Zweitnamen-Suche und die generische Texterkennung.</li>
+  </ul>
+  <p><b>Vorher</b> lief dafür <code>forEachFrame</code> mit Fenstergröße&nbsp;1 über den ganzen Film; behalten wurden nur Frame&nbsp;0 bzw.
+  Frame&nbsp;n−1. Ein Loop mit 150 Frames wurde also komplett dekodiert, um zwei Bilder zu bekommen. Dazu kam: DCMTK legt für jedes Fenster
+  eine eigene <code>DicomImage</code>-Instanz an und prüft dabei das Farbmodell, indem es probeweise dekodiert. Jeder Frame wurde so
+  praktisch zweimal dekodiert.</p>
+  <p><b>Jetzt</b> springt <code>framesAt(ds, {0, n−1})</code> in den gekapselten Pixeldaten direkt zu den Fragmenten dieser Frames und
+  dekodiert nur sie. Das allein nahm fast die Hälfte der Laufzeit weg.</p>
+
+  <h2><span class="nr">2</span>libjpeg-turbo statt DCMTK für JPEG Baseline</h2>
+  <p>Fast alle Ultraschall-Filme haben dieselbe Form – im Testsatz 93&nbsp;% der Frames:</p>
+  <div class="tab"><table>
+    <tr><th>Merkmal</th><th>Wert</th></tr>
+    <tr><td>Transfersyntax</td><td class="z">1.2.840.10008.1.2.4.50 (JPEG Baseline)</td></tr>
+    <tr><td>Bittiefe, Komponenten</td><td class="z">8 Bit, 3</td></tr>
+    <tr><td>Photometric Interpretation</td><td class="z">YBR_FULL_422 oder YBR_FULL</td></tr>
+    <tr><td>Fragmente</td><td class="z">genau eins je Frame</td></tr>
+  </table></div>
+  <p>Der JPEG-Decoder von DCMTK (<code>dcmjpeg</code>) ist eine eigene Kopie der alten IJG-libjpeg&nbsp;6b – sauber, aber skalar.
+  <b>libjpeg-turbo</b> nutzt die Vektoreinheit der CPU (SIMD: NEON auf Apple-Chips, SSE2/AVX2 auf Intel/AMD) für die drei teuren Schritte:
+  die inverse DCT der 8×8-Blöcke, das Hochrechnen der halbierten Farbkanäle bei 4:2:2 und die Umrechnung YCbCr&nbsp;→&nbsp;RGB. Es rechnet
+  dabei 8 bzw. 16 Werte auf einmal.</p>
+
+  <h3>Damit die Pixel gleich bleiben</h3>
+  <ul>
+    <li><b>Farbraum erzwungen:</b> <code>cinfo.jpeg_color_space = JCS_YCbCr</code>. DCMTK ignoriert bei <code>YBR_*</code> die JFIF- und
+    Adobe-Marker im JPEG-Strom und rechnet immer YCbCr&nbsp;→&nbsp;RGB. libjpeg-turbo würde sich sonst nach den Markern richten.</li>
+    <li><b>Dieselbe IDCT:</b> die ganzzahlige <code>JDCT_ISLOW</code>, nicht die schnellere, ungenauere Gleitkomma- oder „fast“-Variante.</li>
+    <li><b>Dasselbe Hochrechnen:</b> „fancy upsampling“, wie bei DCMTK voreingestellt.</li>
+  </ul>
+  <p>Beide beruhen auf demselben IJG-Rechenweg, deshalb kommt bitgleich dasselbe RGB-Bild heraus. Der Unit-Test
+  <code>test_framesource</code> prüft das Pixel für Pixel gegen DCMTK; der Vergleich aller Ausgaben hat es bestätigt.</p>
+
+  <div class="kasten">
+    <p><b>Rückfall auf DCMTK.</b> Die Fragmente werden nicht kopiert: <code>FastJpeg</code> hält nur Zeiger und Länge in die Pixelsequenz
+    von DCMTK. Ein eigener Error-Manager fängt Fehler mit <code>setjmp</code>/<code>longjmp</code> ab. Bei einem kaputten Frame oder
+    abweichenden Maßen übernimmt DCMTK diesen Frame. JPEG-LS, JPEG&nbsp;2000, Lossless, RLE, unkomprimierte Daten und mehrere Fragmente je
+    Frame laufen ohnehin über DCMTK. Mit <code>DCMCONV_DCMTK_JPEG=1</code> ist der schnelle Weg ganz aus.</p>
+  </div>
+
+  <h2><span class="nr">3</span>Vorab-Dekodieren in zwei Hilfs-Threads</h2>
+  <p>Ein klassisches Erzeuger-Verbraucher-Muster in <code>forEachFrame</code>:</p>
+  <div class="fluss" aria-label="Ablauf des Vorab-Dekodierens">
+    <div class="stapel">
+      <div class="knoten"><b>Hilfs-Thread 1</b>dekodiert Frame i</div>
+      <div class="knoten"><b>Hilfs-Thread 2</b>dekodiert Frame i+1</div>
+    </div>
+    <span class="pfeil">→</span>
+    <div class="knoten"><b>Warteschlange</b>höchstens 6 Frames voraus</div>
+    <span class="pfeil">→</span>
+    <div class="knoten"><b>Hauptthread</b>streng in Reihenfolge: filtern (libavfilter), kodieren (x264)</div>
+  </div>
+  <p>Jeder Hilfs-Thread holt sich die nächste Frame-Nummer und dekodiert in einen eigenen Puffer; das Ergebnis landet im Slot
+  <code>slots[k]</code> = Frame <code>first + k</code>. Der Hauptthread nimmt die Frames der Reihe nach und wartet nur, wenn der nächste noch
+  nicht fertig ist. Bei einem Fehler werden die Threads gestoppt, und ab genau diesem Frame geht es nacheinander weiter, mit DCMTK als
+  Rückfall.</p>
+  <p>Der Gewinn ist klein (2:21 → 2:12): Nach Stufe&nbsp;2 ist das Dekodieren schon billig, das Kodieren dominiert, und x264 nutzt selbst
+  schon mehrere Threads. Nebenbei sank der Speicherbedarf von 1,87 auf 1,31&nbsp;GB.</p>
+
+  <h2><span class="nr">4</span>Mehrere Dateien gleichzeitig</h2>
+  <p>Die Stufen 1–3 beschleunigen eine einzelne Datei. Stufe&nbsp;4 verteilt ganze Dateien auf mehrere Spuren (Lanes).</p>
+
+  <h3>Warum das noch etwas bringt</h3>
+  <div class="tab"><table>
+    <tr><th>Spuren</th><th>Laufzeit</th><th>CPU-Zeit</th><th>Kerne im Mittel</th><th>Speicher</th></tr>
+    <tr><td class="z">1</td><td class="z">131 s</td><td class="z">708 s</td><td class="z">5,4</td><td class="z">1,3 GB</td></tr>
+    <tr><td class="z">2</td><td class="z">100 s</td><td class="z">772 s</td><td class="z">7,7</td><td class="z">2,1 GB</td></tr>
+    <tr><td class="z">3 (automatisch ab 8 Kernen)</td><td class="z">90 s</td><td class="z">776 s</td><td class="z">8,6</td><td class="z">2,3 GB</td></tr>
+    <tr><td class="z">4</td><td class="z">86 s</td><td class="z">774 s</td><td class="z">9,0</td><td class="z">2,5 GB</td></tr>
+    <tr><td class="z">6</td><td class="z">86 s</td><td class="z">778 s</td><td class="z">9,0</td><td class="z">3,2 GB</td></tr>
+  </table></div>
+  <p>Nacheinander waren im Mittel nur gut die Hälfte der 10 Kerne beschäftigt: x264 lastet bei kurzen Loops nicht alles aus, Lesen und
+  Texterkennung laufen einspurig. Mit drei Spuren sind die Kerne fast voll; mehr Spuren kosten nur noch Speicher, etwa 0,4&nbsp;GB je Spur.</p>
+
+  <h3>Warum die Ergebnisse gleich bleiben</h3>
+  <p>Dekodieren, Filtern, Kodieren und Texterkennung hängen nur von der einen Datei ab und liefern dasselbe, egal wann und in welchem Thread
+  sie laufen. Auch x264 ist bei gleichen Einstellungen deterministisch, und jede Datei bekommt dieselben Einstellungen wie bisher.</p>
+  <p>Alles mit <b>gemeinsamem Zustand</b> geht durch eine geordnete Schleuse (<code>takeTurn</code> → <code>releaseTurn</code>):
+  Datei&nbsp;k kommt erst hinein, wenn Datei&nbsp;k−1 sie verlassen hat. Das betrifft Patientenordner und „(2)“ bei Namensgleichheit, den
+  Masken-Zwischenspeicher je Gerät und Tag, Serien-Zähler und gleiche Ausgabenamen.</p>
+
+  <div class="diagramm" role="img" aria-label="Drei Spuren über die Zeit: Schleusen-Abschnitte der Dateien 1 bis 5 liegen nacheinander, die Rechenarbeit überlappt sich">
+    <svg viewBox="0 0 700 190" xmlns="http://www.w3.org/2000/svg">
+      <g font-family="IBM Plex Mono, ui-monospace, Menlo, monospace" font-size="12" fill="var(--muted)">
+        <text x="0" y="44">Spur 1</text><text x="0" y="94">Spur 2</text><text x="0" y="144">Spur 3</text>
+      </g>
+      <g stroke="var(--line)" stroke-width="1"><line x1="70" y1="12" x2="70" y2="165"/><line x1="70" y1="165" x2="690" y2="165"/></g>
+      <text x="690" y="182" text-anchor="end" font-family="IBM Plex Sans, Arial, sans-serif" font-size="12" fill="var(--muted)">Zeit →</text>
+      <!-- Maßstab: 1 Einheit = 6 px, Start bei x = 70 -->
+      <g font-family="IBM Plex Sans, Arial, sans-serif" font-size="12" font-weight="600">
+        <!-- Spur 1: Datei 1 Schleuse 0–8, Rechnen 8–60; Datei 4 Schleuse 60–66, Rechnen 66–100 -->
+        <rect x="70" y="26" width="48" height="26" rx="3" fill="var(--turn)"/>
+        <rect x="118" y="26" width="312" height="26" rx="3" fill="var(--accent-2)"/>
+        <text x="124" y="44" fill="var(--bg)">Datei 1</text>
+        <rect x="430" y="26" width="36" height="26" rx="3" fill="var(--turn)"/>
+        <rect x="466" y="26" width="204" height="26" rx="3" fill="var(--accent-2)"/>
+        <text x="472" y="44" fill="var(--bg)">Datei 4</text>
+        <!-- Spur 2: Datei 2 wartet 0–8, Schleuse 8–14, Rechnen 14–48; wartet 48–66, Datei 5 Schleuse 66–72, Rechnen 72–95 -->
+        <rect x="70.5" y="76.5" width="47" height="25" rx="3" fill="none" stroke="var(--muted)" stroke-dasharray="4 3"/>
+        <rect x="118" y="76" width="36" height="26" rx="3" fill="var(--turn)"/>
+        <rect x="154" y="76" width="204" height="26" rx="3" fill="var(--accent-2)"/>
+        <text x="160" y="94" fill="var(--bg)">Datei 2</text>
+        <rect x="358.5" y="76.5" width="107" height="25" rx="3" fill="none" stroke="var(--muted)" stroke-dasharray="4 3"/>
+        <rect x="466" y="76" width="36" height="26" rx="3" fill="var(--turn)"/>
+        <rect x="502" y="76" width="138" height="26" rx="3" fill="var(--accent-2)"/>
+        <text x="508" y="94" fill="var(--bg)">Datei 5</text>
+        <!-- Spur 3: Datei 3 wartet 0–14, Schleuse 14–20, Rechnen 20–58 -->
+        <rect x="70.5" y="126.5" width="83" height="25" rx="3" fill="none" stroke="var(--muted)" stroke-dasharray="4 3"/>
+        <rect x="154" y="126" width="36" height="26" rx="3" fill="var(--turn)"/>
+        <rect x="190" y="126" width="228" height="26" rx="3" fill="var(--accent-2)"/>
+        <text x="196" y="144" fill="var(--bg)">Datei 3</text>
+      </g>
+    </svg>
+  </div>
+  <div class="legende"><span class="l-turn">Schleuse – streng nacheinander</span><span class="l-calc">Rechenarbeit – gleichzeitig</span><span class="l-wait">wartet auf die Schleuse</span></div>
+
+  <p>Ultraschall-Dateien verlassen die Schleuse früh: Sobald der Ausgabepfad feststeht (<code>claimAndRelease</code>), darf die nächste
+  Datei hinein, während die erste noch kodiert. <b>CT, MRT und Durchleuchtung</b> bleiben bis zum Ende der Datei in der Schleuse, weil eine
+  Serie aus vielen Dateien mit gemeinsamem Zustand entsteht. Deshalb gewinnen sie kaum.</p>
+
+  <h3>Protokoll und Nebeneffekte in Dateireihenfolge</h3>
+  <p>Was erst am Ende des Laufs wirkt – PDF-Ziele, Proben, Ordnerdatum und Finder-Tags, Glue-Kandidaten – sammelt jede Datei in einem eigenen
+  <code>FileRecord</code>, ebenso ihre Protokollzeilen (abgefangen mit <code>log::Capture</code>). Der Hauptthread schreibt die Records in
+  Dateireihenfolge fest (<code>commit</code>). Deshalb sind auch Protokoll und Zähler zeilengleich.</p>
+
+  <div class="kasten">
+    <p><b>Kurz gesagt:</b> Der Ablauf verhält sich wie früher nacheinander; nur die reine Rechenarbeit überlappt sich.
+    <code>--jobs 1</code> (oder <code>DCMCONV_JOBS=1</code>) geht genau den alten Weg ohne Spuren und ist mit 3.0.0.373 identisch.</p>
+  </div>
+
+  <footer>Geprüft auf dem gesamten Testbestand (6,5&nbsp;GB, 758 Ausgaben): alte Version = nacheinander = gleichzeitig, auch mit Glue und
+  Anonymisierungsprüfung, in der Windows-VM und im Intel-Teil unter Rosetta. Alle Testdaten: 326&nbsp;s → 197&nbsp;s; mit Glue und Prüfung
+  919&nbsp;s → 409&nbsp;s.</footer>
+  <p class="label" style="margin-top:1.5rem"><a href="./">DICOM-Converter</a> · <a href="rechtliches.html#impressum">Impressum</a> · <a href="rechtliches.html#datenschutz">Datenschutz</a></p>
+</main>
+</body>
+</html>

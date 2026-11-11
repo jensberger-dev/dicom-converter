@@ -4,13 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DICOM-Converter</title>
+<link rel="stylesheet" href="fonts/plex.css">
 <style>
   :root { --bg: #ffffff; --text: #1d1d1f; --muted: #5f6368; --line: #d9dce1; --box: #f3f5f8; --accent: #163452; --warn: #fff4e0; --warnline: #e3a33a; }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) { --bg: #17191c; --text: #e8eaed; --muted: #a0a6ad; --line: #3a3e44; --box: #22262b; --accent: #8db8e6; --warn: #3a2f1c; --warnline: #c48a2c; }
   }
   :root[data-theme="dark"] { --bg: #17191c; --text: #e8eaed; --muted: #a0a6ad; --line: #3a3e44; --box: #22262b; --accent: #8db8e6; --warn: #3a2f1c; --warnline: #c48a2c; }
-  body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.55 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 "IBM Plex Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  h1, h2, h3 { font-family: "IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif; font-weight: 600; text-wrap: balance; }
+  pre, code, kbd { font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
   main { max-width: 880px; margin: 0 auto; padding: 24px 16px 48px; }
   h1 { color: var(--accent); font-size: 2em; margin: 0.4em 0 0.1em; }
   h2 { color: var(--accent); margin-top: 2.2em; padding-top: 0.6em; border-top: 1px solid var(--line); }
@@ -302,6 +305,7 @@ Reihe nach. Deshalb ist das Ergebnis <b>Bild für Bild dasselbe</b> wie beim Umw
 steht in der gewohnten Reihenfolge. Am meisten gewinnen viele Ultraschall-Bilder und -Filme; während des Laufs ist der
 Rechner stärker ausgelastet. Wer es wie früher möchte – eine Datei nach der anderen –, findet die Einstellung im
 <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Handbuch.pdf">Handbuch</a> (Abschnitt 4, „Schneller umwandeln“).</p>
+<p><b>Für Interessierte:</b> <a href="technik.html">Wie die Umwandlung schneller wurde – die Technik dahinter</a> (Frames gezielt lesen, schneller JPEG-Decoder, Schleuse für die Reihenfolge).</p>
 
 <figure><img src="img/vorher-kopf.jpg" alt="Kopfzeile vorher mit Patientenname und ID"><figcaption>Vorher: Patientenname und ID stehen in der Kopfzeile</figcaption></figure>
 <figure><img src="img/nachher-kopf.jpg" alt="Kopfzeile nachher ohne Patientendaten"><figcaption>Nachher: Name und ID sind überdeckt – Gerät, Klinik, Datum und Uhrzeit bleiben stehen</figcaption></figure>
