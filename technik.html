@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wie die Umwandlung schneller wurde – DICOM-Converter</title>
-<meta name="description" content="Technische Erklärung: wie der DICOM-Converter Ultraschall-Filme bei gleichen Ergebnissen viermal schneller umwandelt.">
+<meta name="description" content="Technische Erklärung: wie der DICOM-Converter Ultraschall-Filme fast siebenmal schneller umwandelt.">
 <link rel="stylesheet" href="fonts/plex.css">
 <style>
-  /* Layout: eine Lesespalte wie ein technischer Befund; vier Stufen als Abschnitte, ein maßstäblicher Zeitbalken oben, ein Spur-Diagramm unten */
+  /* Layout: eine Lesespalte wie ein technischer Befund; fünf Stufen als Abschnitte, ein maßstäblicher Zeitbalken oben, ein Spur-Diagramm unten */
   :root {
     --bg: #ffffff;
     --fg: #1b2430;
@@ -92,15 +92,17 @@
   <p class="zurueck"><a href="./">← zurück zum DICOM-Converter</a></p>
   <div class="label">Für Interessierte · seit DICOM-Converter 3.0.0.385</div>
   <h1>Wie die Umwandlung schneller wurde</h1>
-  <p class="lead">Vier Stufen, gemessen mit dem Ultraschall-Testsatz: 212 Dateien, 15&nbsp;335 Frames, Mac mit Apple-Chip und 10 Kernen.
-  Alle Ausgaben sind nach jeder Stufe dieselben wie vorher – Filme im Videodatenstrom, alles andere Byte für Byte.</p>
+  <p class="lead">Fünf Stufen, gemessen mit dem Ultraschall-Testsatz: 212 Dateien, 15&nbsp;335 Frames, Mac mit Apple-Chip und 10 Kernen.
+  Nach den Stufen 1–4 sind alle Ausgaben dieselben wie vorher – Filme im Videodatenstrom, alles andere Byte für Byte. Stufe&nbsp;5
+  kodiert die Filme mit einer schnelleren Einstellung: gleich groß, Bildtreue minimal geringer.</p>
 
   <div class="zeiten" role="list" aria-label="Laufzeit nach jeder Stufe">
     <div class="zeile start" role="listitem"><span class="name">Ausgangslage</span><span class="bahn"><span class="balken" style="width:72%"></span><span class="wert">6:04 min</span></span></div>
     <div class="zeile" role="listitem"><span class="name">1 · Nur benötigte Frames lesen</span><span class="bahn"><span class="balken" style="width:41.8%"></span><span class="wert">3:31 min</span></span></div>
     <div class="zeile" role="listitem"><span class="name">2 · libjpeg-turbo statt DCMTK</span><span class="bahn"><span class="balken" style="width:27.9%"></span><span class="wert">2:21 min</span></span></div>
     <div class="zeile" role="listitem"><span class="name">3 · Vorab-Dekodieren</span><span class="bahn"><span class="balken" style="width:26.1%"></span><span class="wert">2:12 min</span></span></div>
-    <div class="zeile jetzt" role="listitem"><span class="name">4 · Mehrere Dateien gleichzeitig</span><span class="bahn"><span class="balken" style="width:17.9%"></span><span class="wert">1:30 min</span></span></div>
+    <div class="zeile" role="listitem"><span class="name">4 · Mehrere Dateien gleichzeitig</span><span class="bahn"><span class="balken" style="width:17.9%"></span><span class="wert">1:30 min</span></span></div>
+    <div class="zeile jetzt" role="listitem"><span class="name">5 · Schneller kodieren</span><span class="bahn"><span class="balken" style="width:10.5%"></span><span class="wert">0:53 min</span></span></div>
   </div>
   <p class="label">Balkenlänge maßstäblich zur Laufzeit</p>
 
@@ -236,6 +238,31 @@
   <div class="kasten">
     <p><b>Kurz gesagt:</b> Der Ablauf verhält sich wie früher nacheinander; nur die reine Rechenarbeit überlappt sich.
     <code>--jobs 1</code> (oder <code>DCMCONV_JOBS=1</code>) geht genau den alten Weg ohne Spuren und ist mit 3.0.0.373 identisch.</p>
+  </div>
+
+  <h2><span class="nr">5</span>Schneller kodieren: x264 „veryfast“ statt „medium“ <span class="label">seit 3.0.0.389</span></h2>
+  <p>Nach Stufe&nbsp;4 ist der Rechner voll ausgelastet, im Mittel arbeiten 8,6 von 10 Kernen. Eine Abtastung während der Umwandlung zeigt, wofür:
+  <b>88&nbsp;%</b> der Rechenzeit gehen in den H.264-Kodierer x264, Lesen und Farbumrechnung zusammen keine 4&nbsp;%. Mehr Dateien gleichzeitig
+  bringen deshalb nichts mehr (3, 5 und 7 Spuren: 16,9 / 17,2 / 17,5&nbsp;s an einem Teilsatz). Der Hebel ist der Kodierer selbst.</p>
+  <p>x264 kennt Voreinstellungen von „ultrafast“ bis „placebo“. Sie legen fest, wie gründlich er nach Bewegung zwischen den Bildern sucht und
+  wie viele frühere Bilder er als Bezug heranzieht. Die Qualitätsstufe (CRF&nbsp;18) bleibt gleich, x264 regelt die Datenmenge danach. Über
+  alle 92 Filme des Testsatzes:</p>
+  <div class="tab"><table>
+    <thead><tr><th>Voreinstellung</th><th>Zeit</th><th>Größe</th><th>PSNR</th><th>SSIM</th></tr></thead>
+    <tbody>
+      <tr><td>medium (bis 3.0.0.388)</td><td class="z">1:36&nbsp;min</td><td class="z">385&nbsp;MB</td><td class="z">48,8&nbsp;dB</td><td class="z">0,9946</td></tr>
+      <tr><td>faster</td><td class="z">≈&nbsp;1:07&nbsp;min</td><td class="z">401&nbsp;MB</td><td class="z">48,3&nbsp;dB</td><td class="z">0,9940</td></tr>
+      <tr><td><b>veryfast (seit 3.0.0.389)</b></td><td class="z"><b>0:53&nbsp;min</b></td><td class="z">385&nbsp;MB</td><td class="z">47,5&nbsp;dB</td><td class="z">0,9931</td></tr>
+    </tbody>
+  </table></div>
+  <p>PSNR und SSIM messen den Abstand zu einer fast verlustfreien Fassung (CRF&nbsp;1) derselben Umwandlung; über 40&nbsp;dB gilt ein Unterschied
+  als praktisch unsichtbar. „veryfast“ halbiert die Zeit bei gleicher Größe und kostet gut 1&nbsp;dB; eine zehnfach verstärkte Differenz
+  zeigt etwas mehr feines Rauschen. „faster“ (Zeit aus einem Teilsatz hochgerechnet) wird
+  sogar größer, weil es weniger frühere Bilder als Bezug nutzt, ohne viel Zeit zu sparen.</p>
+  <div class="kasten">
+    <p><b>Abschalten:</b> <code>--encoding thorough</code> im Terminal oder <code>DCMCONV_X264_PRESET=medium</code> kodiert wie bis 3.0.0.388.
+    Das Protokoll nennt die Wahl in der Zeile „Filme: … kodiert“. Hardware-Kodierer (VideoToolbox) waren nicht schneller als „veryfast“
+    und liefern je nach Rechner andere Ergebnisse.</p>
   </div>
 
   <footer>Geprüft auf dem gesamten Testbestand (6,5&nbsp;GB, 758 Ausgaben): alte Version = nacheinander = gleichzeitig, auch mit Glue und
