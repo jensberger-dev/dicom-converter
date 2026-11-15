@@ -1,0 +1,362 @@
+{
+ "version": "3.0.0.403",
+ "page": "https://jensberger-dev.github.io/dicom-converter/",
+ "changes": [
+  {
+   "version": "3.0.0.403",
+   "date": "15.11.2026",
+   "items": [
+    "Neu: Der DICOM-Converter meldet beim Start, wenn es eine neue Version gibt, zeigt kurz, was neu ist, und installiert sie auf Wunsch gleich selbst – Mac nach dem Administrator-Kennwort, Windows nach der Rückfrage für Administratorrechte; danach startet er neu. Die Suche lässt sich unter Hilfe abschalten; „Nach neuer Version suchen …“ fragt jederzeit von Hand. Erst ab der nächsten Version zu sehen – diese hier gibt es noch wie gewohnt auf der Webseite.",
+    "Die Anonymisierung wird jetzt immer geprüft: Jedes fertige Bild und jeder Film wird per Texterkennung nach Name, Patienten-ID und Geburtsdatum durchsucht, Treffer werden am Ende gemeldet. Der Schalter „Anonymisierung prüfen“ entfällt. Geprüft wird die Kopfzeile, in der die Geräte diese Angaben einblenden – im Test mit 212 Ultraschall-Dateien dauerte die Umwandlung damit 70 statt 50 Sekunden (die bisherige Prüfung des ganzen Bildes: fast 3 Minuten)."
+   ]
+  },
+  {
+   "version": "3.0.0.395",
+   "date": "12.11.2026",
+   "items": [
+    "„Vortrag – reparieren“ statt „Vortrag – Keynotes reparieren“ – jetzt auch für PowerPoint, auf Mac und Windows: Filme in alten Formaten (MJPEG, AVI, WMV) werden MP4 und spielen in PowerPoint überall, die Präsentation wird meist halb so groß; Philips-Filme und -Bilder werden anonymisiert; alte Bilder, die PowerPoint nur noch als weiße Fläche zeigt, sind in alten .ppt-Dateien wieder sichtbar. Das Ergebnis heißt „… (repariert)“, ein Bericht liegt daneben. Keynote-Präsentationen (nur Mac) werden wie bisher repariert. Liegen beide Arten im Ordner, fragt der Mac wie beim Einfügen „Keynote oder PowerPoint?“ – vorgewählt ist die Wahl vom letzten Mal.",
+    "Alte Keynote- und PowerPoint-Präsentationen: Auch Titelbilder alter Filme (Cinepak, Indeo, DivX, QuickTime-Animation, H.264) werden wieder sichtbar, und der blasse Hinweis „Zur Anzeige wird der QuickTime™ Dekompressor … benötigt“ mitten im Bild verschwindet.",
+    "Neu: Nuklearmedizin (NM). Szintigramme werden dunkel auf weiß ausgegeben (Ganzkörper vorn und hinten nebeneinander, SPECT als Film). Bildschirmaufnahmen von Siemens Symbia und syngo.via zeigen Name, Geburtsdatum, Patienten-ID, Überweiser und Auftragsnummer im Bild – das wird abgedeckt, auch beim Zielformat DICOM; vorher wurden NM-Dateien übersprungen."
+   ]
+  },
+  {
+   "version": "3.0.0.392",
+   "date": "11.11.2026",
+   "items": [
+    "Behoben: Liegen zwischen den DICOM-Dateien Textdateien, ZIP-Archive o. Ä. (z. B. eine LIESMICH-Datei), erscheint im Fortschrittsfenster keine unverständliche Meldung „E: DcmElement: Unknown Tag & Data …“ mehr. Solche Dateien werden wie bisher als „keine DICOM-Datei“ übersprungen."
+   ]
+  },
+  {
+   "version": "3.0.0.389",
+   "date": "11.11.2026",
+   "items": [
+    "Noch schneller: MP4-Filme werden mit einer schnelleren Einstellung kodiert – gleich groß, ein Unterschied im Bild ist praktisch nicht zu sehen. Im Test mit 212 Ultraschall-Dateien 53 Sekunden statt 1½ Minuten (vor 3.0.0.385: 6 Minuten). Gründlich wie bisher: Terminal --encoding thorough.",
+    "„Filme – reparieren und in MP4 umwandeln“: HEVC-Filme im MOV (z. B. vom iPhone) werden jetzt ohne Verlust in MP4 umgepackt statt neu kodiert – sie bleiben so groß wie vorher und behalten ihre Qualität. Filme mit Ton werden beim Umpacken wie alle anderen Bild für Bild auf Vollständigkeit geprüft, bevor das Original weggeräumt wird."
+   ]
+  },
+  {
+   "version": "3.0.0.385",
+   "date": "11.11.2026",
+   "items": [
+    "Viel schneller: DICOM-Filme werden schneller gelesen, und auf Rechnern mit mehreren Kernen werden mehrere Dateien gleichzeitig umgewandelt – im Test mit 212 Ultraschall-Dateien auf einem Mac mit Apple-Chip 1½ statt 6 Minuten. Die Ergebnisse und das Protokoll sind dieselben wie bisher, Bild für Bild. Nacheinander wie bisher: Terminal --jobs 1.",
+    "Behoben (Mac): „Vortrag – in Präsentation einfügen“ brach im Rechtsklick-Menü seit 3.0.0.364 mit „Unbekanntes Token kann hier nicht verwendet werden“ ab. Jetzt merkt es sich dort auch die Wahl Keynote/PowerPoint wie im Programmfenster.",
+    "Windows: Für PCs ohne Administratorrechte gibt es eine ZIP-Fassung zum Entpacken (auf der Webseite und im Release), mit „Rechtsklick einrichten.cmd“ für das Rechtsklick-Menü.",
+    "Terminal: transcode --ask gibt es nur noch zusammen mit --all, also mit denselben Rückfragen wie „Filme – reparieren und in MP4 umwandeln“. Ohne Rückfragen wandelt transcode --mjpeg-only weiter nur die alten MJPEG-Filme um."
+   ]
+  },
+  {
+   "version": "3.0.0.373",
+   "date": "10.11.2026",
+   "items": [
+    "Filme zusammenfügen: Hat eine Untersuchung nur einen Loop, wird er nicht mehr „zusammengefügt“, sondern bleibt ein normaler Film mit Uhrzeit im Namen. Zusammengefügte Filme nennen „CEUS“ bzw. „B-Bild“ nur noch einmal im Namen.",
+    "„Vortrag – in Präsentation einfügen“: Für eine neue Präsentation gibt es eine kleine Liste mit Themen – eigene Themes und Vorlagen, Schwarz mit weißer Schrift, Weiß und (Keynote) alle übrigen Themes. Die Wahl vom letzten Mal ist vorgewählt. Unter Windows ersetzt die Liste die bisherige Ja/Nein-Frage.",
+    "Ausgabe-Prüfung: Bearbeitet ein anderes Werkzeug (etwa „nachträglich anonymisieren“) Dateien schon während der Umwandlung, meldet die Prüfung das als „Inzwischen verändert“ mit der neuen Fassung statt als Fehler. Fehlt eine Datei wirklich, steht dabei, ob der Ordner oder nur die Datei fehlt. Doppelklick auf eine solche Zeile zeigt die Quelldatei.",
+    "Weniger Rückfragen: Beschneiden, Reparieren, nachträgliches Anonymisieren und Keynotes reparieren fragen nur noch einmal nach den Originalen, zusammen mit dem Überblick – „In ‚zum Löschen‘ aufheben“ oder „Originale löschen“, die letzte Wahl ist vorgewählt. Aufgehobene Originale liegen gesammelt in einem Ordner „zum Löschen“ im gewählten Ordner. Auch die übrigen Rückfragen nennen auf den Knöpfen, was passiert („Als ZIP packen“ / „Ohne ZIP“)."
+   ]
+  },
+  {
+   "version": "3.0.0.368",
+   "date": "09.11.2026",
+   "items": [
+    "Windows: In Rückfragen waren längere Knopfnamen wie „Zusammenfügen“ abgeschnitten; die Knöpfe passen sich jetzt dem Text an."
+   ]
+  },
+  {
+   "version": "3.0.0.364",
+   "date": "09.11.2026",
+   "items": [
+    "Neu: „Filme – reparieren und in MP4 umwandeln“ ersetzt „Filme – reparieren“ und „Filme – in MP4 umwandeln“. Ein Überblick nennt, was nicht spielt, was in älteren Formaten vorliegt und was schon in Ordnung ist. Zur Wahl stehen „Alles in MP4“ – jetzt für alle Formate (MOV, AVI, WMV, MPG, WebM …), nicht nur alte MJPEG-Filme – oder „Nur reparieren“, bei dem das Format bleibt. Filme mit Ton werden nicht mehr übersprungen, der Ton bleibt erhalten.",
+    "Neu im Rechtsklick-Menü: „Filme – beschneiden“ schneidet die Kopfzeile mit Namen und Datum von fertigen Filmen und Bildern ab, auch von Dateien direkt vom Gerät. Hersteller und Modell werden je Datei erkannt wie beim Anonymisieren, so dass auch Geräte gleicher Bildgröße mit verschieden hohem Kopf richtig beschnitten werden.",
+    "„DICOM – konvertieren“ fragt selbst, ob die Loops einer Untersuchung zu einem Film zusammengefügt werden sollen – nur, wenn eine Untersuchung mehrere Loops gleicher Bildgröße hat. Der eigene Eintrag „mit Glue“ entfällt.",
+    "„Vortrag – in Präsentation einfügen“ ersetzt „… in Keynote einfügen“ und „… in PowerPoint einfügen“: Auf dem Mac fragt es „Keynote oder PowerPoint?“ (nur, wenn beide installiert sind), unter Windows nimmt es PowerPoint.",
+    "Bei „Zusammenfügen oder einzeln lassen?“ und „Keynote oder PowerPoint?“ ist die Wahl vom letzten Mal vorgewählt.",
+    "Originale: Alle Werkzeuge, die Dateien ersetzen, fragen gleich – löschen oder aufheben. Aufgehobene Originale liegen immer in Ordnern „zum Löschen“: gesammelt in einem im gewählten Ordner oder je Ordner einer. Ein älteres Original gleichen Namens wird nie überschrieben.",
+    "Programmfenster, Reiter „Werkzeuge“: enthält genau die Einträge des Rechtsklick-Menüs – gleich benannt, in derselben Reihenfolge und mit denselben Rückfragen. Was es nur dort gibt, steht darunter mit „(nicht im Kontextmenü)“. Das Häkchen „Quelle löschen“ und der eigene Toshiba-Eintrag entfallen; „Filme – nachträglich anonymisieren“ erkennt Toshiba/Canon selbst und setzt mit dem Parameter „glue“ die Loops eines Tages zu einem Film zusammen.",
+    "Behoben: Alte QuickTime-Referenzfilme (häufig in alten Keynote-Präsentationen), deren Datendatei Umlaute, Akzente oder andere Sonderzeichen im Namen hat oder deren Name vom alten Mac gekürzt abgelegt wurde, wurden nicht repariert („Daten fehlen“), und die Datendatei wurde als eigener Film umgewandelt und weggeräumt.",
+    "Dateinamen mit Umlauten und Akzenten werden überall gleich erkannt, auch von älteren Mac-Platten oder von dort kopiert. Ein eigener Ordner wie „zum Lernen“ gilt nicht mehr als Löschordner.",
+    "Behoben: Konnte Keynote beim Reparieren eine Präsentation nicht öffnen, blieb das im Hintergrund gestartete Keynote mit einem unsichtbaren Hinweis stehen und ließ sich nicht mehr beenden."
+   ]
+  },
+  {
+   "version": "3.0.0.345",
+   "date": "08.11.2026",
+   "items": [
+    "„Vortrag – Keynotes reparieren“ rettet viel mehr alte Präsentationen – jetzt auch aus Keynote 1 und 2 und als einzelne Datei gesicherte Keynote-'09-Präsentationen. Große Präsentationen bleiben nicht mehr hängen; klemmt Keynote doch einmal, versucht es das Programm ein zweites Mal und macht sonst mit der nächsten weiter.",
+    "Bilder: Alte PICT-Bilder und -Zeichnungen (z. B. Diagramme aus Excel), die heute weiß bleiben, erscheinen wieder.",
+    "Filme: Formate, die Keynote nicht mehr abspielt (MPEG, AVI, WMV, Flash, WebM, alte QuickTime-Filme), werden mit Ton in H.264 umgewandelt; verwiesene und zusammengesetzte Filme werden vollständig übernommen.",
+    "Schriften, die es auf dem Mac nicht gibt, werden durch ähnliche aus macOS ersetzt – Keynote fragt nicht mehr nach.",
+    "Bericht: Was Keynote vermutlich nicht abspielt, steht mit Foliennummer unter „Bitte in Keynote prüfen“; fehlende Filmteile werden mit ihrem damaligen Speicherort genannt.",
+    "Fehler behoben: Beim Anonymisieren von Philips-Bildern konnten Vorschaubilder anderer Bilder ersetzt werden. Betroffene Präsentationen bitte noch einmal aus dem Original reparieren.",
+    "„Filme – reparieren“ und „Filme – in MP4 umwandeln“: Mehr alte Filme werden umgewandelt statt abzubrechen, das letzte Bild behält seine Dauer, Mengen in MB, Protokoll durchgehend deutsch.",
+    "Windows: Nach einem Update zeigen Rechtsklick-Menü, Startmenü und Verknüpfungen sofort das neue Icon."
+   ]
+  },
+  {
+   "version": "3.0.0.314",
+   "date": "07.11.2026",
+   "items": [
+    "Neues Programm-Icon: ein gezeichneter Schallfächer mit SMI-Gefäßbild über einem Filmstreifen – klar erkennbar auch in kleinen Größen (Dock, Finder, Explorer, Taskleiste). Auch das Symbol im Windows-Rechtsklick-Menü ist neu.",
+    "Windows: Das Programmfenster „DICOM-Converter.exe“ zeigt im Explorer jetzt das Programm-Icon statt bunter Quadrate."
+   ]
+  },
+  {
+   "version": "3.0.0.311",
+   "date": "07.11.2026",
+   "items": [
+    "Windows: Im Rechtsklick-Menü stehen jetzt bei Ordnern und bei Dateien dieselben Einträge wie auf dem Mac – auch „Filme – in Einzelbilder zerlegen“ bei Ordnern und „Filme – in MP4 umwandeln“ oder „Versand – Dateinamen anonymisieren“ bei Dateien (dann für deren Ordner)."
+   ]
+  },
+  {
+   "version": "3.0.0.308",
+   "date": "07.11.2026",
+   "items": [
+    "Rechtsklick-Menü neu geordnet: Die Einträge beginnen mit ihrer Gruppe – „DICOM“, „Filme“, „Versand“, „Vortrag“ – und stehen auf Mac und Windows gleich benannt in derselben Reihenfolge, z. B. „DICOM – konvertieren“, „Filme – reparieren“, „Versand – Dateinamen anonymisieren“. „Alte Filme in MP4 umwandeln“ heißt jetzt „Filme – in MP4 umwandeln (Platz sparen)“, „Alte Keynotes reparieren“ heißt „Vortrag – Keynotes reparieren“. Die alten Einträge verschwinden beim Update von selbst."
+   ]
+  },
+  {
+   "version": "3.0.0.306",
+   "date": "06.11.2026",
+   "items": [
+    "Zonare z.one: Bei Einzelbildern blieb am linken Rand ein Rest der Patientennummer sichtbar – jetzt vollständig abgedeckt.",
+    "Name oder Kürzel des Untersuchers im Bildkopf werden jetzt abgedeckt, das Untersuchungsprogramm (z. B. „Abdomen“) bleibt dafür sichtbar – bei Canon/Toshiba Aplio und Xario sowie GE LOGIQ, auch bei DICOM als Zielformat und bei der nachträglichen Anonymisierung. Bei Canon Aplio i reicht die Abdeckung nicht mehr in den Rahmen unter dem Kopf.",
+    "Nachträgliche Anonymisierung: Ist das Gerät eindeutig erkannt, gelten genau die Abdeckungen wie beim Umwandeln nach DICOM. Einrichtungsnamen mit Komma (z. B. „UK Köln, Gastro/Sono“) bleiben stehen, und der Rahmen unter dem Kopf bleibt unversehrt.",
+    "Filme: Abdeckungen sitzen jetzt pixelgenau. Beginnt eine Abdeckung auf einer ungeraden Zeile oder Spalte, blieb bisher am Rand eine Pixelzeile sichtbar (z. B. Siemens Sequoia: Unterkante der Patientennummer über dem Datum).",
+    "Siemens ACUSON Sequoia (ältere Software) und Redwood: Ist am Gerät keine Patienteneinblendung eingeschaltet, bleibt die Sondenbezeichnung oben rechts (z. B. „5C1“) jetzt sichtbar. Steht dort etwas anderes, wird weiterhin abgedeckt.",
+    "Programmfenster: Das Format „DICOM – anonymisiert, verlustfrei“ heißt jetzt „DICOM zu DICOM (anonymisiert)“ – wie der Eintrag im Rechtsklick-Menü."
+   ]
+  },
+  {
+   "version": "3.0.0.296",
+   "date": "05.11.2026",
+   "items": [
+    "Neu im Rechtsklick-Menü: „DICOM zu DICOM anonymisieren“ – die Bilder bleiben DICOM, ohne Namen und persönliche Angaben, z. B. für Kollegen, Lehre oder ein anderes PACS.",
+    "Format „DICOM – anonymisiert“: Name, Patientennummer und Geburtsdatum werden jetzt auch aus Untersuchungs- und Serienbeschreibungen entfernt, falls sie dort stehen.",
+    "Programmfenster: Ein Doppelklick auf eine Zeile im Protokoll findet die Datei auch dann, wenn der Patientenordner am Ende der Umwandlung umbenannt wurde (Vorsatz „CEUS“, „B-Bild“, „Punktion“).",
+    "Format „DICOM – anonymisiert“: Der Vermerk im DICOM-Kopf und das Handbuch beschreiben genauer, was mit Ultraschallbildern geschieht – außerhalb der Abdeckungen bleibt das Bild exakt gleich, die Datei wird aber neu geschrieben."
+   ]
+  },
+  {
+   "version": "3.0.0.283",
+   "date": "02.11.2026",
+   "items": [
+    "„Alte Filme in MP4 umwandeln“ nimmt jetzt auch MOV-Filme in H.264 mit: Sie werden ohne Qualitätsverlust umgepackt und bleiben gleich groß, damit das Archiv einheitlich MP4 wird."
+   ]
+  },
+  {
+   "version": "3.0.0.281",
+   "date": "01.11.2026",
+   "items": [
+    "„Filme nachträglich anonymisieren“: Auch beschnittene oder verkleinerte Bilder ohne passende Geräteregel werden abgedeckt, wenn Name oder Geburtsdatum im Bild zu lesen sind.",
+    "GE LOGIQ: Masken für 1552×873 und 960×540 verbessert; beim nachträglichen Anonymisieren bleiben Logo, Einrichtung und Bedienerkürzel stehen.",
+    "Der Zweitname im Praxisnamen und das zugehörige Untersucherkürzel werden immer aus dem Bild entfernt, ob nachträglich, bei der Umwandlung oder als DICOM.",
+    "Untersucher-Extraktion: Der Unterordner bleibt vollständig erhalten, gleichnamige Dateien werden nicht mehr überschrieben.",
+    "„Filme nachträglich anonymisieren“: Bei manchen Bildern blieben die Oberkanten überdeckter Schrift sichtbar, zum Beispiel beim Geburtsdatum; sie werden jetzt mit entfernt.",
+    "Hochformatige Filme (z. B. CT- und MRT-Rekonstruktionen) behalten beim Umwandeln nach MP4 ihre volle Größe; bisher wurden sie ohne Hinweis verkleinert.",
+    "Hochkant aufgenommene Filme (z. B. vom iPhone) bleiben beim Umwandeln und Bearbeiten hochkant; bisher lagen sie danach auf der Seite."
+   ]
+  },
+  {
+   "version": "3.0.0.273",
+   "date": "31.10.2026",
+   "items": [
+    "Filmformat DICOM: Geht DICOM bei einer Datei nicht, entsteht kein MP4 oder PNG mehr; das Protokoll nennt den Grund."
+   ]
+  },
+  {
+   "version": "3.0.0.268",
+   "date": "31.10.2026",
+   "items": [
+    "Filmformat DICOM: In Ordner- und Dateinamen stehen keine Namen und Daten zur Person mehr. Jeder Patient bekommt eine zufällige Kennung, damit ein PACS die Patienten auseinanderhalten kann. Der DICOM-Kopf wird nach der vollständigen Tabelle der Norm bereinigt, PDF-Befunde werden nicht mitgegeben. Datum, Alter, Gerät und Beschreibungen bleiben erhalten – das Format ist für Kollegen, Lehre und PACS gedacht, nicht für Studien.",
+    "„Abbrechen“ wirkt jetzt auch im Filmformat DICOM und beim Einlesen von Schnittbildern, nach der gerade bearbeiteten Datei."
+   ]
+  },
+  {
+   "version": "3.0.0.263",
+   "date": "30.10.2026",
+   "items": [
+    "Neu: Filmformat „DICOM – anonymisiert, verlustfrei“ – alle Bilder bleiben DICOM, persönliche Angaben verschwinden aus dem DICOM-Kopf, beim Ultraschall werden sie auch im Bild abgedeckt (ohne neue Kompression). Gedacht für die Weitergabe an andere Kliniken, PACS oder Studien.",
+    "GE LOGIQ E9 (Bildgröße 1442x802): Name, Geburtsdatum und ID werden abgedeckt statt den Kopf abzuschneiden – Datum, Uhrzeit, Sonde und MI bleiben sichtbar."
+   ]
+  },
+  {
+   "version": "3.0.0.254",
+   "date": "30.10.2026",
+   "items": [
+    "Der DICOM-Empfänger startet nicht mehr ungefragt bei jeder Anmeldung. Die Installation fragt einmal danach – nötig ist er nur, wenn Ultraschallgeräte direkt an diesen Rechner senden. Ein früher eingerichteter Autostart bleibt, bis man ihn bei dieser Frage abwählt.",
+    "„Alte Keynotes reparieren“: Das Protokoll nennt zu jedem Film und Bild die Folie und ist kürzer; ein beschädigtes Bild bricht die Reparatur einer Präsentation nicht mehr ab.",
+    "Übersichtlichere Filmformate im Programmfenster: „MP4 – hohe / mittlere / geringe Qualität“ und „MOV – MJPEG wie Version 2“. Nahezu verlustfreies MOV, AVI und WMV gibt es nur noch im Terminal (--preset)."
+   ]
+  },
+  {
+   "version": "3.0.0.248",
+   "date": "29.10.2026",
+   "items": [
+    "„Alte Keynotes reparieren“: übersichtliches Protokoll – welche Präsentation, welcher Film (z. B. „Film 3/24“) und was damit geschehen ist; keine technischen Meldungen mehr.",
+    "„Alte Keynotes reparieren“: Reparierte Präsentationen heißen immer „… (repariert)“ und werden bei einem neuen Durchgang übersprungen – ein abgebrochener Durchgang lässt sich einfach neu starten.",
+    "Behoben: Bei Philips-Filmen, deren alte Abdeckung ersetzt wird, wurde das PHILIPS-Logo mit abgedeckt.",
+    "Film beschleunigen, Beschneiden, In MP4 umwandeln und das Aufräumen leerer bzw. „zum Löschen“-Ordner gibt es nur noch im Terminal (dicomconverter), nicht mehr im Programmfenster – die Auswahl ist übersichtlicher.",
+    "Behoben: „Abbrechen“ im Fortschrittsfenster beendete auf dem Mac hängende Vorgänge nicht.",
+    "Behoben: Große Fotos (z. B. 4K-Aufnahmen eines Bildschirms) in Präsentationen oder Ordnern hielten die Erkennung des Ultraschallgeräts stundenlang auf."
+   ]
+  },
+  {
+   "version": "3.0.0.235",
+   "date": "28.10.2026",
+   "items": [
+    "Neu: „Was ist neu?“ im Menü Hilfe – die Änderungen jeder Version in Kürze. Nach einem Update erscheint die Übersicht einmal von selbst.",
+    "Die Webseite zeigt die letzten Neuerungen gleich oben.",
+    "Patientenordner beginnen mit der Art ihrer Ultraschall-Untersuchungen: „CEUS“, sonst „B-Bild“, sonst „Punktion“.",
+    "CT, MRT, Röntgen und andere: Im Untersuchungsordner steht die untersuchende Einrichtung, z. B. „MR 12.12.2025 Praxis Beispiel“.",
+    "Behoben: Einzelne CT- und MRT-Serien mit nicht quadratischen Bildpunkten wurden als MP4 nicht umgewandelt."
+   ]
+  },
+  {
+   "version": "3.0.0.223",
+   "date": "27.10.2026",
+   "items": [
+    "Filme werden jetzt überall als MP4 in hoher Qualität gespeichert: etwa halb so groß wie bisher und auf jedem Gerät abspielbar. Das alte Format von Version 2 gibt es weiter unter Filmformat „mjpeg (mov)“.",
+    "Neu (nur Mac): „Alte Keynotes reparieren …“ – Präsentationen mit alten Filmen werden kleiner und laufen wieder überall; ein Bericht nennt die Foliennummern.",
+    "Neu: „Alte Filme in MP4 umwandeln (Platz sparen) …“ für ganze Ordner – nennt vorher Ersparnis und Dauer.",
+    "„Filme reparieren“ setzt alte QuickTime-Filme aus mehreren Teilen richtig zusammen – jetzt auch unter Windows.",
+    "In MP4-Filmen lässt sich flüssig vor- und zurückspulen.",
+    "Anonymisierung im Bild noch genauer, die Abdeckungen so knapp wie möglich.",
+    "Die Werkzeuge lassen Keynote-Präsentationen, die Fotos-Mediathek und andere Pakete in Ruhe."
+   ]
+  },
+  {
+   "version": "3.0.0.169",
+   "date": "25.10.2026",
+   "items": [
+    "Kleine Verbesserungen im Hintergrund."
+   ]
+  },
+  {
+   "version": "3.0.0.165",
+   "date": "24.10.2026",
+   "items": [
+    "Am Ende jedes Laufs eine Ergebnistabelle mit der benötigten Zeit je Bildart und insgesamt.",
+    "Das Protokoll ist übersichtlicher und nach Bildarten (Ultraschall, CT, MRT …) geordnet.",
+    "In DICOM verpackte PDF-Befunde werden ausgelesen und einsortiert. Zugangsblätter von Bildportalen (mit Zugangscode oder PIN) werden nie übernommen."
+   ]
+  },
+  {
+   "version": "3.0.0.158",
+   "date": "24.10.2026",
+   "items": [
+    "Das Programmfenster öffnet groß und mittig.",
+    "Die Texterkennung liefert auf allen Rechnern dasselbe Ergebnis.",
+    "Bei neuen Geräten nennt das Programm die Kontaktadresse dicom-converter@gmx.net."
+   ]
+  },
+  {
+   "version": "3.0.0.150",
+   "date": "23.10.2026",
+   "items": [
+    "Neue, einheitliche Ordner: ein Ordner je Patient („NAME VORNAME ALTER“), darin der Ultraschall als „US <Datum> CEUS“, „… Punktion“ oder „… B-Bild“ sowie CT, MRT und Befunde.",
+    "Verschiedene Patienten mit gleichem Namen bekommen getrennte Ordner."
+   ]
+  },
+  {
+   "version": "3.0.0.143",
+   "date": "23.10.2026",
+   "items": [
+    "Einstellungen im Programmfenster unter einem Namen speichern und wieder abrufen; beim Start ist der letzte Stand vorbelegt.",
+    "CT und MRT: verständliche Dateinamen mit Schnittebene, ohne zufällige Kürzel.",
+    "Die vollständige Serienbeschreibung steht im Dateinamen.",
+    "Handbuch und Kurzanleitung als PDF besser lesbar."
+   ]
+  },
+  {
+   "version": "3.0.0.126",
+   "date": "21.10.2026",
+   "items": [
+    "Neu: „Patientenliste aus DICOM-Ordner erstellen (PDF und CSV)“ – wer wann mit welchem Gerät untersucht wurde.",
+    "Neue Geräte: GE LOGIQ E10, LOGIQ E9 und Venue."
+   ]
+  },
+  {
+   "version": "3.0.0.121",
+   "date": "20.10.2026",
+   "items": [
+    "Windows: „Im Ordner zeigen“ funktioniert wieder.",
+    "Weniger technische Meldungen im Protokoll."
+   ]
+  },
+  {
+   "version": "3.0.0.119",
+   "date": "20.10.2026",
+   "items": [
+    "Windows: Filme standardmäßig als MP4.",
+    "Systemvoraussetzungen in Anleitung und auf der Webseite."
+   ]
+  },
+  {
+   "version": "3.0.0.115",
+   "date": "19.10.2026",
+   "items": [
+    "Neue Geräte werden automatisch erkannt und anonymisiert; Proben zum Einschicken liegen als ZIP in EXAMS.",
+    "Viele weitere Hersteller werden erkannt (Esaote, Mindray, BK Medical, Butterfly, Clarius und andere).",
+    "Der Befehl im Terminal heißt jetzt dicomconverter.",
+    "Das Mac-Paket ist von Apple signiert und beglaubigt: keine Warnung mehr beim Öffnen."
+   ]
+  },
+  {
+   "version": "3.0.0.96",
+   "date": "19.10.2026",
+   "items": [
+    "Neue Webseite mit Downloads, Impressum und Datenschutz."
+   ]
+  },
+  {
+   "version": "3.0.0.86",
+   "date": "19.10.2026",
+   "items": [
+    "Erste Version 3 zum Herunterladen: Installationsprogramm für Mac und Windows, eigenes Programmfenster, Rechtsklick-Menü und Anonymisierung für alle gängigen Hersteller."
+   ]
+  }
+ ],
+ "files": [
+  {
+   "name": "changes.txt",
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.403/changes.txt",
+   "size": 173697,
+   "sha256": "518e6915b75a033694c5e6b3c83151e734c34f15d20685b234e2017bed5ec50d"
+  },
+  {
+   "name": "DICOM-Converter-Handbuch.pdf",
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.403/DICOM-Converter-Handbuch.pdf",
+   "size": 208284,
+   "sha256": "e54f281fc1df39e772e87a422da4fe751605c23ba2fb31d0b417cff79bb47ba7"
+  },
+  {
+   "name": "DICOM-Converter-Kurzanleitung.pdf",
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.403/DICOM-Converter-Kurzanleitung.pdf",
+   "size": 80029,
+   "sha256": "6cac3e7e9f51905b7e5112747b4c163b5e2e310fd1c4f833158544c9bf5ecb03"
+  },
+  {
+   "name": "DICOM-Converter-macOS.pkg",
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.403/DICOM-Converter-macOS.pkg",
+   "size": 97650250,
+   "sha256": "1ee7d501eec6bdfb0e76ee79b9f3a986f96b8f41a34f685995829fc53f59948e"
+  },
+  {
+   "name": "DICOM-Converter-Neuerungen.pdf",
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.403/DICOM-Converter-Neuerungen.pdf",
+   "size": 65202,
+   "sha256": "5b0251968395585f8ad5616bf5a0f78604fc74eb157e24ffcebfb3ec6d45ccf9"
+  },
+  {
+   "name": "DICOM-Converter-Windows-ohne-Admin.zip",
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.403/DICOM-Converter-Windows-ohne-Admin.zip",
+   "size": 58144480,
+   "sha256": "aec6cf06fd83ef96ecc4910b31e470b9f21beca18f00311026e3e471c07975aa"
+  },
+  {
+   "name": "DICOM-Converter-Windows-Setup.exe",
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.403/DICOM-Converter-Windows-Setup.exe",
+   "size": 44242854,
+   "sha256": "8d12e4521c2344d5923fd331dee9b8544749f07a9e9896fabd117a183052acb9"
+  }
+ ]
+}

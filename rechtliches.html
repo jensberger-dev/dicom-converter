@@ -44,7 +44,8 @@
   <li>Diese Webseite setzt <b>keine Cookies</b> und lädt keine Schriften, Karten oder Videos von fremden Servern.</li>
   <li>Aufrufe werden <b>anonym gezählt</b> (siehe Abschnitt 4). Ihre IP-Adresse wird dafür nicht gespeichert.</li>
   <li>Der DICOM-Converter selbst arbeitet ausschließlich auf Ihrem Rechner. <b>Patientendaten werden weder an diese
-      Webseite noch an den Herausgeber übermittelt.</b></li>
+      Webseite noch an den Herausgeber übermittelt.</b> Nur um neue Versionen zu finden, fragt das Programm beim Start
+      diese Webseite ab (siehe Abschnitt 3; abschaltbar).</li>
 </ul>
 
 <h3>3. Hosting und Downloads (GitHub)</h3>
@@ -55,7 +56,14 @@ Ihre IP-Adresse, Datum und Uhrzeit des Abrufs sowie Angaben zu Browser und Betri
 und die Sicherheit des Dienstes zu gewährleisten. Dabei kann eine Übermittlung in die USA stattfinden; GitHub ist
 nach dem EU-US Data Privacy Framework zertifiziert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes
 Interesse an einer zuverlässigen und sicheren Bereitstellung der Seite und der Programme). GitHub zählt außerdem, wie
-oft jede Datei heruntergeladen wurde; diese Zahl enthält keine personenbezogenen Daten.
+oft jede Datei heruntergeladen wurde; diese Zahl enthält keine personenbezogenen Daten.</p>
+<p><b>Suche nach neuen Versionen im Programm:</b> Beim Start des Programmfensters ruft der DICOM-Converter von dieser
+Webseite die Datei <i>aktuell.json</i> ab (Versionsnummer und Neuerungen) und lädt auf Wunsch das neue Installationsprogramm
+von GitHub Releases. Dabei verarbeitet GitHub dieselben technisch notwendigen Daten wie beim Aufruf der Seite (IP-Adresse,
+Zeitpunkt) sowie die Versionsnummer des Programms. Weitere Angaben, Patientendaten oder Dateien werden nicht übertragen,
+und der eigene Zähldienst (Abschnitt 4) wird dabei nicht verwendet. Die Suche lässt sich im Programm unter
+<i>Hilfe → Beim Start nach neuen Versionen suchen</i> abschalten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO
+(berechtigtes Interesse, Anwender auf neue und verbesserte Versionen hinzuweisen).
 Weitere Informationen: <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement">Datenschutzerklärung von GitHub</a>.</p>
 
 <h3>4. Anonyme Besucherzählung mit Herkunft der Einrichtung (Cloudflare)</h3>
@@ -87,7 +95,7 @@ Art. 6 Abs. 1 lit. f DSGVO (Art. 21). Außerdem können Sie sich bei einer Daten
 (Art. 77 DSGVO), etwa bei der Behörde Ihres Wohnorts oder der für den Verantwortlichen zuständigen
 (Die Landesbeauftragte für den Datenschutz und für das Recht auf Akteneinsicht Brandenburg).</p>
 
-<p class="muted" style="margin-top:3em">Stand: 13.11.2026</p>
+<p class="muted" style="margin-top:3em">Stand: 15.11.2026</p>
 </main>
 </body>
 </html>
