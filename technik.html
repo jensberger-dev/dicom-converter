@@ -6,6 +6,7 @@
 <title>Wie die Umwandlung schneller wurde – DICOM-Converter</title>
 <meta name="description" content="Technische Erklärung: wie der DICOM-Converter Ultraschall-Filme fast siebenmal schneller umwandelt.">
 <link rel="stylesheet" href="fonts/plex.css">
+<link rel="alternate" hreflang="de" href="technik.html"><link rel="alternate" hreflang="en" href="en/technology.html">
 <style>
   /* Layout: eine Lesespalte wie ein technischer Befund; fünf Stufen als Abschnitte, ein maßstäblicher Zeitbalken oben, ein Spur-Diagramm unten */
   :root {
@@ -83,13 +84,15 @@
   .legende .l-calc::before { background: var(--accent-2); }
   .legende .l-wait::before { background: transparent; border: 1px dashed var(--muted); }
   footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--muted); }
-  .zurueck { font-size: 0.92rem; margin-bottom: 1.2rem; }
+  .zurueck { font-size: 0.92rem; margin-bottom: 1.2rem; max-width: none; }
+  .sprache { float: right; font-size: 0.92rem; color: var(--muted); }
+  .sprache b { color: var(--fg); }
   a { color: var(--accent); }
 </style>
 </head>
 <body>
 <main>
-  <p class="zurueck"><a href="./">← zurück zum DICOM-Converter</a></p>
+  <p class="zurueck"><span class="sprache"><b>DE</b> | <a href="en/technology.html" hreflang="en" lang="en">EN</a></span><a href="./">← zurück zum DICOM-Converter</a></p>
   <div class="label">Für Interessierte · seit DICOM-Converter 3.0.0.385</div>
   <h1>Wie die Umwandlung schneller wurde</h1>
   <p class="lead">Fünf Stufen, gemessen mit dem Ultraschall-Testsatz: 212 Dateien, 15&nbsp;335 Frames, Mac mit Apple-Chip und 10 Kernen.
