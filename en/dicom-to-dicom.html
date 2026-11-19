@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DICOM to DICOM: what exactly happens – DICOM-Converter</title>
+<meta name="description" content="Technical explanation: what DICOM-Converter does with header and image in the output format DICOM.">
+<link rel="stylesheet" href="../fonts/plex.css">
+<link rel="alternate" hreflang="de" href="../dicom-dicom.html"><link rel="alternate" hreflang="en" href="dicom-to-dicom.html">
+<style>
+  /* Layout: eine Lesespalte wie ein technischer Befund; fünf Stufen als Abschnitte, ein maßstäblicher Zeitbalken oben, ein Spur-Diagramm unten */
+  :root {
+    --bg: #ffffff;
+    --fg: #1b2430;
+    --muted: #5a6675;
+    --line: #d8dee6;
+    --panel: #eef2f6;
+    --accent: #163452;
+    --accent-2: #3d7bb8;
+    --turn: #c27a2c;
+    --display: "IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+    --body: "IBM Plex Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14181d; --fg: #e3e8ee; --muted: #9aa5b2; --line: #333b45; --panel: #1e242b;
+      --accent: #9cc3ea; --accent-2: #5f9bd6; --turn: #e0a057; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14181d; --fg: #e3e8ee; --muted: #9aa5b2; --line: #333b45; --panel: #1e242b;
+    --accent: #9cc3ea; --accent-2: #5f9bd6; --turn: #e0a057; color-scheme: dark;
+  }
+  body {
+    background: var(--bg); color: var(--fg);
+    font: 16.5px/1.6 var(--body);
+    margin: 0; padding-left: 16px; padding-right: 16px;
+  }
+  main { max-width: 46rem; margin: 0 auto; padding-block: 2.5rem 4rem; display: grid; gap: 0.2rem; }
+  h1, h2, h3 { font-family: var(--display); color: var(--accent); text-wrap: balance; line-height: 1.2; }
+  h1 { font-size: 2.1rem; font-weight: 600; margin: 0 0 0.3rem; }
+  h2 { font-size: 1.45rem; font-weight: 600; margin: 2.4rem 0 0.4rem; padding-top: 1.2rem; border-top: 1px solid var(--line); display: flex; gap: 0.6rem; align-items: baseline; }
+  h2 .nr { font-family: var(--mono); font-size: 0.85rem; font-weight: 500; color: var(--muted); }
+  h3 { font-size: 1.1rem; font-weight: 600; margin: 1.4rem 0 0.2rem; }
+  p, li { max-width: 65ch; }
+  p { margin: 0.5rem 0; }
+  ul { margin: 0.4rem 0; padding-left: 1.2rem; }
+  li { margin: 0.25rem 0; }
+  code { font-family: var(--mono); font-size: 0.88em; background: var(--panel); padding: 0.05em 0.35em; border-radius: 4px; }
+  .lead { font-size: 1.08rem; color: var(--muted); margin-bottom: 1rem; }
+  .label { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+
+  .zeiten { display: grid; gap: 0.55rem; margin: 1rem 0 0.4rem; font-variant-numeric: tabular-nums; }
+  .zeile { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 0.8rem; align-items: center; }
+  .zeile .name { font-size: 0.92rem; }
+  .bahn { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+  .balken { height: 1.15rem; background: var(--accent-2); border-radius: 3px; flex: none; }
+  .zeile.start .balken { background: var(--muted); }
+  .zeile.jetzt .balken { background: var(--accent); }
+  .wert { font-family: var(--mono); font-size: 0.85rem; white-space: nowrap; }
+  @media (max-width: 560px) { .zeile { grid-template-columns: 1fr; gap: 0.15rem; } }
+
+  .kasten { background: var(--panel); border-radius: 8px; padding: 0.9rem 1.1rem; margin: 0.9rem 0; }
+  .kasten p:first-child { margin-top: 0; } .kasten p:last-child { margin-bottom: 0; }
+
+  .fluss { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 1rem 0; font-size: 0.9rem; }
+  .fluss .knoten { border: 1px solid var(--line); border-radius: 6px; padding: 0.45rem 0.7rem; background: var(--bg); }
+  .fluss .knoten b { display: block; font-weight: 600; color: var(--accent); }
+  .fluss .pfeil { color: var(--muted); font-family: var(--mono); }
+  .fluss .stapel { display: grid; gap: 0.4rem; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-weight: 600; color: var(--muted); font-size: 0.82rem; }
+  td.z { font-family: var(--mono); white-space: nowrap; }
+  .tab { overflow-x: auto; margin: 0.8rem 0; }
+
+  .diagramm { overflow-x: auto; margin: 1rem 0 0.3rem; }
+  .diagramm svg { display: block; width: 100%; min-width: 34rem; height: auto; }
+  .legende { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; font-size: 0.85rem; color: var(--muted); }
+  .legende span::before { content: ""; display: inline-block; width: 0.8rem; height: 0.8rem; border-radius: 2px; margin-right: 0.4rem; vertical-align: -0.1rem; }
+  .legende .l-turn::before { background: var(--turn); }
+  .legende .l-calc::before { background: var(--accent-2); }
+  .legende .l-wait::before { background: transparent; border: 1px dashed var(--muted); }
+  footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--muted); }
+  .zurueck { font-size: 0.92rem; margin-bottom: 1.2rem; max-width: none; }
+  .sprache { float: right; font-size: 0.92rem; color: var(--muted); }
+  .sprache b { color: var(--fg); }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <p class="zurueck"><span class="sprache"><a href="../dicom-dicom.html" hreflang="de" lang="de">DE</a> | <b>EN</b></span><a href="./">← back to DICOM-Converter</a></p>
+  <div class="label">For those interested · output format DICOM since 3.0.0.263 · as of 3.0.0.442</div>
+  <h1>DICOM to DICOM: what exactly happens</h1>
+  <p class="lead">With the output format DICOM (right-click “DICOM – anonymize to DICOM”, in the terminal <code>--preset dicom</code>),
+  every suitable image file becomes a DICOM file again. Name and ID are replaced by a random code, the header is cleaned according to
+  the standard DICOM PS3.15, and the storage contains no names. This explanation is based on the source code and test runs; the examples
+  contain no patient data.</p>
+
+  <ul>
+    <li><b>Ultrasound:</b> patient data shown in the image is covered. Outside the covers there is no new compression loss. With JPEG
+    only the affected blocks are replaced.</li>
+    <li><b>CT, MRI and others:</b> the image stays unchanged; only the header is cleaned.</li>
+    <li><b>When in doubt, no output:</b> if DICOM is not possible, nothing is created – no MP4 or PNG either. The reason is in the log.</li>
+  </ul>
+  <div class="kasten">
+    <p><b>The result is pseudonymous, not completely anonymous.</b> Examination date, age, device including serial number and the
+    (cleaned) descriptions are kept on purpose. Together they may allow conclusions. Section&nbsp;10 lists the limits.</p>
+  </div>
+
+  <h2><span class="nr">1</span>The process at a glance</h2>
+  <p>Each file is loaded and its header read (the character set becomes UTF-8), then the code and the target folder are determined.
+  After that the program decides step by step:</p>
+  <div class="tab"><table>
+    <thead><tr><th>Question</th><th>yes</th><th>no</th></tr></thead>
+    <tbody>
+      <tr><td>Image storage class with pixel data?</td><td>continue</td><td><b>no output</b> (PDF, structured report …)</td></tr>
+      <tr><td>Ultrasound (or a nuclear medicine screen capture)?</td><td>continue</td><td>image unchanged, only the header is cleaned
+        (text recognition only for screenshots or “Burned In Annotation: YES”)</td></tr>
+      <tr><td>Matching device rule?</td><td>continue</td><td>text recognition finds the data, covers it, checks again; otherwise <b>no output</b></td></tr>
+      <tr><td>Rule with covers?</td><td>insert the covers, compare with the original outside them</td><td>rule only crops: <b>no output</b>;
+        rule without covers and cropping: image unchanged</td></tr>
+    </tbody>
+  </table></div>
+  <p>Finally the header is cleaned and the file written. In the output format DICOM, anonymization cannot be switched off by a profile.
+  If it is switched off with an option (<code>--no-overlay</code>), ultrasound gives no output. Missing header data such as manufacturer
+  or model is completed for device recognition from neighbouring files of the same series or study. If only the manufacturer can be
+  recognized from the UID, the file counts as “device unknown” and goes through text recognition.</p>
+
+  <h2><span class="nr">2</span>Storage: folders and file names</h2>
+  <p>Folder and file names contain no names, dates, IDs, institutions or examination types.</p>
+  <div class="tab"><table>
+    <thead><tr><th>Type</th><th>Path</th></tr></thead>
+    <tbody>
+      <tr><td>Ultrasound, single image</td><td class="z">ANON-7F3K9QX2/US-0001-singleframe.dcm</td></tr>
+      <tr><td>Ultrasound, movie</td><td class="z">ANON-7F3K9QX2/US-0002-multiframe.dcm</td></tr>
+      <tr><td>CT, MR, PT, XA</td><td class="z">ANON-7F3K9QX2/CT-Serie-0001/IM-00012.dcm</td></tr>
+      <tr><td>Others (e.g. CR)</td><td class="z">ANON-7F3K9QX2/CR-0001.dcm</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><b>File date:</b> that of the conversion, not of the examination.</li>
+    <li><b>IM number:</b> the Instance Number from the header.</li>
+    <li><b>No identity file:</b> the hidden file otherwise placed in the patient folder is left out, because its check values could be calculated back.</li>
+  </ul>
+
+  <h2><span class="nr">3</span>Code and UIDs</h2>
+  <p><b>Code.</b> Each patient gets a code made of <code>ANON-</code> and eight random characters, without the easily confused characters
+  0, O, 1 and I. It is not calculated from the patient data.</p>
+  <ul>
+    <li><b>Assignment:</b> the same combination of patient ID, name and date of birth gives the same code within one run. The program
+    would rather separate too much than merge two patients.</li>
+    <li><b>Without data:</b> if all three values are missing, there is one code per study.</li>
+    <li><b>A later run</b> assigns new codes. Follow-up examinations can only be matched within the same run. No assignment list is stored.</li>
+  </ul>
+  <p><b>UIDs.</b> All fields marked “U” in the standard’s table get new UIDs that cannot be derived. Within one run the same old UID always
+  maps to the same new one, so series and references stay together.</p>
+
+  <h2><span class="nr">4</span>The DICOM header</h2>
+  <h3>Order of the steps</h3>
+  <ol>
+    <li><b>Character set:</b> on reading, the data set is converted to UTF-8. Afterwards it says <code>(0008,0005) ISO_IR 192</code>.</li>
+    <li><b>Keep the age:</b> if <code>(0010,1010)</code> is missing, it is calculated from the dates of birth and examination before the date of birth disappears.</li>
+    <li><b>Clean the descriptions:</b> name, patient ID, other IDs, accession number and date of birth (in every usual spelling) as well as
+    the names of physicians and operators from the header are searched for in the descriptions and removed; the rest stays (“CEUS Leber
+    MUSTERMANN” → “CEUS Leber”). The search works word by word: “Leber” stays even for a patient called “Lebert”.</li>
+    <li><b>Copies of the date of birth:</b> every date field with the same value is emptied, also in sequences. Some devices write the date of birth into other fields.</li>
+    <li><b>Cleaning:</b> each element is treated according to the table below, recursively in sequences.</li>
+    <li><b>File meta information:</b> sender, receiver and private information of group 0002 are removed.</li>
+    <li><b>Newly set:</b> code and marking (below).</li>
+  </ol>
+
+  <h3>Rules</h3>
+  <p>The rules come from table E.1-1 in DICOM PS3.15; a script generates 402 entries from it.</p>
+  <div class="tab"><table>
+    <thead><tr><th>Action</th><th>Entries</th><th>Effect and examples</th></tr></thead>
+    <tbody>
+      <tr><td class="z">X</td><td class="z">266</td><td>Remove: institution, names of physicians and operators, addresses, sequences about orders</td></tr>
+      <tr><td class="z">Z</td><td class="z">34</td><td>Empty, field stays: date of birth, accession number, referring physician, study ID</td></tr>
+      <tr><td class="z">D</td><td class="z">50</td><td>Placeholder (<code>ANONYM</code>, <code>19000101</code>, <code>000000</code>); sequences and binary data without a placeholder are removed</td></tr>
+      <tr><td class="z">U</td><td class="z">52</td><td>New UID: SOP instance, study instance, series instance, frame of reference</td></tr>
+    </tbody>
+  </table></div>
+  <p>Independently of the table, all <b>private elements</b> (odd groups) are removed everywhere, including manufacturers’ preview images,
+  and all <b>overlays and curves</b> (groups 60xx and 50xx).</p>
+
+  <h3>What is kept on purpose</h3>
+  <div class="tab"><table>
+    <thead><tr><th>Option of the standard</th><th>Fields</th></tr></thead>
+    <tbody>
+      <tr><td>Retain Device Identity</td><td>manufacturer, model, serial number, station name, software version (not location data)</td></tr>
+      <tr><td>Retain Patient Characteristics</td><td>age, sex, height, weight, smoking and pregnancy status</td></tr>
+      <tr><td>Retain Longitudinal Temporal Information</td><td>all date and time fields of the examination</td></tr>
+      <tr><td>Clean Descriptors</td><td>study description, series description, protocol name, descriptions of procedure steps, contrast
+        agent, derivation description – cleaned as above</td></tr>
+      <tr><td>always</td><td>image geometry, measurements, modality, SOP class, transfer syntax</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Marking in the result</h3>
+  <div class="tab"><table>
+    <thead><tr><th>Field</th><th>Content</th></tr></thead>
+    <tbody>
+      <tr><td class="z">(0010,0010), (0010,0020)</td><td>code</td></tr>
+      <tr><td class="z">(0012,0062)</td><td>Patient Identity Removed: <code>YES</code></td></tr>
+      <tr><td class="z">(0012,0063)</td><td>method: program version, “PS3.15 E, Beschreibungen bereinigt” (descriptions cleaned), how the image was treated</td></tr>
+      <tr><td class="z">(0012,0064)</td><td>codes 113105 Clean Descriptors, 113106 Dates, 113108 Patient Characteristics, 113109 Device Identity;
+        in addition 113101 Clean Pixel Data if the image was treated or is free according to the rule</td></tr>
+      <tr><td class="z">(0028,0301)</td><td>Burned In Annotation: <code>NO</code> for ultrasound; on the header-only path the source value stays</td></tr>
+      <tr><td class="z">(0020,4000)</td><td>Image Comments: “Anonymisiert mit …” (anonymized with); on the header-only path “Kopf anonymisiert mit …”</td></tr>
+      <tr><td class="z">(0028,2110)</td><td>Lossy Image Compression: <code>01</code> if the original is lossy; otherwise unchanged</td></tr>
+    </tbody>
+  </table></div>
+  <p>The code 113100 (Basic Profile) is deliberately not set: the descriptions are only cleaned of known data from the header; the
+  program does not recognize other data in them.</p>
+
+  <h2><span class="nr">5</span>The ultrasound image</h2>
+  <h3>Where the cover comes from</h3>
+  <p>The rule set defines rectangles for each device and resolution. For each rectangle a patch is made from the <b>first image</b> of the
+  movie (up to 3.0.0.403 from the last one) by continuing an image strip defined in the rule. The same patch is inserted into all images.
+  The output format DICOM never crops. Nuclear medicine screen captures with a device rule are covered in the same way.</p>
+
+  <h3>Treatment by transfer syntax</h3>
+  <div class="tab"><table>
+    <thead><tr><th>Transfer syntax</th><th>Procedure</th><th>Checked</th></tr></thead>
+    <tbody>
+      <tr><td>JPEG Baseline</td><td>only the blocks under the covers are replaced</td><td>DCT coefficients outside</td></tr>
+      <tr><td>uncompressed</td><td>pixels replaced directly</td><td>pixels outside</td></tr>
+      <tr><td>RLE, JPEG Lossless</td><td>decode, replace, re-encode losslessly in the same syntax</td><td>pixels outside</td></tr>
+      <tr><td>JPEG 2000</td><td>decode, replace, always re-encode losslessly, even for a lossy original. The file gets larger, but there
+        is no second loss</td><td>pixels outside</td></tr>
+      <tr><td>JPEG-LS, video, others</td><td>no output</td><td>–</td></tr>
+    </tbody>
+  </table></div>
+  <p>Except for JPEG Baseline there are further limits: 8&nbsp;bit only, 1 or 3 channels, no subsampled colour. Otherwise there is no output.</p>
+
+  <h3>JPEG Baseline in detail</h3>
+  <ol>
+    <li>The coefficients of the original image are read without decoding.</li>
+    <li>The image with the cover inserted is encoded once completely, with the same quantization tables and the same subsampling. This
+    result only serves as a source.</li>
+    <li>Only the blocks in the MCU grid that cover the rectangles are taken over from it into the original.</li>
+    <li>The original coefficients including the replaced blocks are written. The Huffman tables are recalculated.</li>
+    <li>Both data streams are compared block by block. If a block outside differs, the output is discarded.</li>
+  </ol>
+  <div class="kasten">
+    <p><b>Strictly speaking:</b> the coefficients outside are identical, but the data stream itself is not, because the Huffman coding is
+    new. After decoding, individual pixels may also differ minimally (measurement in section&nbsp;9), probably because upsampling of the
+    colour channels works across block boundaries. This does not mean a loss of quality.</p>
+  </div>
+
+  <h3>Ultrasound without a device rule: text recognition</h3>
+  <ol>
+    <li>A search list is made from the header: parts of the name, patient ID, other IDs, accession number, date of birth in usual
+    spellings. If it is empty, there is no output.</li>
+    <li>The first image is read by text recognition and compared with the list (the header line with the patient data does not change in
+    a movie). Manufacturer and model names stay.</li>
+    <li>If nothing is found, the file is held back; an unchanged sample goes into the folder <code>unsupp_res</code>.</li>
+    <li>Only the matches are covered, losslessly as above.</li>
+    <li>The finished file is read again and checked again. Remaining matches are added and the original is processed once more, at most
+    two rounds. If anything remains readable, the output is deleted.</li>
+    <li>The log reports “generisch anonymisiert – bitte prüfen” (generically anonymized – please check).</li>
+  </ol>
+
+  <h2><span class="nr">6</span>CT, MRI, PET, X-ray and others</h2>
+  <p>The image is not touched, any transfer syntax is possible, the pixel data stays byte for byte the same. All images of a series are
+  taken over, including localizers.</p>
+  <p>Text recognition only runs for screenshots (Secondary Capture) and for sources with “Burned In Annotation: YES”. The first image is
+  checked; if something is found, the file is not taken over. Because the image otherwise stays unchecked, this path sets neither
+  “Burned In Annotation: NO” nor the code 113101.</p>
+
+  <h2><span class="nr">7</span>When there is no output</h2>
+  <ul>
+    <li>PDF documents in DICOM, structured reports, presentation states and other objects without an image class</li>
+    <li>Ultrasound with an unsupported transfer syntax or bit depth</li>
+    <li>Device rule that only crops, or a result that changed outside the cover</li>
+    <li>Anonymization switched off (<code>--no-overlay</code>) or generic path switched off (<code>--no-generic-redact</code>) without a matching rule</li>
+    <li>Text recognition: no search terms, nothing found, or still readable after two rounds</li>
+    <li>Screenshot or burned-in image with a match in text recognition</li>
+    <li><code>ImageType</code> contains <code>INVALID</code>; ultrasound without Series Instance UID; manufacturer empty</li>
+  </ul>
+
+  <h2><span class="nr">8</span>Example: header before and after</h2>
+  <p>A real ultrasound movie from a Canon Aplio i800 with 5 images, 1280×960. Values relating to persons are only shown as “present”
+  here. In total: 192 entries the same, 18 changed, 55 removed, 14 new; most removed entries were already empty (measured on
+  31.10.2026).</p>
+  <div class="tab"><table>
+    <thead><tr><th>Tag</th><th>Attribute</th><th>Before</th><th>After</th></tr></thead>
+    <tbody>
+      <tr><th colspan="4">Patient</th></tr>
+      <tr><td class="z">0010,0010</td><td>PatientName</td><td>present</td><td class="z">ANON-R3WPF8YK</td></tr>
+      <tr><td class="z">0010,0020</td><td>PatientID</td><td>present</td><td class="z">ANON-R3WPF8YK</td></tr>
+      <tr><td class="z">0010,0030</td><td>PatientBirthDate</td><td>present</td><td>empty</td></tr>
+      <tr><th colspan="4">Institution and staff</th></tr>
+      <tr><td class="z">0008,0080</td><td>InstitutionName</td><td>present</td><td>removed</td></tr>
+      <tr><td class="z">0008,0081</td><td>InstitutionAddress</td><td>present</td><td>removed</td></tr>
+      <tr><td class="z">0008,1040</td><td>InstitutionalDepartmentName</td><td>present</td><td>removed</td></tr>
+      <tr><td class="z">0008,0090</td><td>ReferringPhysicianName</td><td>present</td><td>empty</td></tr>
+      <tr><td class="z">0032,1032</td><td>RequestingPhysician</td><td>present</td><td>removed</td></tr>
+      <tr><th colspan="4">Identifiers</th></tr>
+      <tr><td class="z">0008,0050</td><td>AccessionNumber</td><td>present</td><td>empty</td></tr>
+      <tr><td class="z">0020,0010</td><td>StudyID</td><td>present</td><td>empty</td></tr>
+      <tr><td class="z">0040,0253</td><td>PerformedProcedureStepID</td><td>present</td><td>removed</td></tr>
+      <tr><td class="z">0040,0275</td><td>RequestAttributesSequence</td><td>present</td><td>removed</td></tr>
+      <tr><td class="z">0008,0018</td><td>SOPInstanceUID</td><td class="z">1.2.392.200036…</td><td class="z">1.2.276.0.7230010…</td></tr>
+      <tr><td class="z">0020,000d</td><td>StudyInstanceUID</td><td class="z">1.2.840.113619…</td><td class="z">1.2.276.0.7230010…</td></tr>
+      <tr><td class="z">0020,000e</td><td>SeriesInstanceUID</td><td class="z">1.2.392.200036…</td><td class="z">1.2.276.0.7230010…</td></tr>
+      <tr><th colspan="4">Marking</th></tr>
+      <tr><td class="z">0012,0062</td><td>PatientIdentityRemoved</td><td class="z">NO</td><td class="z">YES</td></tr>
+      <tr><td class="z">0012,0063</td><td>DeidentificationMethod</td><td>missing</td><td>program, PS3.15 E, image</td></tr>
+      <tr><td class="z">0012,0064</td><td>DeidentificationMethodCodeSequence</td><td>missing</td><td>codes (5 entries today)</td></tr>
+      <tr><td class="z">0028,0301</td><td>BurnedInAnnotation</td><td class="z">YES</td><td class="z">NO</td></tr>
+      <tr><td class="z">0020,4000</td><td>ImageComments</td><td>empty</td><td>Anonymisiert mit …</td></tr>
+      <tr><th colspan="4">Technical and private</th></tr>
+      <tr><td class="z">0008,0005</td><td>SpecificCharacterSet</td><td class="z">ISO_IR 100</td><td class="z">ISO_IR 192</td></tr>
+      <tr><td class="z">7015,1073</td><td>private block (4.5&nbsp;MB)</td><td>present</td><td>removed</td></tr>
+      <tr><td class="z">0029,xxxx</td><td>private tags</td><td>present</td><td>removed</td></tr>
+      <tr><th colspan="4">Stays the same</th></tr>
+      <tr><td class="z">0008,0020</td><td>StudyDate</td><td>present</td><td>same</td></tr>
+      <tr><td class="z">0008,0060</td><td>Modality</td><td class="z">US</td><td class="z">US</td></tr>
+      <tr><td class="z">0008,0070</td><td>Manufacturer</td><td class="z">TOSHIBA_MEC_US</td><td>same</td></tr>
+      <tr><td class="z">0008,1090</td><td>ManufacturerModelName</td><td class="z">TUS-AI800</td><td>same</td></tr>
+      <tr><td class="z">0008,1030</td><td>StudyDescription</td><td class="z">Sono Abdomen</td><td>same</td></tr>
+      <tr><td class="z">0008,0016</td><td>SOPClassUID</td><td>US Multiframe</td><td>same</td></tr>
+      <tr><td class="z">0002,0010</td><td>TransferSyntaxUID</td><td>JPEG Baseline</td><td>same</td></tr>
+      <tr><td class="z">0028,0008</td><td>NumberOfFrames</td><td class="z">5</td><td class="z">5</td></tr>
+      <tr><td class="z">0028,0010/11</td><td>Rows / Columns</td><td class="z">960 / 1280</td><td>same</td></tr>
+      <tr><td class="z">0028,0004</td><td>PhotometricInterpretation</td><td class="z">YBR_FULL_422</td><td>same</td></tr>
+      <tr><td class="z">0028,2110</td><td>LossyImageCompression</td><td class="z">01</td><td class="z">01</td></tr>
+    </tbody>
+  </table></div>
+  <p>The file shrinks from 5.2 to 0.6&nbsp;MB, almost entirely because of the removed private block. The pixel data stays nearly the
+  same size at 0.67 and 0.63&nbsp;MB.</p>
+
+  <h2><span class="nr">9</span>Measurements from two test runs</h2>
+  <h3>Ultrasound movie, Aplio i800, JPEG Baseline, 55 images, 1280×960</h3>
+  <div class="tab"><table>
+    <tbody>
+      <tr><td>Covers (in the block grid)</td><td>2: 944×48 and 288×48 pixels, 4.44&nbsp;% of the image area</td></tr>
+      <tr><td>Replaced blocks</td><td class="z">17,160 of 1,584,000 (1.08&nbsp;%)</td></tr>
+      <tr><td>Blocks outside, coefficients</td><td class="z">1,513,710 the same, 0 different</td></tr>
+      <tr><td>Decoded pixels outside</td><td>220 different, difference at most 2 of 255</td></tr>
+      <tr><td>Pixel data</td><td class="z">8,802 → 8,517&nbsp;KB</td></tr>
+      <tr><td>Whole file</td><td class="z">29.4 → 8.7&nbsp;MB</td></tr>
+    </tbody>
+  </table></div>
+  <h3>CT single image, GE LightSpeed16</h3>
+  <div class="tab"><table>
+    <tbody>
+      <tr><td>Pixel data</td><td>byte for byte identical</td></tr>
+      <tr><td>Header elements</td><td class="z">233 → 101; private 127 → 0</td></tr>
+      <tr><td>Other name fields with a value</td><td class="z">0</td></tr>
+      <tr><td>Path</td><td class="z">ANON-…/CT-Serie-0001/IM-00012.dcm</td></tr>
+    </tbody>
+  </table></div>
+  <p>These are samples (31.10.2026). They show the process for these files, not completeness across all devices.</p>
+
+  <h2><span class="nr">10</span>Limits and residual risks</h2>
+  <ol>
+    <li><b>Descriptions are only cleaned of what is known.</b> The search covers name, IDs, date of birth and the names of physicians and
+    operators from the header. Other data in a description (names of relatives, addresses) is not recognized. If a patient’s name is a
+    medical term, that word disappears from his or her descriptions.</li>
+    <li><b>Device and date help identify.</b> Serial number, station name and the exact examination date may make an institution or
+    examination recognizable.</li>
+    <li><b>Device rules are not re-checked.</b> On the path with a rule no text recognition runs. “Burned In Annotation: NO” is a
+    statement from the rule, not a measurement in the image. If a device shows data in a different place after an update, this is not noticed here.</li>
+    <li><b>Text recognition only knows the header.</b> It searches for the values from the header and only in the first image. It does
+    not find other names or data.</li>
+    <li><b>CT and MRI without image check.</b> Without Secondary Capture and without “Burned In Annotation: YES”, the image is not
+    checked. For a multi-image object the burned-in path only checks the first image.</li>
+    <li><b>Traces on your own computer.</b> The log names source and output and so allows an assignment. <code>unsupp_res</code>
+    contains unchanged samples with patient data.</li>
+  </ol>
+
+  <footer>Basis: source code and test runs; measurements from 31.10.2026 (3.0.0.273), process as of 3.0.0.442. The output format is also checked
+  by an automatic test in every test run of the program.</footer>
+  <p class="label" style="margin-top:1.5rem"><a href="./">DICOM-Converter</a> · <a href="technology.html">How the conversion became faster</a> · <a href="legal.html#impressum">Legal notice</a> · <a href="legal.html#datenschutz">Privacy policy</a></p>
+</main>
+</body>
+</html>

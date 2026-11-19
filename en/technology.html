@@ -121,6 +121,7 @@
   was in effect decoded twice.</p>
   <p><b>Now</b>, <code>framesAt(ds, {0, n−1})</code> jumps directly to the fragments of these frames in the encapsulated pixel data and
   decodes only them. That alone took away almost half of the run time.</p>
+  <p class="label">Since 3.0.0.442 the first frame is enough: the header line with the patient data does not change in a movie.</p>
 
   <h2><span class="nr">2</span>libjpeg-turbo instead of DCMTK for JPEG Baseline</h2>
   <p>Almost all ultrasound movies have the same form – 93&nbsp;% of the frames in the test set:</p>
@@ -274,7 +275,7 @@
   <footer>Checked on the entire test collection (6.5&nbsp;GB, 758 outputs): old version = one after the other = at the same time, also
   with glue and the anonymization check, in the Windows VM and in the Intel part under Rosetta. All test data: 326&nbsp;s → 197&nbsp;s;
   with glue and check 919&nbsp;s → 409&nbsp;s.</footer>
-  <p class="label" style="margin-top:1.5rem"><a href="./">DICOM-Converter</a> · <a href="legal.html#impressum">Legal notice</a> · <a href="legal.html#datenschutz">Privacy policy</a></p>
+  <p class="label" style="margin-top:1.5rem"><a href="./">DICOM-Converter</a> · <a href="dicom-to-dicom.html">DICOM to DICOM: what exactly happens</a> · <a href="legal.html#impressum">Legal notice</a> · <a href="legal.html#datenschutz">Privacy policy</a></p>
 </main>
 </body>
 </html>

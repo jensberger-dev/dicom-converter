@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DICOM zu DICOM: Was genau passiert – DICOM-Converter</title>
+<meta name="description" content="Technische Erklärung: was der DICOM-Converter beim Zielformat DICOM mit Kopf und Bild macht.">
+<link rel="stylesheet" href="fonts/plex.css">
+<link rel="alternate" hreflang="de" href="dicom-dicom.html"><link rel="alternate" hreflang="en" href="en/dicom-to-dicom.html">
+<style>
+  /* Layout: eine Lesespalte wie ein technischer Befund; fünf Stufen als Abschnitte, ein maßstäblicher Zeitbalken oben, ein Spur-Diagramm unten */
+  :root {
+    --bg: #ffffff;
+    --fg: #1b2430;
+    --muted: #5a6675;
+    --line: #d8dee6;
+    --panel: #eef2f6;
+    --accent: #163452;
+    --accent-2: #3d7bb8;
+    --turn: #c27a2c;
+    --display: "IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+    --body: "IBM Plex Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14181d; --fg: #e3e8ee; --muted: #9aa5b2; --line: #333b45; --panel: #1e242b;
+      --accent: #9cc3ea; --accent-2: #5f9bd6; --turn: #e0a057; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14181d; --fg: #e3e8ee; --muted: #9aa5b2; --line: #333b45; --panel: #1e242b;
+    --accent: #9cc3ea; --accent-2: #5f9bd6; --turn: #e0a057; color-scheme: dark;
+  }
+  body {
+    background: var(--bg); color: var(--fg);
+    font: 16.5px/1.6 var(--body);
+    margin: 0; padding-left: 16px; padding-right: 16px;
+  }
+  main { max-width: 46rem; margin: 0 auto; padding-block: 2.5rem 4rem; display: grid; gap: 0.2rem; }
+  h1, h2, h3 { font-family: var(--display); color: var(--accent); text-wrap: balance; line-height: 1.2; }
+  h1 { font-size: 2.1rem; font-weight: 600; margin: 0 0 0.3rem; }
+  h2 { font-size: 1.45rem; font-weight: 600; margin: 2.4rem 0 0.4rem; padding-top: 1.2rem; border-top: 1px solid var(--line); display: flex; gap: 0.6rem; align-items: baseline; }
+  h2 .nr { font-family: var(--mono); font-size: 0.85rem; font-weight: 500; color: var(--muted); }
+  h3 { font-size: 1.1rem; font-weight: 600; margin: 1.4rem 0 0.2rem; }
+  p, li { max-width: 65ch; }
+  p { margin: 0.5rem 0; }
+  ul { margin: 0.4rem 0; padding-left: 1.2rem; }
+  li { margin: 0.25rem 0; }
+  code { font-family: var(--mono); font-size: 0.88em; background: var(--panel); padding: 0.05em 0.35em; border-radius: 4px; }
+  .lead { font-size: 1.08rem; color: var(--muted); margin-bottom: 1rem; }
+  .label { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+
+  .zeiten { display: grid; gap: 0.55rem; margin: 1rem 0 0.4rem; font-variant-numeric: tabular-nums; }
+  .zeile { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 0.8rem; align-items: center; }
+  .zeile .name { font-size: 0.92rem; }
+  .bahn { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+  .balken { height: 1.15rem; background: var(--accent-2); border-radius: 3px; flex: none; }
+  .zeile.start .balken { background: var(--muted); }
+  .zeile.jetzt .balken { background: var(--accent); }
+  .wert { font-family: var(--mono); font-size: 0.85rem; white-space: nowrap; }
+  @media (max-width: 560px) { .zeile { grid-template-columns: 1fr; gap: 0.15rem; } }
+
+  .kasten { background: var(--panel); border-radius: 8px; padding: 0.9rem 1.1rem; margin: 0.9rem 0; }
+  .kasten p:first-child { margin-top: 0; } .kasten p:last-child { margin-bottom: 0; }
+
+  .fluss { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 1rem 0; font-size: 0.9rem; }
+  .fluss .knoten { border: 1px solid var(--line); border-radius: 6px; padding: 0.45rem 0.7rem; background: var(--bg); }
+  .fluss .knoten b { display: block; font-weight: 600; color: var(--accent); }
+  .fluss .pfeil { color: var(--muted); font-family: var(--mono); }
+  .fluss .stapel { display: grid; gap: 0.4rem; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-weight: 600; color: var(--muted); font-size: 0.82rem; }
+  td.z { font-family: var(--mono); white-space: nowrap; }
+  .tab { overflow-x: auto; margin: 0.8rem 0; }
+
+  .diagramm { overflow-x: auto; margin: 1rem 0 0.3rem; }
+  .diagramm svg { display: block; width: 100%; min-width: 34rem; height: auto; }
+  .legende { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; font-size: 0.85rem; color: var(--muted); }
+  .legende span::before { content: ""; display: inline-block; width: 0.8rem; height: 0.8rem; border-radius: 2px; margin-right: 0.4rem; vertical-align: -0.1rem; }
+  .legende .l-turn::before { background: var(--turn); }
+  .legende .l-calc::before { background: var(--accent-2); }
+  .legende .l-wait::before { background: transparent; border: 1px dashed var(--muted); }
+  footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--muted); }
+  .zurueck { font-size: 0.92rem; margin-bottom: 1.2rem; max-width: none; }
+  .sprache { float: right; font-size: 0.92rem; color: var(--muted); }
+  .sprache b { color: var(--fg); }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <p class="zurueck"><span class="sprache"><b>DE</b> | <a href="en/dicom-to-dicom.html" hreflang="en" lang="en">EN</a></span><a href="./">← zurück zum DICOM-Converter</a></p>
+  <div class="label">Für Interessierte · Zielformat DICOM seit 3.0.0.263 · Stand 3.0.0.442</div>
+  <h1>DICOM zu DICOM: Was genau passiert</h1>
+  <p class="lead">Mit dem Zielformat DICOM (Rechtsklick „DICOM – zu DICOM anonymisieren“, im Terminal <code>--preset dicom</code>) entsteht
+  aus jeder geeigneten Bilddatei wieder eine DICOM-Datei. Name und ID werden durch eine zufällige Kennung ersetzt, der Kopf wird nach
+  der Norm DICOM PS3.15 bereinigt, die Ablage enthält keine Namen. Grundlage dieser Erklärung sind der Code und Testläufe; die Beispiele
+  enthalten keine Patientendaten.</p>
+
+  <ul>
+    <li><b>Ultraschall:</b> Eingeblendete Patientendaten werden abgedeckt. Außerhalb der Abdeckung entsteht kein neuer
+    Kompressionsverlust. Bei JPEG werden nur die betroffenen Blöcke ersetzt.</li>
+    <li><b>CT, MRT und andere:</b> Das Bild bleibt unverändert, nur der Kopf wird bereinigt.</li>
+    <li><b>Im Zweifel keine Ausgabe:</b> Geht DICOM nicht, entsteht nichts, auch kein MP4 oder PNG. Der Grund steht im Protokoll.</li>
+  </ul>
+  <div class="kasten">
+    <p><b>Das Ergebnis ist pseudonym, nicht vollständig anonym.</b> Untersuchungsdatum, Alter, Gerät samt Seriennummer und die
+    (gesäuberten) Beschreibungen bleiben absichtlich erhalten. Zusammen können sie Rückschlüsse erlauben. Abschnitt&nbsp;10 nennt die
+    Grenzen.</p>
+  </div>
+
+  <h2><span class="nr">1</span>Ablauf im Überblick</h2>
+  <p>Jede Datei wird geladen, ihr Kopf gelesen (der Zeichensatz wird dabei UTF-8), dann werden Kennung und Zielordner bestimmt. Danach
+  entscheidet das Programm Schritt für Schritt:</p>
+  <div class="tab"><table>
+    <thead><tr><th>Frage</th><th>ja</th><th>nein</th></tr></thead>
+    <tbody>
+      <tr><td>Bild-Speicherklasse mit Bilddaten?</td><td>weiter</td><td><b>keine Ausgabe</b> (PDF, Strukturbericht …)</td></tr>
+      <tr><td>Ultraschall (oder Bildschirmaufnahme der Nuklearmedizin)?</td><td>weiter</td><td>Bild unverändert, nur der Kopf wird bereinigt
+        (Texterkennung nur bei Bildschirmfotos oder „Burned In Annotation: YES“)</td></tr>
+      <tr><td>Passende Geräteregel?</td><td>weiter</td><td>Texterkennung findet die Daten, deckt ab, prüft erneut; sonst <b>keine Ausgabe</b></td></tr>
+      <tr><td>Regel mit Abdeckungen?</td><td>Abdeckungen einsetzen, außerhalb mit dem Original vergleichen</td><td>Regel beschneidet nur:
+        <b>keine Ausgabe</b>; Regel ohne Abdeckung und Beschnitt: Bild unverändert</td></tr>
+    </tbody>
+  </table></div>
+  <p>Zum Schluss wird der Kopf bereinigt und die Datei geschrieben. Die Anonymisierung lässt sich im Zielformat DICOM nicht durch ein
+  Profil abschalten. Wird sie per Schalter ausgeschaltet (<code>--no-overlay</code>), entsteht beim Ultraschall keine Ausgabe. Fehlende
+  Kopfangaben wie Hersteller oder Modell ergänzt das Programm für die Geräteerkennung aus Nachbardateien derselben Serie oder Studie. Ist
+  nur der Hersteller an der UID erkennbar, gilt die Datei als „Gerät unbekannt“ und läuft über die Texterkennung.</p>
+
+  <h2><span class="nr">2</span>Ablage: Ordner und Dateinamen</h2>
+  <p>Ordner- und Dateinamen enthalten weder Namen noch Daten, IDs, Einrichtungen oder Untersuchungsarten.</p>
+  <div class="tab"><table>
+    <thead><tr><th>Art</th><th>Pfad</th></tr></thead>
+    <tbody>
+      <tr><td>Ultraschall, Einzelbild</td><td class="z">ANON-7F3K9QX2/US-0001-singleframe.dcm</td></tr>
+      <tr><td>Ultraschall, Film</td><td class="z">ANON-7F3K9QX2/US-0002-multiframe.dcm</td></tr>
+      <tr><td>CT, MR, PT, XA</td><td class="z">ANON-7F3K9QX2/CT-Serie-0001/IM-00012.dcm</td></tr>
+      <tr><td>Andere (z.&nbsp;B. CR)</td><td class="z">ANON-7F3K9QX2/CR-0001.dcm</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><b>Dateidatum:</b> das der Umwandlung, nicht das der Untersuchung.</li>
+    <li><b>IM-Nummer:</b> die Instance Number aus dem Kopf.</li>
+    <li><b>Keine Kennungsdatei:</b> Die sonst übliche versteckte Datei im Patientenordner entfällt, weil sich ihre Prüfwerte zurückrechnen ließen.</li>
+  </ul>
+
+  <h2><span class="nr">3</span>Kennung und UIDs</h2>
+  <p><b>Kennung.</b> Pro Patient entsteht eine Kennung aus <code>ANON-</code> und acht Zufallszeichen, ohne die verwechselbaren Zeichen
+  0, O, 1 und I. Sie wird nicht aus den Patientendaten berechnet.</p>
+  <ul>
+    <li><b>Zuordnung:</b> Gleiche Kombination aus Patienten-ID, Name und Geburtsdatum ergibt innerhalb eines Laufs dieselbe Kennung. Das
+    Programm trennt lieber zu viel, als zwei Patienten zusammenzulegen.</li>
+    <li><b>Ohne Angaben:</b> Fehlen alle drei Werte, gibt es eine Kennung je Studie.</li>
+    <li><b>Späterer Lauf:</b> Er vergibt neue Kennungen. Folgeuntersuchungen lassen sich nur im selben Lauf zuordnen. Eine
+    Zuordnungsliste wird nicht gespeichert.</li>
+  </ul>
+  <p><b>UIDs.</b> Alle in der Normtabelle mit „U“ markierten Felder erhalten neue, nicht ableitbare UIDs. Innerhalb eines Laufs wird
+  dieselbe alte UID immer auf dieselbe neue abgebildet; Serien und Verweise bleiben so zusammen.</p>
+
+  <h2><span class="nr">4</span>Der DICOM-Kopf</h2>
+  <h3>Reihenfolge der Schritte</h3>
+  <ol>
+    <li><b>Zeichensatz:</b> Beim Lesen wird der Datensatz nach UTF-8 gewandelt. Deshalb steht nachher <code>(0008,0005) ISO_IR 192</code>.</li>
+    <li><b>Alter sichern:</b> Fehlt <code>(0010,1010)</code>, wird es aus Geburts- und Untersuchungsdatum berechnet, bevor das Geburtsdatum verschwindet.</li>
+    <li><b>Beschreibungen säubern:</b> Name, Patienten-ID, weitere IDs, Auftragsnummer und Geburtsdatum (in jeder üblichen Schreibweise)
+    sowie die Namen von Ärzten und Bedienern aus dem Kopf werden in den Beschreibungen gesucht und entfernt; der Rest bleibt
+    („CEUS Leber MUSTERMANN“ → „CEUS Leber“). Gesucht wird wortweise: „Leber“ bleibt auch bei einem Patienten „Lebert“.</li>
+    <li><b>Kopien des Geburtsdatums:</b> Jedes Datumsfeld mit demselben Wert wird geleert, auch in Sequenzen. Manche Geräte schreiben das
+    Geburtsdatum in andere Felder.</li>
+    <li><b>Bereinigung:</b> Jedes Element wird nach der Tabelle unten behandelt, rekursiv in Sequenzen.</li>
+    <li><b>Vorspann:</b> Absender, Empfänger und private Angaben der Gruppe 0002 werden entfernt.</li>
+    <li><b>Neu gesetzt:</b> Kennung und Kennzeichnung (unten).</li>
+  </ol>
+
+  <h3>Regeln</h3>
+  <p>Die Regeln stammen aus der Tabelle E.1-1 in DICOM PS3.15; ein Skript erzeugt daraus 402 Einträge.</p>
+  <div class="tab"><table>
+    <thead><tr><th>Aktion</th><th>Einträge</th><th>Wirkung und Beispiele</th></tr></thead>
+    <tbody>
+      <tr><td class="z">X</td><td class="z">266</td><td>Entfernen: Einrichtung, Ärzte- und Bedienernamen, Adressen, Sequenzen zu Aufträgen</td></tr>
+      <tr><td class="z">Z</td><td class="z">34</td><td>Leeren, Feld bleibt: Geburtsdatum, Accession Number, überweisender Arzt, Study ID</td></tr>
+      <tr><td class="z">D</td><td class="z">50</td><td>Platzhalter (<code>ANONYM</code>, <code>19000101</code>, <code>000000</code>); Sequenzen und Binärdaten ohne Platzhalter werden entfernt</td></tr>
+      <tr><td class="z">U</td><td class="z">52</td><td>Neue UID: SOP Instance, Study Instance, Series Instance, Frame of Reference</td></tr>
+    </tbody>
+  </table></div>
+  <p>Unabhängig von der Tabelle werden entfernt: alle <b>privaten Elemente</b> (ungerade Gruppen), überall, also auch Vorschaubilder der
+  Hersteller, und alle <b>Overlays und Kurven</b> (Gruppen 60xx und 50xx).</p>
+
+  <h3>Was bewusst bleibt</h3>
+  <div class="tab"><table>
+    <thead><tr><th>Option der Norm</th><th>Felder</th></tr></thead>
+    <tbody>
+      <tr><td>Retain Device Identity</td><td>Hersteller, Modell, Seriennummer, Stationsname, Softwareversion (Standortangaben nicht)</td></tr>
+      <tr><td>Retain Patient Characteristics</td><td>Alter, Geschlecht, Größe, Gewicht, Raucher- und Schwangerschaftsstatus</td></tr>
+      <tr><td>Retain Longitudinal Temporal Information</td><td>alle Datums- und Zeitfelder der Untersuchung</td></tr>
+      <tr><td>Clean Descriptors</td><td>Study Description, Series Description, Protocol Name, Beschreibungen von Verfahrensschritten,
+        Kontrastmittel, Derivation Description – gesäubert wie oben</td></tr>
+      <tr><td>immer</td><td>Bildgeometrie, Messwerte, Modalität, SOP-Klasse, Speicherart</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Kennzeichnung im Ergebnis</h3>
+  <div class="tab"><table>
+    <thead><tr><th>Feld</th><th>Inhalt</th></tr></thead>
+    <tbody>
+      <tr><td class="z">(0010,0010), (0010,0020)</td><td>Kennung</td></tr>
+      <tr><td class="z">(0012,0062)</td><td>Patient Identity Removed: <code>YES</code></td></tr>
+      <tr><td class="z">(0012,0063)</td><td>Methode: Programmversion, „PS3.15 E, Beschreibungen bereinigt“, Art der Bildbehandlung</td></tr>
+      <tr><td class="z">(0012,0064)</td><td>Codes 113105 Clean Descriptors, 113106 Dates, 113108 Patient Characteristics, 113109 Device Identity;
+        zusätzlich 113101 Clean Pixel Data, wenn das Bild behandelt oder laut Regel frei ist</td></tr>
+      <tr><td class="z">(0028,0301)</td><td>Burned In Annotation: <code>NO</code> beim Ultraschall; beim reinen Kopf-Weg bleibt der Wert der Quelle</td></tr>
+      <tr><td class="z">(0020,4000)</td><td>Image Comments: „Anonymisiert mit …“; beim reinen Kopf-Weg „Kopf anonymisiert mit …“</td></tr>
+      <tr><td class="z">(0028,2110)</td><td>Lossy Image Compression: <code>01</code>, wenn das Original verlustbehaftet ist; sonst unverändert</td></tr>
+    </tbody>
+  </table></div>
+  <p>Der Code 113100 (Basic Profile) wird absichtlich nicht gesetzt: Die Beschreibungen werden nur von bekannten Angaben aus dem Kopf
+  gesäubert, andere darin erkennt das Programm nicht.</p>
+
+  <h2><span class="nr">5</span>Das Bild beim Ultraschall</h2>
+  <h3>Woher die Abdeckung kommt</h3>
+  <p>Das Regelwerk legt je Gerät und Auflösung Rechtecke fest. Für jedes Rechteck entsteht ein Flicken aus dem <b>ersten Bild</b> des
+  Films (bis 3.0.0.403 aus dem letzten), indem ein in der Regel festgelegter Bildstreifen fortgesetzt wird. Derselbe Flicken wird in
+  alle Bilder eingesetzt. Beschnitten wird im Zielformat DICOM nie. Bildschirmaufnahmen der Nuklearmedizin mit Geräteregel werden genauso
+  abgedeckt.</p>
+
+  <h3>Behandlung je Speicherart</h3>
+  <div class="tab"><table>
+    <thead><tr><th>Speicherart</th><th>Vorgehen</th><th>Geprüft wird</th></tr></thead>
+    <tbody>
+      <tr><td>JPEG Baseline</td><td>Nur die Blöcke unter den Abdeckungen werden ersetzt</td><td>DCT-Koeffizienten außerhalb</td></tr>
+      <tr><td>Unkomprimiert</td><td>Bildpunkte direkt ersetzen</td><td>Bildpunkte außerhalb</td></tr>
+      <tr><td>RLE, JPEG Lossless</td><td>Dekodieren, ersetzen, in derselben Art verlustfrei neu kodieren</td><td>Bildpunkte außerhalb</td></tr>
+      <tr><td>JPEG 2000</td><td>Dekodieren, ersetzen, immer verlustfrei neu kodieren, auch bei verlustbehaftetem Original. Die Datei wird
+        größer, aber es entsteht kein zweiter Verlust</td><td>Bildpunkte außerhalb</td></tr>
+      <tr><td>JPEG-LS, Video, andere</td><td>keine Ausgabe</td><td>–</td></tr>
+    </tbody>
+  </table></div>
+  <p>Außer bei JPEG Baseline gelten weitere Grenzen: nur 8&nbsp;Bit, 1 oder 3 Kanäle, keine unterabgetastete Farbe. Sonst gibt es keine Ausgabe.</p>
+
+  <h3>JPEG Baseline im Detail</h3>
+  <ol>
+    <li>Die Koeffizienten des Originalbilds werden gelesen, ohne zu dekodieren.</li>
+    <li>Das Bild wird mit eingesetzter Abdeckung einmal komplett neu kodiert, mit denselben Quantisierungstabellen und derselben
+    Unterabtastung. Dieses Ergebnis dient nur als Quelle.</li>
+    <li>Nur die Blöcke im MCU-Raster, das die Rechtecke überdeckt, werden daraus ins Original übernommen.</li>
+    <li>Die Originalkoeffizienten samt ersetzter Blöcke werden geschrieben. Die Huffman-Tabellen werden dabei neu berechnet.</li>
+    <li>Beide Datenströme werden Block für Block verglichen. Weicht ein Block außerhalb ab, wird die Ausgabe verworfen.</li>
+  </ol>
+  <div class="kasten">
+    <p><b>Genau genommen:</b> Die Koeffizienten außerhalb sind identisch, der Datenstrom selbst aber nicht, weil die Huffman-Kodierung neu
+    ist. Auch nach dem Dekodieren können einzelne Bildpunkte minimal abweichen (Messung in Abschnitt&nbsp;9), vermutlich weil das
+    Hochrechnen der Farbkanäle über Blockgrenzen rechnet. Einen Qualitätsverlust bedeutet das nicht.</p>
+  </div>
+
+  <h3>Ultraschall ohne Geräteregel: Texterkennung</h3>
+  <ol>
+    <li>Aus dem Kopf entsteht eine Suchliste: Namensteile, Patienten-ID, weitere IDs, Accession Number, Geburtsdatum in üblichen
+    Schreibweisen. Ist sie leer, gibt es keine Ausgabe.</li>
+    <li>Das erste Bild wird per Texterkennung gelesen und mit der Liste abgeglichen (die Kopfzeile mit den Patientendaten ändert sich im
+    Film nicht). Hersteller- und Modellnamen bleiben stehen.</li>
+    <li>Findet die Erkennung nichts, wird die Datei zurückgehalten; eine unveränderte Probe landet im Ordner <code>unsupp_res</code>.</li>
+    <li>Nur die Fundstellen werden abgedeckt, verlustfrei wie oben.</li>
+    <li>Die fertige Datei wird neu gelesen und erneut geprüft. Restfunde werden ergänzt und das Original noch einmal verarbeitet,
+    höchstens zwei Runden. Bleibt etwas lesbar, wird die Ausgabe gelöscht.</li>
+    <li>Das Protokoll meldet „generisch anonymisiert – bitte prüfen“.</li>
+  </ol>
+
+  <h2><span class="nr">6</span>CT, MRT, PET, Röntgen und andere</h2>
+  <p>Das Bild wird nicht angefasst, jede Speicherart ist möglich, die Bilddaten bleiben Byte für Byte gleich. Alle Bilder einer Serie
+  werden übernommen, auch Übersichtsaufnahmen.</p>
+  <p>Eine Texterkennung läuft nur bei Bildschirmfotos (Secondary Capture) und bei Quellen mit „Burned In Annotation: YES“. Geprüft wird
+  das erste Bild; bei einem Treffer wird die Datei nicht übernommen. Weil das Bild sonst ungeprüft bleibt, setzt dieser Weg weder
+  „Burned In Annotation: NO“ noch den Code 113101.</p>
+
+  <h2><span class="nr">7</span>Wann keine Ausgabe entsteht</h2>
+  <ul>
+    <li>PDF-Dokumente in DICOM, Strukturberichte, Darstellungszustände und andere Objekte ohne Bildklasse</li>
+    <li>Ultraschall mit nicht unterstützter Speicherart oder Bittiefe</li>
+    <li>Geräteregel, die nur beschneidet, oder Ergebnis, das sich außerhalb der Abdeckung verändert hat</li>
+    <li>Anonymisierung abgeschaltet (<code>--no-overlay</code>) oder generischer Weg abgeschaltet (<code>--no-generic-redact</code>) ohne passende Regel</li>
+    <li>Texterkennung: keine Suchbegriffe, nichts gefunden oder nach zwei Runden noch lesbar</li>
+    <li>Bildschirmfoto oder Burned-In-Bild mit Treffer in der Texterkennung</li>
+    <li><code>ImageType</code> enthält <code>INVALID</code>; Ultraschall ohne Series Instance UID; Hersteller leer</li>
+  </ul>
+
+  <h2><span class="nr">8</span>Beispiel: Kopf vorher und nachher</h2>
+  <p>Echter Ultraschallfilm vom Canon Aplio i800 mit 5 Bildern, 1280×960. Werte mit Personenbezug sind hier nur als „vorhanden“
+  ausgewiesen. Insgesamt: 192 Einträge gleich, 18 geändert, 55 entfernt, 14 neu; die meisten entfernten Einträge waren schon leer
+  (Messung vom 31.10.2026).</p>
+  <div class="tab"><table>
+    <thead><tr><th>Tag</th><th>Attribut</th><th>Vorher</th><th>Nachher</th></tr></thead>
+    <tbody>
+      <tr><th colspan="4">Patient</th></tr>
+      <tr><td class="z">0010,0010</td><td>PatientName</td><td>vorhanden</td><td class="z">ANON-R3WPF8YK</td></tr>
+      <tr><td class="z">0010,0020</td><td>PatientID</td><td>vorhanden</td><td class="z">ANON-R3WPF8YK</td></tr>
+      <tr><td class="z">0010,0030</td><td>PatientBirthDate</td><td>vorhanden</td><td>leer</td></tr>
+      <tr><th colspan="4">Einrichtung und Personal</th></tr>
+      <tr><td class="z">0008,0080</td><td>InstitutionName</td><td>vorhanden</td><td>entfernt</td></tr>
+      <tr><td class="z">0008,0081</td><td>InstitutionAddress</td><td>vorhanden</td><td>entfernt</td></tr>
+      <tr><td class="z">0008,1040</td><td>InstitutionalDepartmentName</td><td>vorhanden</td><td>entfernt</td></tr>
+      <tr><td class="z">0008,0090</td><td>ReferringPhysicianName</td><td>vorhanden</td><td>leer</td></tr>
+      <tr><td class="z">0032,1032</td><td>RequestingPhysician</td><td>vorhanden</td><td>entfernt</td></tr>
+      <tr><th colspan="4">Kennungen</th></tr>
+      <tr><td class="z">0008,0050</td><td>AccessionNumber</td><td>vorhanden</td><td>leer</td></tr>
+      <tr><td class="z">0020,0010</td><td>StudyID</td><td>vorhanden</td><td>leer</td></tr>
+      <tr><td class="z">0040,0253</td><td>PerformedProcedureStepID</td><td>vorhanden</td><td>entfernt</td></tr>
+      <tr><td class="z">0040,0275</td><td>RequestAttributesSequence</td><td>vorhanden</td><td>entfernt</td></tr>
+      <tr><td class="z">0008,0018</td><td>SOPInstanceUID</td><td class="z">1.2.392.200036…</td><td class="z">1.2.276.0.7230010…</td></tr>
+      <tr><td class="z">0020,000d</td><td>StudyInstanceUID</td><td class="z">1.2.840.113619…</td><td class="z">1.2.276.0.7230010…</td></tr>
+      <tr><td class="z">0020,000e</td><td>SeriesInstanceUID</td><td class="z">1.2.392.200036…</td><td class="z">1.2.276.0.7230010…</td></tr>
+      <tr><th colspan="4">Kennzeichnung</th></tr>
+      <tr><td class="z">0012,0062</td><td>PatientIdentityRemoved</td><td class="z">NO</td><td class="z">YES</td></tr>
+      <tr><td class="z">0012,0063</td><td>DeidentificationMethod</td><td>fehlt</td><td>Programm, PS3.15 E, Bild</td></tr>
+      <tr><td class="z">0012,0064</td><td>DeidentificationMethodCodeSequence</td><td>fehlt</td><td>Codes (heute 5 Einträge)</td></tr>
+      <tr><td class="z">0028,0301</td><td>BurnedInAnnotation</td><td class="z">YES</td><td class="z">NO</td></tr>
+      <tr><td class="z">0020,4000</td><td>ImageComments</td><td>leer</td><td>Anonymisiert mit …</td></tr>
+      <tr><th colspan="4">Technik und Privates</th></tr>
+      <tr><td class="z">0008,0005</td><td>SpecificCharacterSet</td><td class="z">ISO_IR 100</td><td class="z">ISO_IR 192</td></tr>
+      <tr><td class="z">7015,1073</td><td>privater Block (4,5&nbsp;MB)</td><td>vorhanden</td><td>entfernt</td></tr>
+      <tr><td class="z">0029,xxxx</td><td>private Tags</td><td>vorhanden</td><td>entfernt</td></tr>
+      <tr><th colspan="4">Bleibt gleich</th></tr>
+      <tr><td class="z">0008,0020</td><td>StudyDate</td><td>vorhanden</td><td>gleich</td></tr>
+      <tr><td class="z">0008,0060</td><td>Modality</td><td class="z">US</td><td class="z">US</td></tr>
+      <tr><td class="z">0008,0070</td><td>Manufacturer</td><td class="z">TOSHIBA_MEC_US</td><td>gleich</td></tr>
+      <tr><td class="z">0008,1090</td><td>ManufacturerModelName</td><td class="z">TUS-AI800</td><td>gleich</td></tr>
+      <tr><td class="z">0008,1030</td><td>StudyDescription</td><td class="z">Sono Abdomen</td><td>gleich</td></tr>
+      <tr><td class="z">0008,0016</td><td>SOPClassUID</td><td>US Multiframe</td><td>gleich</td></tr>
+      <tr><td class="z">0002,0010</td><td>TransferSyntaxUID</td><td>JPEG Baseline</td><td>gleich</td></tr>
+      <tr><td class="z">0028,0008</td><td>NumberOfFrames</td><td class="z">5</td><td class="z">5</td></tr>
+      <tr><td class="z">0028,0010/11</td><td>Rows / Columns</td><td class="z">960 / 1280</td><td>gleich</td></tr>
+      <tr><td class="z">0028,0004</td><td>PhotometricInterpretation</td><td class="z">YBR_FULL_422</td><td>gleich</td></tr>
+      <tr><td class="z">0028,2110</td><td>LossyImageCompression</td><td class="z">01</td><td class="z">01</td></tr>
+    </tbody>
+  </table></div>
+  <p>Die Datei schrumpft von 5,2 auf 0,6&nbsp;MB, fast nur durch den entfernten privaten Block. Die Bilddaten bleiben mit 0,67 und
+  0,63&nbsp;MB nahezu gleich groß.</p>
+
+  <h2><span class="nr">9</span>Messwerte aus zwei Testläufen</h2>
+  <h3>Ultraschallfilm, Aplio i800, JPEG Baseline, 55 Bilder, 1280×960</h3>
+  <div class="tab"><table>
+    <tbody>
+      <tr><td>Abdeckungen (im Blockraster)</td><td>2 Stück: 944×48 und 288×48 Bildpunkte, 4,44&nbsp;% der Bildfläche</td></tr>
+      <tr><td>Ersetzte Blöcke</td><td class="z">17&nbsp;160 von 1&nbsp;584&nbsp;000 (1,08&nbsp;%)</td></tr>
+      <tr><td>Blöcke außerhalb, Koeffizienten</td><td class="z">1&nbsp;513&nbsp;710 gleich, 0 verschieden</td></tr>
+      <tr><td>Dekodierte Bildpunkte außerhalb</td><td>220 abweichend, Differenz höchstens 2 von 255</td></tr>
+      <tr><td>Bilddaten</td><td class="z">8&nbsp;802 → 8&nbsp;517&nbsp;KB</td></tr>
+      <tr><td>Datei gesamt</td><td class="z">29,4 → 8,7&nbsp;MB</td></tr>
+    </tbody>
+  </table></div>
+  <h3>CT-Einzelbild, GE LightSpeed16</h3>
+  <div class="tab"><table>
+    <tbody>
+      <tr><td>Bilddaten</td><td>Byte für Byte identisch</td></tr>
+      <tr><td>Kopf-Elemente</td><td class="z">233 → 101; privat 127 → 0</td></tr>
+      <tr><td>Weitere Namensfelder mit Wert</td><td class="z">0</td></tr>
+      <tr><td>Pfad</td><td class="z">ANON-…/CT-Serie-0001/IM-00012.dcm</td></tr>
+    </tbody>
+  </table></div>
+  <p>Das sind Stichproben (31.10.2026). Sie belegen den Ablauf an diesen Dateien, nicht die Vollständigkeit über alle Geräte.</p>
+
+  <h2><span class="nr">10</span>Grenzen und Restrisiken</h2>
+  <ol>
+    <li><b>Beschreibungen nur von Bekanntem gesäubert.</b> Gesucht wird nach Name, IDs, Geburtsdatum und den Namen von Ärzten und
+    Bedienern aus dem Kopf. Andere Angaben in einer Beschreibung (Namen von Angehörigen, Adressen) erkennt das Programm nicht. Heißt ein
+    Patient wie ein Fachwort, verschwindet das Wort aus seinen Beschreibungen.</li>
+    <li><b>Gerät und Datum identifizieren mit.</b> Seriennummer, Stationsname und exaktes Untersuchungsdatum können eine Einrichtung oder
+    Untersuchung erkennbar machen.</li>
+    <li><b>Geräteregeln werden nicht nachgeprüft.</b> Beim Weg mit Regel läuft keine Texterkennung. „Burned In Annotation: NO“ ist eine
+    Aussage aus der Regel, keine Messung im Bild. Zeigt ein Gerät nach einem Update Daten an anderer Stelle, fällt das hier nicht auf.</li>
+    <li><b>Texterkennung kennt nur den Kopf.</b> Sie sucht nach den Werten aus dem Kopf und nur im ersten Bild. Andere Namen oder Daten
+    findet sie nicht.</li>
+    <li><b>CT und MRT ohne Bildprüfung.</b> Ohne Secondary Capture und ohne „Burned In Annotation: YES“ wird das Bild nicht geprüft. Bei
+    einem Mehrbild-Objekt prüft der Burned-In-Weg nur das erste Bild.</li>
+    <li><b>Spuren auf dem eigenen Rechner.</b> Das Protokoll nennt Quelle und Ausgabe und erlaubt damit eine Zuordnung. In
+    <code>unsupp_res</code> liegen unveränderte Proben mit Patientendaten.</li>
+  </ol>
+
+  <footer>Grundlage: Quellcode und Testläufe; Messwerte vom 31.10.2026 (3.0.0.273), Ablauf auf dem Stand 3.0.0.442. Das Zielformat prüft zusätzlich ein
+  automatischer Test bei jedem Testlauf des Programms.</footer>
+  <p class="label" style="margin-top:1.5rem"><a href="./">DICOM-Converter</a> · <a href="technik.html">Wie die Umwandlung schneller wurde</a> · <a href="rechtliches.html#impressum">Impressum</a> · <a href="rechtliches.html#datenschutz">Datenschutz</a></p>
+</main>
+</body>
+</html>
