@@ -1,7 +1,24 @@
 {
- "version": "3.0.0.442",
+ "version": "3.0.0.480",
  "page": "https://jensberger-dev.github.io/dicom-converter/",
  "changes": [
+  {
+   "version": "3.0.0.480",
+   "date": "20.11.2026",
+   "items": [
+    "Neu im Terminal: thick-movies mittelt schon fertige CT-Filme mit dünnen Schichten nachträglich zu 3-mm-Schichten (Dicke aus dem Dateinamen, Original wird nach geprüfter Umwandlung gelöscht), cine-bars entfernt die Cine-Leiste aus schon fertigen, beschnittenen Canon-Standbildern, ohne das übrige Bild zu verändern. Beide nur im Terminal.",
+    "Echokardiographie: Aufnahmen mit Sektor-Schallkopf heißen jetzt „Echo“ und kommen in einen eigenen Ordner „US <Datum> Echo“. Bisher hielt das Programm ein Echo mit niedrigem MI für CEUS und schob die ganze Untersuchung des Tages in den CEUS-Ordner. Beim Zusammenfügen bleibt das Echo ein eigener Film.",
+    "CT: Dünne Schichten (z. B. 0,6 mm) werden jetzt zu 3-mm-Schichten zusammengerechnet, so wie es CT und PACS-Viewer tun. Die Schichten überlappen (alle 1,2 mm eine), damit der Film flüssig läuft; die Filme sind ruhiger und kleiner; im Dateinamen steht die neue Dicke. Koronare und sagittale Serien bleiben unverändert. Im Terminal: andere Dicke mit --thick-slices 5, aus mit --thick-slices 0.",
+    "Patientenordner heißen wieder nur nach dem Patienten, ohne „CEUS“, „B-Bild“ oder „Punktion“ davor. Vorhandene Ordner mit Vorsatz werden weiter benutzt und nicht umbenannt. Wer den Vorsatz möchte: im Terminal convert --type-prefix.",
+    "Windows: Die Links der Patientenliste („Ordner öffnen“ und „umwandeln“) funktionieren jetzt – bisher meldete das Programm „Dieser Ordner ist nicht (mehr) vorhanden“.",
+    "GE LOGIQ E10: Bilder in 1285x960 und 1530x960 (zum Beispiel in Vorträgen) werden jetzt anonymisiert – Name, ID und Benutzerkürzel werden abgedeckt.",
+    "GE-Bilder und -Filme in 960x720, 960x540 und 1552x873 werden jetzt auch am Logo erkannt. Bisher blieben manche unverändert, wenn die Texterkennung den Schriftzug nicht lesen konnte (zum Beispiel in „Vortrag – reparieren“).",
+    "Canon Aplio (i-Serie, a, a450, flex u. a.): In Standbildern verschwindet die Cine-Leiste mit der Bildnummer am unteren Rand („# 117“), im Doppelbild beide; Filme haben keine. Das gilt auch für „Filme – nachträglich anonymisieren“ – für Exporte in voller Bildgröße und für schon beschnittene Bilder, wenn die Leiste genau an ihrer Stelle steht. Beim Zielformat DICOM bleibt das Bild wie bisher unverändert.",
+    "GE LOGIQ E9: Bildausschnitte in 1018x685 (zum Beispiel in Vorträgen) werden jetzt anonymisiert.",
+    "Endoskopie: Name, Patienten-ID und Geburtsdatum unten links im Bild werden jetzt abgedeckt (Fujifilm VP-7000, MESO iBox); Geschlecht, Alter, Einrichtung und Datum bleiben; auch in Endoskopie-Filmen. Bilder und Filme anderer Endoskopie-Geräte werden vorerst nicht umgewandelt – bisher kamen sie mit dem Namen im Bild in die Ausgabe.",
+    "Vortrag – reparieren: Abdeck-Rechtecke über einem anonymisierten Bild oder Film werden jetzt auch entfernt, wenn die Texterkennung zusätzlich etwas abgedeckt hat; der Hinweis „bitte ansehen“ im Bericht bleibt."
+   ]
+  },
   {
    "version": "3.0.0.442",
    "date": "17.11.2026",
@@ -340,6 +357,23 @@
   }
  ],
  "changes_en": [
+  {
+   "version": "3.0.0.480",
+   "date": "20.11.2026",
+   "items": [
+    "New in the terminal: thick-movies averages finished CT movies with thin slices into 3 mm slices afterwards (thickness from the file name, the original is deleted after a checked conversion); cine-bars removes the cine bar from finished, cropped Canon still images without changing the rest of the image. Both in the terminal only.",
+    "Echocardiography: recordings with a sector transducer are now named “Echo” and go into a folder of their own, “US <date> Echo”. Until now an echo with a low MI was taken for CEUS and pulled the whole examination of that day into the CEUS folder. When joining movies, the echo stays a movie of its own.",
+    "CT: thin slices (e.g. 0.6 mm) are now combined into 3 mm slices, as the CT and PACS viewers do. The slices overlap (one every 1.2 mm) so that the movie runs smoothly; the movies are calmer and smaller; the file name shows the new thickness. Coronal and sagittal series stay unchanged. In the terminal: another thickness with --thick-slices 5, off with --thick-slices 0.",
+    "Patient folders are named after the patient only again, without “CEUS”, “B-Bild” or “Punktion” in front. Existing folders with a prefix are still used and not renamed. If you want the prefix: convert --type-prefix in the terminal.",
+    "Windows: the links in the patient list (open folder and “convert”) now work – previously the program reported that the folder no longer exists.",
+    "GE LOGIQ E10: images in 1285x960 and 1530x960 (for example in presentations) are now anonymized – name, ID and user initials are covered.",
+    "GE images and movies in 960x720, 960x540 and 1552x873 are now also recognized by their logo. Before, some stayed unchanged when text recognition could not read the lettering (for example in “Repair presentation”).",
+    "Canon Aplio (i series, a, a450, flex and others): in still images the cine bar with the frame number at the bottom (“# 117”) disappears, in dual view both; movies have none. This also applies to “Movies – anonymize afterwards” – for exports in full image size and for images already cropped, if the bar is exactly in its place. With the output format DICOM the image stays unchanged as before.",
+    "GE LOGIQ E9: image sections in 1018x685 (for example in presentations) are now anonymized.",
+    "Endoscopy: name, patient ID and date of birth at the bottom left of the image are now covered (Fujifilm VP-7000, MESO iBox); sex, age, institution and date remain; also in endoscopy videos. Images and videos from other endoscopy devices are not converted for now – previously they ended up in the output with the name in the image.",
+    "Lecture – repair: cover rectangles over an anonymized image or movie are now also removed when text recognition covered something in addition; the “please look” note in the report stays."
+   ]
+  },
   {
    "version": "3.0.0.442",
    "date": "17.11.2026",
@@ -680,63 +714,63 @@
  "files": [
   {
    "name": "changes.txt",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.442/changes.txt",
-   "size": 191215,
-   "sha256": "e68ca96520f9adee8f470db5813cee11e5c0da0947a0f16f366fcb8a2420f233"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/changes.txt",
+   "size": 197189,
+   "sha256": "5e660db18fc9264d6f126a2dc635508413c5762c85d51d85e32f562a4bae46f3"
   },
   {
    "name": "DICOM-Converter-Handbuch.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.442/DICOM-Converter-Handbuch.pdf",
-   "size": 219480,
-   "sha256": "31d7b4b0d65faa3b9635f7e88f6090bd9ce3ec75d99fda06298170d3d9f429d5"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Handbuch.pdf",
+   "size": 259930,
+   "sha256": "f419b1e85aec9368818affea10ad38f844cb1f8ebf1fcf8574c016d423eafe17"
   },
   {
    "name": "DICOM-Converter-Kurzanleitung.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.442/DICOM-Converter-Kurzanleitung.pdf",
-   "size": 81160,
-   "sha256": "531cf4d7a42e4a2a4673b9fc25628f71df284f8a8d982030e574219905016f2c"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Kurzanleitung.pdf",
+   "size": 81472,
+   "sha256": "04f8c4fac04e00b9e7bfe28077053745452ba60dd46aece7d5720e0cfce5f5f0"
   },
   {
    "name": "DICOM-Converter-macOS.pkg",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.442/DICOM-Converter-macOS.pkg",
-   "size": 98708957,
-   "sha256": "8300b7ecf76801ff9c031995282541d73eae578274b3ce1704442e74adb11652"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-macOS.pkg",
+   "size": 98996120,
+   "sha256": "f209ebbcfb2c26dfdb599c058befb1892f61ec50335bb2d5247f0e5c7c34fde4"
   },
   {
    "name": "DICOM-Converter-Manual.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.442/DICOM-Converter-Manual.pdf",
-   "size": 216941,
-   "sha256": "51437b9bf6a04a485a4aa224fd140d45c9716dcb7c4777058d209e85c033884e"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Manual.pdf",
+   "size": 254983,
+   "sha256": "c0838a0376fa8ed3775ac2a857484e2bb83afb66172b9a6c3f09f808c4f21aad"
   },
   {
    "name": "DICOM-Converter-Neuerungen.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.442/DICOM-Converter-Neuerungen.pdf",
-   "size": 65845,
-   "sha256": "8680d2b8d323f800b3731e185fe6aae3a303996c9d5cd195ded14b9bb146d9de"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Neuerungen.pdf",
+   "size": 65936,
+   "sha256": "bc24c3c027f8d64bfc7a78d8cff45587f59a10ea878239d1a7413d681b9cc9e7"
   },
   {
    "name": "DICOM-Converter-Quick-Start-Guide.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.442/DICOM-Converter-Quick-Start-Guide.pdf",
-   "size": 80009,
-   "sha256": "253c1d0f1ff08d4fd680fd6bed6320ac6db13e79724ed7ac383230b6a98d6a5c"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Quick-Start-Guide.pdf",
+   "size": 80320,
+   "sha256": "adad55969e7fd3e496ee40e2ed7d745c75322d93c40e45630a98eac427012e77"
   },
   {
    "name": "DICOM-Converter-Whats-New.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.442/DICOM-Converter-Whats-New.pdf",
-   "size": 64967,
-   "sha256": "c35e9b7d5ed7b8740947f286449e9407c4f193bb62c7dd31be32014292cae97e"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Whats-New.pdf",
+   "size": 65437,
+   "sha256": "95aa3dee71de0e9ce472a5e501b7544551bf34cb4accf5371edd6267049b9dfc"
   },
   {
    "name": "DICOM-Converter-Windows-ohne-Admin.zip",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.442/DICOM-Converter-Windows-ohne-Admin.zip",
-   "size": 58881966,
-   "sha256": "8aa333f34bc1bd9695196b0166e79e9187f7176e551b07ac73175cba32590a44"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Windows-ohne-Admin.zip",
+   "size": 59098363,
+   "sha256": "3a4750170322b558ff8b65db9e9bdfb6f371187b3a7b5c3ad2d66313621b7b4f"
   },
   {
    "name": "DICOM-Converter-Windows-Setup.exe",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.442/DICOM-Converter-Windows-Setup.exe",
-   "size": 44829543,
-   "sha256": "25450c6027d46010c369deb6c1781c57c8afb19cf6b6306b3e28027a43bb6eaf"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Windows-Setup.exe",
+   "size": 44995930,
+   "sha256": "21efcdc621a866ca5baed2e43703806335d5cf315da30230df4755a50e2d4bae"
   }
  ]
 }

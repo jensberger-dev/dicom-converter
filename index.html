@@ -58,7 +58,7 @@ s("view");document.addEventListener("click",function(e){var a=e.target.closest&&
 
 <p class="sprache"><b>DE</b> | <a href="en/" hreflang="en" lang="en">EN</a></p>
 <h1>DICOM-Converter</h1>
-<p class="muted">Version 3.0.0.442 · Stand 19.11.2026 · für macOS und Windows</p>
+<p class="muted">Version 3.0.0.480 · Stand 20.11.2026 · für macOS und Windows</p>
 
 <p class="lead">Der DICOM-Converter macht aus Ultraschall-Untersuchungen – und auch aus CT, MRT, Röntgen und anderen
 DICOM-Daten – ganz normale <b>Filme und Bilder</b>,
@@ -91,7 +91,7 @@ Einstellen musst du nichts. <a href="#schneller">Mehr dazu</a></p>
   </div>
 <p class="muted">Windows ohne Administratorrechte (z.&nbsp;B. von der IT verwalteter Klinik-PC): <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-ohne-Admin.zip" data-klick="download-windows">ZIP-Fassung</a> – entpacken und starten (<a href="#windows-zip">so geht’s</a>)</p>
 <p class="muted">Mac ab macOS 11 (Apple Silicon und Intel), von Apple signiert · Windows 10 oder 11 (64 Bit) · <a href="#voraussetzungen">Systemvoraussetzungen</a></p>
-<p class="muted">Version 3.0.0.442 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-klick="download-neuerungen">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
+<p class="muted">Version 3.0.0.480 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-klick="download-neuerungen">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
 <div class="support">
   <span>Der DICOM-Converter ist kostenlos. Seine Weiterentwicklung kostet aber Geld – für das Apple-Entwicklerprogramm (damit der Mac das Programm ohne Warnung startet) und für den KI-Assistenten Claude, mit dem er entwickelt wird. Über eine Unterstützung freue ich mich sehr.</span>
   <a class="button secondary" href="https://www.paypal.com/paypalme/DicomConverter" data-klick="paypal">Unterstützen mit PayPal</a>
@@ -99,6 +99,20 @@ Einstellen musst du nichts. <a href="#schneller">Mehr dazu</a></p>
 
 
 <h2 id="neu">Neu in den letzten Versionen</h2>
+<h3>Version 3.0.0.480 <span class="muted">· 20.11.2026</span></h3>
+<ul>
+  <li>Neu im Terminal: <code>thick-movies</code> mittelt schon fertige CT-Filme mit dünnen Schichten nachträglich zu 3-mm-Schichten (Dicke aus dem Dateinamen, Original wird nach geprüfter Umwandlung gelöscht), <code>cine-bars</code> entfernt die Cine-Leiste aus schon fertigen, beschnittenen Canon-Standbildern, ohne das übrige Bild zu verändern. Beide nur im Terminal.</li>
+  <li>Echokardiographie: Aufnahmen mit Sektor-Schallkopf heißen jetzt „Echo“ und kommen in einen eigenen Ordner „US &lt;Datum&gt; Echo“. Bisher hielt das Programm ein Echo mit niedrigem MI für CEUS und schob die ganze Untersuchung des Tages in den CEUS-Ordner. Beim Zusammenfügen bleibt das Echo ein eigener Film.</li>
+  <li>CT: Dünne Schichten (z. B. 0,6 mm) werden jetzt zu 3-mm-Schichten zusammengerechnet, so wie es CT und PACS-Viewer tun. Die Schichten überlappen (alle 1,2 mm eine), damit der Film flüssig läuft; die Filme sind ruhiger und kleiner; im Dateinamen steht die neue Dicke. Koronare und sagittale Serien bleiben unverändert. Im Terminal: andere Dicke mit <code>--thick-slices 5</code>, aus mit <code>--thick-slices 0</code>.</li>
+  <li>Patientenordner heißen wieder nur nach dem Patienten, ohne „CEUS“, „B-Bild“ oder „Punktion“ davor. Vorhandene Ordner mit Vorsatz werden weiter benutzt und nicht umbenannt. Wer den Vorsatz möchte: im Terminal <code>convert --type-prefix</code>.</li>
+  <li>Windows: Die Links der Patientenliste („Ordner öffnen“ und „umwandeln“) funktionieren jetzt – bisher meldete das Programm „Dieser Ordner ist nicht (mehr) vorhanden“.</li>
+  <li>GE LOGIQ E10: Bilder in 1285x960 und 1530x960 (zum Beispiel in Vorträgen) werden jetzt anonymisiert – Name, ID und Benutzerkürzel werden abgedeckt.</li>
+  <li>GE-Bilder und -Filme in 960x720, 960x540 und 1552x873 werden jetzt auch am Logo erkannt. Bisher blieben manche unverändert, wenn die Texterkennung den Schriftzug nicht lesen konnte (zum Beispiel in „Vortrag – reparieren“).</li>
+  <li>Canon Aplio (i-Serie, a, a450, flex u. a.): In Standbildern verschwindet die Cine-Leiste mit der Bildnummer am unteren Rand („# 117“), im Doppelbild beide; Filme haben keine. Das gilt auch für „Filme – nachträglich anonymisieren“ – für Exporte in voller Bildgröße und für schon beschnittene Bilder, wenn die Leiste genau an ihrer Stelle steht. Beim Zielformat DICOM bleibt das Bild wie bisher unverändert.</li>
+  <li>GE LOGIQ E9: Bildausschnitte in 1018x685 (zum Beispiel in Vorträgen) werden jetzt anonymisiert.</li>
+  <li>Endoskopie: Name, Patienten-ID und Geburtsdatum unten links im Bild werden jetzt abgedeckt (Fujifilm VP-7000, MESO iBox); Geschlecht, Alter, Einrichtung und Datum bleiben; auch in Endoskopie-Filmen. Bilder und Filme anderer Endoskopie-Geräte werden vorerst nicht umgewandelt – bisher kamen sie mit dem Namen im Bild in die Ausgabe.</li>
+  <li>Vortrag – reparieren: Abdeck-Rechtecke über einem anonymisierten Bild oder Film werden jetzt auch entfernt, wenn die Texterkennung zusätzlich etwas abgedeckt hat; der Hinweis „bitte ansehen“ im Bericht bleibt.</li>
+</ul>
 <h3>Version 3.0.0.442 <span class="muted">· 17.11.2026</span></h3>
 <ul>
   <li>Vortrag – reparieren: Von Hand über die Kopfzeile gelegte Abdeck-Rechtecke werden entfernt, sobald der Film oder das Bild darunter sicher anonymisiert ist (Keynote und PowerPoint). Der Bericht nennt die Folien; animierte Rechtecke bleiben.</li>
@@ -125,13 +139,13 @@ Einstellen musst du nichts. <a href="#schneller">Mehr dazu</a></p>
   <li>Neu: Der DICOM-Converter meldet beim Start, wenn es eine neue Version gibt, zeigt kurz, was neu ist, und installiert sie auf Wunsch gleich selbst – Mac nach dem Administrator-Kennwort, Windows nach der Rückfrage für Administratorrechte; danach startet er neu. Die Suche lässt sich unter Hilfe abschalten; „Nach neuer Version suchen …“ fragt jederzeit von Hand. Erst ab der nächsten Version zu sehen – diese hier gibt es noch wie gewohnt auf der Webseite.</li>
   <li>Die Anonymisierung wird jetzt immer geprüft: Jedes fertige Bild und jeder Film wird per Texterkennung nach Name, Patienten-ID und Geburtsdatum durchsucht, Treffer werden am Ende gemeldet. Der Schalter „Anonymisierung prüfen“ entfällt. Geprüft wird die Kopfzeile, in der die Geräte diese Angaben einblenden – im Test mit 212 Ultraschall-Dateien dauerte die Umwandlung damit 70 statt 50 Sekunden (die bisherige Prüfung des ganzen Bildes: fast 3 Minuten).</li>
 </ul>
+<details><summary>Ältere Versionen</summary>
 <h3>Version 3.0.0.395 <span class="muted">· 12.11.2026</span></h3>
 <ul>
   <li>„Vortrag – reparieren“ statt „Vortrag – Keynotes reparieren“ – jetzt auch für PowerPoint, auf Mac und Windows: Filme in alten Formaten (MJPEG, AVI, WMV) werden MP4 und spielen in PowerPoint überall, die Präsentation wird meist halb so groß; Philips-Filme und -Bilder werden anonymisiert; alte Bilder, die PowerPoint nur noch als weiße Fläche zeigt, sind in alten .ppt-Dateien wieder sichtbar. Das Ergebnis heißt „… (repariert)“, ein Bericht liegt daneben. Keynote-Präsentationen (nur Mac) werden wie bisher repariert. Liegen beide Arten im Ordner, fragt der Mac wie beim Einfügen „Keynote oder PowerPoint?“ – vorgewählt ist die Wahl vom letzten Mal.</li>
   <li>Alte Keynote- und PowerPoint-Präsentationen: Auch Titelbilder alter Filme (Cinepak, Indeo, DivX, QuickTime-Animation, H.264) werden wieder sichtbar, und der blasse Hinweis „Zur Anzeige wird der QuickTime™ Dekompressor … benötigt“ mitten im Bild verschwindet.</li>
   <li>Neu: Nuklearmedizin (NM). Szintigramme werden dunkel auf weiß ausgegeben (Ganzkörper vorn und hinten nebeneinander, SPECT als Film). Bildschirmaufnahmen von Siemens Symbia und syngo.via zeigen Name, Geburtsdatum, Patienten-ID, Überweiser und Auftragsnummer im Bild – das wird abgedeckt, auch beim Zielformat DICOM; vorher wurden NM-Dateien übersprungen.</li>
 </ul>
-<details><summary>Ältere Versionen</summary>
 <h3>Version 3.0.0.392 <span class="muted">· 11.11.2026</span></h3>
 <ul>
   <li>Behoben: Liegen zwischen den DICOM-Dateien Textdateien, ZIP-Archive o. Ä. (z. B. eine LIESMICH-Datei), erscheint im Fortschrittsfenster keine unverständliche Meldung „E: DcmElement: Unknown Tag &amp; Data …“ mehr. Solche Dateien werden wie bisher als „keine DICOM-Datei“ übersprungen.</li>
@@ -522,7 +536,7 @@ Weiterentwicklung unterstützen möchte, kann das gern über
 
 
 <p class="muted" style="margin-top:3em">Alle Bilder auf dieser Seite zeigen Testpatienten („Mustermann“), keine echten Patientendaten.<br>
-DICOM-Converter 3.0.0.442 · Copyright Dr. Jens Berger (2012-2026)</p>
+DICOM-Converter 3.0.0.480 · Copyright Dr. Jens Berger (2012-2026)</p>
 
 </main>
 </body>
