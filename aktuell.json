@@ -1,7 +1,18 @@
 {
- "version": "3.0.0.480",
+ "version": "3.0.0.501",
  "page": "https://jensberger-dev.github.io/dicom-converter/",
  "changes": [
+  {
+   "version": "3.0.0.501",
+   "date": "21.11.2026",
+   "items": [
+    "Finder-Tags (B-Bild, CEUS, …) bleiben erhalten, wenn Bilder oder Filme an Ort und Stelle bearbeitet werden (nachträglich anonymisieren, Cine-Leiste entfernen, beschneiden, reparieren). Bisher gingen sie dabei verloren.",
+    "Vortrag – reparieren: Ultraschallbilder, die in PowerPoint verkleinert oder gestaucht eingefügt wurden, werden jetzt erkannt und anonymisiert; gestauchte Bilder erscheinen wieder im richtigen Seitenverhältnis. Abdeck-Rechtecke, die über den Bildrand hinausragen oder animiert sind, werden mit entfernt. Bleibt ein Abdeck-Rechteck liegen, weil das Bild darunter nicht anonymisiert werden konnte, nennt der Bericht die Folie.",
+    "Vortrag – in Präsentation einfügen: Bei mehreren Dateien fragt ein kleines Raster, wie viele Bilder oder Filme auf eine Folie sollen – mit der Maus z. B. 1 × 2 (nebeneinander), 2 × 2 oder 3 × 4 Felder markieren und klicken. Die Bilder werden zeilenweise eingeteilt, jedes passend in sein Feld. Keynote und PowerPoint, Mac und Windows.",
+    "Installation auf dem Mac: Die Schritte links im Installationsfenster sind wieder gut lesbar (hellerer Hintergrund, eigene Fassung für den Dunkelmodus); als Kontakt steht dort dicom-converter@gmx.net.",
+    "GE LOGIQ (Filme und Bilder 960×540 aus Vorträgen): Unter der abgedeckten Kopfzeile blieb bei Linearsonden eine schmale graue Linie links neben dem Bild stehen. Sie entsteht nicht mehr."
+   ]
+  },
   {
    "version": "3.0.0.480",
    "date": "20.11.2026",
@@ -357,6 +368,17 @@
   }
  ],
  "changes_en": [
+  {
+   "version": "3.0.0.501",
+   "date": "21.11.2026",
+   "items": [
+    "Finder tags (B-Bild, CEUS, …) are kept when images or movies are edited in place (anonymize afterwards, remove cine bar, crop, repair). Until now they were lost.",
+    "Presentation – repair: ultrasound images that were inserted into PowerPoint scaled down or squashed are now recognized and anonymized; squashed images are shown in the right aspect ratio again. Cover rectangles that stick out beyond the image edge or are animated are removed as well. If a cover rectangle stays because the image below could not be anonymized, the report names the slide.",
+    "Vortrag – in Präsentation einfügen (insert into presentation): with several files a small grid asks how many images or movies should go on one slide – mark e.g. 1 × 2 (side by side), 2 × 2 or 3 × 4 fields with the mouse and click. The images are placed row by row, each fitted into its field. Keynote and PowerPoint, Mac and Windows.",
+    "Installation on the Mac: the steps on the left of the installer window are easy to read again (lighter background, own version for dark mode); the contact shown there is dicom-converter@gmx.net.",
+    "GE LOGIQ (movies and images 960×540 from presentations): with linear probes a thin grey line stayed left of the image below the covered header line. It no longer appears."
+   ]
+  },
   {
    "version": "3.0.0.480",
    "date": "20.11.2026",
@@ -714,63 +736,63 @@
  "files": [
   {
    "name": "changes.txt",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/changes.txt",
-   "size": 197189,
-   "sha256": "5e660db18fc9264d6f126a2dc635508413c5762c85d51d85e32f562a4bae46f3"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/changes.txt",
+   "size": 201242,
+   "sha256": "c5bf1225841c1fc134ca8a45863a93dd0111cd011b2772dc21374003c4990d8d"
   },
   {
    "name": "DICOM-Converter-Handbuch.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Handbuch.pdf",
-   "size": 259930,
-   "sha256": "f419b1e85aec9368818affea10ad38f844cb1f8ebf1fcf8574c016d423eafe17"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Handbuch.pdf",
+   "size": 260308,
+   "sha256": "3f5f0ca53867c6448abcb22ec5de62525c82dc3ec116c1a85c916ecb213d3ad0"
   },
   {
    "name": "DICOM-Converter-Kurzanleitung.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Kurzanleitung.pdf",
-   "size": 81472,
-   "sha256": "04f8c4fac04e00b9e7bfe28077053745452ba60dd46aece7d5720e0cfce5f5f0"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Kurzanleitung.pdf",
+   "size": 81804,
+   "sha256": "cd88d9de01e95667f70c99877c419c1e83aed8b6491c96197ea9be3b2cb4b62c"
   },
   {
    "name": "DICOM-Converter-macOS.pkg",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-macOS.pkg",
-   "size": 98996120,
-   "sha256": "f209ebbcfb2c26dfdb599c058befb1892f61ec50335bb2d5247f0e5c7c34fde4"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-macOS.pkg",
+   "size": 98776425,
+   "sha256": "fccfc8d21b1c1c4b7b842c6d1c4a5b4bba63b2c6ebeda627ddede2252db837c2"
   },
   {
    "name": "DICOM-Converter-Manual.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Manual.pdf",
-   "size": 254983,
-   "sha256": "c0838a0376fa8ed3775ac2a857484e2bb83afb66172b9a6c3f09f808c4f21aad"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Manual.pdf",
+   "size": 255934,
+   "sha256": "7a369802dfae79e7e0f54d0024988382e0cb6b1a8f4ce3a86a2268a7dc1c8169"
   },
   {
    "name": "DICOM-Converter-Neuerungen.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Neuerungen.pdf",
-   "size": 65936,
-   "sha256": "bc24c3c027f8d64bfc7a78d8cff45587f59a10ea878239d1a7413d681b9cc9e7"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Neuerungen.pdf",
+   "size": 66173,
+   "sha256": "618c0904178e19b4250ace8326e226df16f0f51bafa0a818c0f3706f72876c4e"
   },
   {
    "name": "DICOM-Converter-Quick-Start-Guide.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Quick-Start-Guide.pdf",
-   "size": 80320,
-   "sha256": "adad55969e7fd3e496ee40e2ed7d745c75322d93c40e45630a98eac427012e77"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Quick-Start-Guide.pdf",
+   "size": 80669,
+   "sha256": "bcb1f737c9837b80f079787c3727cdcafd8fe510da3cc8692554c1faebda8cc1"
   },
   {
    "name": "DICOM-Converter-Whats-New.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Whats-New.pdf",
-   "size": 65437,
-   "sha256": "95aa3dee71de0e9ce472a5e501b7544551bf34cb4accf5371edd6267049b9dfc"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Whats-New.pdf",
+   "size": 65659,
+   "sha256": "5bc25693334a69f51070e74f6feb39c7d8b34f7ef564de8730b536e6718e619f"
   },
   {
    "name": "DICOM-Converter-Windows-ohne-Admin.zip",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Windows-ohne-Admin.zip",
-   "size": 59098363,
-   "sha256": "3a4750170322b558ff8b65db9e9bdfb6f371187b3a7b5c3ad2d66313621b7b4f"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Windows-ohne-Admin.zip",
+   "size": 59159786,
+   "sha256": "04433506f2aa285edb8b56f513365ceebf72ebbeb6aed354873e59a9ed907ef7"
   },
   {
    "name": "DICOM-Converter-Windows-Setup.exe",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.480/DICOM-Converter-Windows-Setup.exe",
-   "size": 44995930,
-   "sha256": "21efcdc621a866ca5baed2e43703806335d5cf315da30230df4755a50e2d4bae"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Windows-Setup.exe",
+   "size": 45047690,
+   "sha256": "299c028f3de98635f9787917d9f44c705cae5d9f2b6afea56ab553541d522b49"
   }
  ]
 }
