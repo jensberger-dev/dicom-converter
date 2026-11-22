@@ -1,7 +1,17 @@
 {
- "version": "3.0.0.504",
+ "version": "3.0.0.511",
  "page": "https://jensberger-dev.github.io/dicom-converter/",
  "changes": [
+  {
+   "version": "3.0.0.511",
+   "date": "22.11.2026",
+   "items": [
+    "Filme – nachträglich anonymisieren (auch beim Reparieren mit „Auch anonymisieren“): Liegt neben einem Film schon eine „… anonymisiert“-Datei einer früheren Fassung, wird trotzdem anonymisiert (die neue heißt dann „… anonymisiert 2“). Bisher brach das Programm dort ab, und beim Reparieren entstanden aus diesen Filmen neue MP4 ohne Anonymisierung.",
+    "Filme – reparieren und in MP4 umwandeln mit „Auch anonymisieren“: Lässt sich eine Datei nicht anonymisieren, wird nichts umgewandelt und das Programm sagt es; Filme ohne erkannten Hersteller werden zum Ansehen genannt.",
+    "Nachträglich anonymisieren, Dateiname aus dem Bild: Vornamen mit „Il“ (z. B. Ilse) werden nicht mehr als „H…“ gelesen, zerrissene Vornamen werden wieder zusammengesetzt, und das Alter fehlt nicht mehr, wenn Untersuchungs- und Geburtsdatum in derselben Kopfzeile stehen (GE).",
+    "Vortrag – in Präsentation einfügen: In die Moderatornotizen kommt jetzt der Fallordner (der sprechende Ordner über der Datei, meist zwei Ebenen höher) statt des Dateinamens; einstellbar unter „Notizen“ (Fallordner, Dateiname, beides, nein). Mehrere Bilder eines Falls auf einer Folie nennen ihn nur einmal."
+   ]
+  },
   {
    "version": "3.0.0.504",
    "date": "22.11.2026",
@@ -379,6 +389,16 @@
   }
  ],
  "changes_en": [
+  {
+   "version": "3.0.0.511",
+   "date": "22.11.2026",
+   "items": [
+    "Movies – anonymize afterwards (also when repairing with “Also anonymize”): if an “… anonymisiert” file from an earlier version already lies next to a movie, it is anonymized anyway (the new one is then called “… anonymisiert 2”). Until now the program stopped there, and repairing turned these movies into new MP4 files without anonymization.",
+    "Movies – repair and convert to MP4 with “Also anonymize”: if a file cannot be anonymized, nothing is converted and the program says so; movies whose manufacturer was not recognised are listed for checking.",
+    "Anonymize afterwards, file name from the image: first names with “Il” (e.g. Ilse) are no longer read as “H…”, torn first names are put back together, and the age is no longer missing when examination date and date of birth are on the same header line (GE).",
+    "Lecture – insert into presentation: the presenter notes now get the case folder (the descriptive folder above the file, usually two levels up) instead of the file name; adjustable under “Notes” (case folder, file name, both, no). Several images of one case on a slide name it only once."
+   ]
+  },
   {
    "version": "3.0.0.504",
    "date": "22.11.2026",
@@ -758,63 +778,63 @@
  "files": [
   {
    "name": "changes.txt",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/changes.txt",
-   "size": 204669,
-   "sha256": "f889a0bc47899d64ad77536de869931d2652ff7cfb1517e3bd3b0c4c71643e85"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.511/changes.txt",
+   "size": 208252,
+   "sha256": "eca6f9f0cf84f8be52d2557d54d6d661980189b6acd4aa69be7087e633226157"
   },
   {
    "name": "DICOM-Converter-Handbuch.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Handbuch.pdf",
-   "size": 264325,
-   "sha256": "e458ffa9effa107245ef97866a8cbb424469e8796c89d083769ef97216668d74"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.511/DICOM-Converter-Handbuch.pdf",
+   "size": 264799,
+   "sha256": "dacd2d330cd560c53d4be851bd2ede42c169c23e8bc3b69a818a1d91e7342e2d"
   },
   {
    "name": "DICOM-Converter-Kurzanleitung.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Kurzanleitung.pdf",
-   "size": 81806,
-   "sha256": "7f33efb68e4586354168dcba8e019cac62bf99f60b836b82768ce350c279bc0c"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.511/DICOM-Converter-Kurzanleitung.pdf",
+   "size": 81810,
+   "sha256": "57a62d23cae84e22a1ac363db9aa742f8376790e8b80f672c128ae963452bef5"
   },
   {
    "name": "DICOM-Converter-macOS.pkg",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-macOS.pkg",
-   "size": 98981380,
-   "sha256": "eefb5bf5c33ac1efe06396bbc478ffa4bd38a3b108c39b9d108988c8034e22ab"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.511/DICOM-Converter-macOS.pkg",
+   "size": 99015250,
+   "sha256": "35f0193a3e829b67da3c88fe0fbb94145293558cf629baeeaea4c70ead943885"
   },
   {
    "name": "DICOM-Converter-Manual.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Manual.pdf",
-   "size": 258535,
-   "sha256": "bc18c328449560718c85721d4522eaafe1de6d8d0a0fb86f1d805bcfa2df43ec"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.511/DICOM-Converter-Manual.pdf",
+   "size": 258727,
+   "sha256": "c25f821e81e9759ab39a0b741889ed144f97e04cf65405c301f3ab9a06580f8b"
   },
   {
    "name": "DICOM-Converter-Neuerungen.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Neuerungen.pdf",
-   "size": 66202,
-   "sha256": "7c5138ac0635b85d4218fbb29f5ad1a3e6151b2f40fd99ba9e4b563eac5545dc"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.511/DICOM-Converter-Neuerungen.pdf",
+   "size": 66258,
+   "sha256": "6a0281f89e93974db53bd0790716e3b898862d862a86723b2eab1dd24422199e"
   },
   {
    "name": "DICOM-Converter-Quick-Start-Guide.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Quick-Start-Guide.pdf",
-   "size": 80673,
-   "sha256": "afe1ff13b59f17b3cb9b565977202773f64d22dba291d4d459e5f96794821a0d"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.511/DICOM-Converter-Quick-Start-Guide.pdf",
+   "size": 80677,
+   "sha256": "16070a387a25ae3c89664b02e79556134580e7fab5d6494379cd2c836d683b9b"
   },
   {
    "name": "DICOM-Converter-Whats-New.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Whats-New.pdf",
-   "size": 65674,
-   "sha256": "cbe1d8b0fb4fb1801bb724a85e59b87bad31c63574218514359fde24d0157fb5"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.511/DICOM-Converter-Whats-New.pdf",
+   "size": 65740,
+   "sha256": "7765dde3cc485893d27d4076952f63f41fffd87606d9fc0c07bf74de536ac2fc"
   },
   {
    "name": "DICOM-Converter-Windows-ohne-Admin.zip",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Windows-ohne-Admin.zip",
-   "size": 59269178,
-   "sha256": "11e057907c85247efa31c274202b3c38e2a7f83310721bf677a2e8ac51ba8ea4"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.511/DICOM-Converter-Windows-ohne-Admin.zip",
+   "size": 59267631,
+   "sha256": "8fe93b705a1ae91b835db799c769164c6a3e2687fb987bf75117a3e1d92937b3"
   },
   {
    "name": "DICOM-Converter-Windows-Setup.exe",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Windows-Setup.exe",
-   "size": 45141854,
-   "sha256": "50db70ff29e0555b9a79c328740d715ec8168986c4fd29abebd7d45e5abb5b22"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.511/DICOM-Converter-Windows-Setup.exe",
+   "size": 45121854,
+   "sha256": "f1c4b881d84a7f89abcf9b2e59b1cc82621df8666096109c797a074ce25913b5"
   }
  ]
 }

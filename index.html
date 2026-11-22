@@ -58,7 +58,7 @@ s("view");document.addEventListener("click",function(e){var a=e.target.closest&&
 
 <p class="sprache"><b>DE</b> | <a href="en/" hreflang="en" lang="en">EN</a></p>
 <h1>DICOM-Converter</h1>
-<p class="muted">Version 3.0.0.504 · Stand 22.11.2026 · für macOS und Windows</p>
+<p class="muted">Version 3.0.0.511 · Stand 22.11.2026 · für macOS und Windows</p>
 
 <p class="lead">Der DICOM-Converter macht aus Ultraschall-Untersuchungen – und auch aus CT, MRT, Röntgen und anderen
 DICOM-Daten – ganz normale <b>Filme und Bilder</b>,
@@ -91,7 +91,7 @@ Einstellen musst du nichts. <a href="#schneller">Mehr dazu</a></p>
   </div>
 <p class="muted">Windows ohne Administratorrechte (z.&nbsp;B. von der IT verwalteter Klinik-PC): <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-ohne-Admin.zip" data-klick="download-windows">ZIP-Fassung</a> – entpacken und starten (<a href="#windows-zip">so geht’s</a>)</p>
 <p class="muted">Mac ab macOS 11 (Apple Silicon und Intel), von Apple signiert · Windows 10 oder 11 (64 Bit) · <a href="#voraussetzungen">Systemvoraussetzungen</a></p>
-<p class="muted">Version 3.0.0.504 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-klick="download-neuerungen">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
+<p class="muted">Version 3.0.0.511 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Neuerungen.pdf" data-klick="download-neuerungen">Was ist neu gegenüber 2.0.8 (PDF)</a></p>
 <div class="support">
   <span>Der DICOM-Converter ist kostenlos. Seine Weiterentwicklung kostet aber Geld – für das Apple-Entwicklerprogramm (damit der Mac das Programm ohne Warnung startet) und für den KI-Assistenten Claude, mit dem er entwickelt wird. Über eine Unterstützung freue ich mich sehr.</span>
   <a class="button secondary" href="https://www.paypal.com/paypalme/DicomConverter" data-klick="paypal">Unterstützen mit PayPal</a>
@@ -99,6 +99,13 @@ Einstellen musst du nichts. <a href="#schneller">Mehr dazu</a></p>
 
 
 <h2 id="neu">Neu in den letzten Versionen</h2>
+<h3>Version 3.0.0.511 <span class="muted">· 22.11.2026</span></h3>
+<ul>
+  <li>Filme – nachträglich anonymisieren (auch beim Reparieren mit „Auch anonymisieren“): Liegt neben einem Film schon eine „… anonymisiert“-Datei einer früheren Fassung, wird trotzdem anonymisiert (die neue heißt dann „… anonymisiert 2“). Bisher brach das Programm dort ab, und beim Reparieren entstanden aus diesen Filmen neue MP4 ohne Anonymisierung.</li>
+  <li>Filme – reparieren und in MP4 umwandeln mit „Auch anonymisieren“: Lässt sich eine Datei nicht anonymisieren, wird nichts umgewandelt und das Programm sagt es; Filme ohne erkannten Hersteller werden zum Ansehen genannt.</li>
+  <li>Nachträglich anonymisieren, Dateiname aus dem Bild: Vornamen mit „Il“ (z. B. Ilse) werden nicht mehr als „H…“ gelesen, zerrissene Vornamen werden wieder zusammengesetzt, und das Alter fehlt nicht mehr, wenn Untersuchungs- und Geburtsdatum in derselben Kopfzeile stehen (GE).</li>
+  <li>Vortrag – in Präsentation einfügen: In die Moderatornotizen kommt jetzt der Fallordner (der sprechende Ordner über der Datei, meist zwei Ebenen höher) statt des Dateinamens; einstellbar unter „Notizen“ (Fallordner, Dateiname, beides, nein). Mehrere Bilder eines Falls auf einer Folie nennen ihn nur einmal.</li>
+</ul>
 <h3>Version 3.0.0.504 <span class="muted">· 22.11.2026</span></h3>
 <ul>
   <li>Vortrag – in Präsentation einfügen: Was bisher bei jedem Einfügen gefragt wurde (Keynote oder PowerPoint, Thema, Aufteilung der Folien), lässt sich jetzt fest einstellen – in einer Textdatei mit Erklärungen, zu öffnen im Programmfenster unter Ablage (Windows: Datei) → „Einstellungen zum Einfügen in Präsentationen …“. Für PowerPoint neu einstellbar: Rahmen um Bilder und Filme (Farbe, Stärke, Linie), Schatten, Stärke der Spiegelung, sanftes Einblenden sowie für Filme Start (sofort oder bei Klick), Schleife oder einmal, Zurückspulen, Ausblenden und (unter Windows) Ton. Für Keynote: Stärke der Spiegelung, Wiederholen (Schleife oder vor und zurück) und Lautstärke. Wer nichts einstellt, merkt keinen Unterschied.</li>
@@ -115,6 +122,7 @@ Einstellen musst du nichts. <a href="#schneller">Mehr dazu</a></p>
   <li>Installation auf dem Mac: Die Schritte links im Installationsfenster sind wieder gut lesbar (hellerer Hintergrund, eigene Fassung für den Dunkelmodus); als Kontakt steht dort dicom-converter@gmx.net.</li>
   <li>GE LOGIQ (Filme und Bilder 960×540 aus Vorträgen): Unter der abgedeckten Kopfzeile blieb bei Linearsonden eine schmale graue Linie links neben dem Bild stehen. Sie entsteht nicht mehr.</li>
 </ul>
+<details><summary>Ältere Versionen</summary>
 <h3>Version 3.0.0.480 <span class="muted">· 20.11.2026</span></h3>
 <ul>
   <li>Neu im Terminal: <code>thick-movies</code> mittelt schon fertige CT-Filme mit dünnen Schichten nachträglich zu 3-mm-Schichten (Dicke aus dem Dateinamen, Original wird nach geprüfter Umwandlung gelöscht), <code>cine-bars</code> entfernt die Cine-Leiste aus schon fertigen, beschnittenen Canon-Standbildern, ohne das übrige Bild zu verändern. Beide nur im Terminal.</li>
@@ -129,7 +137,6 @@ Einstellen musst du nichts. <a href="#schneller">Mehr dazu</a></p>
   <li>Endoskopie: Name, Patienten-ID und Geburtsdatum unten links im Bild werden jetzt abgedeckt (Fujifilm VP-7000, MESO iBox); Geschlecht, Alter, Einrichtung und Datum bleiben; auch in Endoskopie-Filmen. Bilder und Filme anderer Endoskopie-Geräte werden vorerst nicht umgewandelt – bisher kamen sie mit dem Namen im Bild in die Ausgabe.</li>
   <li>Vortrag – reparieren: Abdeck-Rechtecke über einem anonymisierten Bild oder Film werden jetzt auch entfernt, wenn die Texterkennung zusätzlich etwas abgedeckt hat; der Hinweis „bitte ansehen“ im Bericht bleibt.</li>
 </ul>
-<details><summary>Ältere Versionen</summary>
 <h3>Version 3.0.0.442 <span class="muted">· 17.11.2026</span></h3>
 <ul>
   <li>Vortrag – reparieren: Von Hand über die Kopfzeile gelegte Abdeck-Rechtecke werden entfernt, sobald der Film oder das Bild darunter sicher anonymisiert ist (Keynote und PowerPoint). Der Bericht nennt die Folien; animierte Rechtecke bleiben.</li>
@@ -552,7 +559,7 @@ Weiterentwicklung unterstützen möchte, kann das gern über
 
 
 <p class="muted" style="margin-top:3em">Alle Bilder auf dieser Seite zeigen Testpatienten („Mustermann“), keine echten Patientendaten.<br>
-DICOM-Converter 3.0.0.504 · Copyright Dr. Jens Berger (2012-2026)</p>
+DICOM-Converter 3.0.0.511 · Copyright Dr. Jens Berger (2012-2026)</p>
 
 </main>
 </body>
