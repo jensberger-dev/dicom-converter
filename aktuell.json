@@ -1,7 +1,19 @@
 {
- "version": "3.0.0.501",
+ "version": "3.0.0.504",
  "page": "https://jensberger-dev.github.io/dicom-converter/",
  "changes": [
+  {
+   "version": "3.0.0.504",
+   "date": "22.11.2026",
+   "items": [
+    "Vortrag – in Präsentation einfügen: Was bisher bei jedem Einfügen gefragt wurde (Keynote oder PowerPoint, Thema, Aufteilung der Folien), lässt sich jetzt fest einstellen – in einer Textdatei mit Erklärungen, zu öffnen im Programmfenster unter Ablage (Windows: Datei) → „Einstellungen zum Einfügen in Präsentationen …“. Für PowerPoint neu einstellbar: Rahmen um Bilder und Filme (Farbe, Stärke, Linie), Schatten, Stärke der Spiegelung, sanftes Einblenden sowie für Filme Start (sofort oder bei Klick), Schleife oder einmal, Zurückspulen, Ausblenden und (unter Windows) Ton. Für Keynote: Stärke der Spiegelung, Wiederholen (Schleife oder vor und zurück) und Lautstärke. Wer nichts einstellt, merkt keinen Unterschied.",
+    "Keynote: Eingefügte Filme laufen jetzt in einer normalen Schleife statt vorwärts und wieder rückwärts (einstellbar).",
+    "Filme – reparieren und in MP4 umwandeln: Eine zusätzliche Frage bietet an, die Filme im selben Schritt nachträglich zu anonymisieren (wie „Filme – nachträglich anonymisieren“, mit derselben Wahl für die Originale). Ist nichts zu reparieren, lässt sich stattdessen nur anonymisieren.",
+    "Filme – reparieren und in MP4 umwandeln: Eine zusätzliche Frage bietet an, die Filme im selben Schritt nachträglich zu anonymisieren (wie „Filme – nachträglich anonymisieren“, mit derselben Wahl für die Originale). Ist nichts zu reparieren, lässt sich stattdessen nur anonymisieren.",
+    "GE LOGIQ (Filme 960×540 aus Vorträgen): Filme im Doppelbild (B-Bild und Kontrastmittel nebeneinander) werden beim nachträglichen Anonymisieren jetzt erkannt; bisher blieben sie unverändert. Die Abdeckung des Namens ist bei allen 960×540-Filmen schwarz und lässt die Sondenangabe rechts daneben frei.",
+    "PowerPoint auf dem Mac: Eingefügte Filme starten jetzt wirklich von selbst, sobald die Folie erscheint. Bisher warteten sie auf einen Klick."
+   ]
+  },
   {
    "version": "3.0.0.501",
    "date": "21.11.2026",
@@ -368,6 +380,18 @@
   }
  ],
  "changes_en": [
+  {
+   "version": "3.0.0.504",
+   "date": "22.11.2026",
+   "items": [
+    "Lecture – insert into presentation: what was asked at every insert (Keynote or PowerPoint, theme, slide layout) can now be set permanently – in a text file with explanations, opened in the program window under File → “Settings for inserting into presentations …”. New for PowerPoint: border around images and movies (colour, width, line), shadow, strength of the reflection, fade-in, and for movies start (immediately or on click), loop or once, rewind, hide and (on Windows) sound. For Keynote: strength of the reflection, repeat (loop or back and forth) and volume. If you set nothing, nothing changes.",
+    "Keynote: inserted movies now play in a normal loop instead of forwards and then backwards (adjustable).",
+    "Movies – repair and convert to MP4: an additional question offers to anonymize the movies afterwards in the same step (like “Movies – anonymize afterwards”, with the same choice for the originals). If there is nothing to repair, you can anonymize on its own instead.",
+    "Movies – repair and convert to MP4: an additional question offers to anonymize the movies afterwards in the same step (like “Movies – anonymize afterwards”, with the same choice for the originals). If there is nothing to repair, you can anonymize on its own instead.",
+    "GE LOGIQ (960×540 movies from lectures): movies in dual view (B-mode and contrast side by side) are now recognised when anonymizing afterwards; until now they stayed unchanged. The cover over the name is black for all 960×540 movies and leaves the probe text next to it free.",
+    "PowerPoint on the Mac: inserted movies now really start by themselves as soon as the slide appears. Until now they waited for a click."
+   ]
+  },
   {
    "version": "3.0.0.501",
    "date": "21.11.2026",
@@ -736,63 +760,63 @@
  "files": [
   {
    "name": "changes.txt",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/changes.txt",
-   "size": 201242,
-   "sha256": "c5bf1225841c1fc134ca8a45863a93dd0111cd011b2772dc21374003c4990d8d"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/changes.txt",
+   "size": 204669,
+   "sha256": "f889a0bc47899d64ad77536de869931d2652ff7cfb1517e3bd3b0c4c71643e85"
   },
   {
    "name": "DICOM-Converter-Handbuch.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Handbuch.pdf",
-   "size": 260308,
-   "sha256": "3f5f0ca53867c6448abcb22ec5de62525c82dc3ec116c1a85c916ecb213d3ad0"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Handbuch.pdf",
+   "size": 264705,
+   "sha256": "be4de61189ec1cabc931f921f83332d9f6b15f5b0641d4c45aa3663fa359cd98"
   },
   {
    "name": "DICOM-Converter-Kurzanleitung.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Kurzanleitung.pdf",
-   "size": 81804,
-   "sha256": "cd88d9de01e95667f70c99877c419c1e83aed8b6491c96197ea9be3b2cb4b62c"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Kurzanleitung.pdf",
+   "size": 81806,
+   "sha256": "7f33efb68e4586354168dcba8e019cac62bf99f60b836b82768ce350c279bc0c"
   },
   {
    "name": "DICOM-Converter-macOS.pkg",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-macOS.pkg",
-   "size": 98776425,
-   "sha256": "fccfc8d21b1c1c4b7b842c6d1c4a5b4bba63b2c6ebeda627ddede2252db837c2"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-macOS.pkg",
+   "size": 98981380,
+   "sha256": "eefb5bf5c33ac1efe06396bbc478ffa4bd38a3b108c39b9d108988c8034e22ab"
   },
   {
    "name": "DICOM-Converter-Manual.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Manual.pdf",
-   "size": 255934,
-   "sha256": "7a369802dfae79e7e0f54d0024988382e0cb6b1a8f4ce3a86a2268a7dc1c8169"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Manual.pdf",
+   "size": 258748,
+   "sha256": "245e7d97a8c93893eb568c26a8ed3958afde5b527b3f0c40aa0c7c7877158411"
   },
   {
    "name": "DICOM-Converter-Neuerungen.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Neuerungen.pdf",
-   "size": 66173,
-   "sha256": "618c0904178e19b4250ace8326e226df16f0f51bafa0a818c0f3706f72876c4e"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Neuerungen.pdf",
+   "size": 66202,
+   "sha256": "7c5138ac0635b85d4218fbb29f5ad1a3e6151b2f40fd99ba9e4b563eac5545dc"
   },
   {
    "name": "DICOM-Converter-Quick-Start-Guide.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Quick-Start-Guide.pdf",
-   "size": 80669,
-   "sha256": "bcb1f737c9837b80f079787c3727cdcafd8fe510da3cc8692554c1faebda8cc1"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Quick-Start-Guide.pdf",
+   "size": 80673,
+   "sha256": "afe1ff13b59f17b3cb9b565977202773f64d22dba291d4d459e5f96794821a0d"
   },
   {
    "name": "DICOM-Converter-Whats-New.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Whats-New.pdf",
-   "size": 65659,
-   "sha256": "5bc25693334a69f51070e74f6feb39c7d8b34f7ef564de8730b536e6718e619f"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Whats-New.pdf",
+   "size": 65674,
+   "sha256": "cbe1d8b0fb4fb1801bb724a85e59b87bad31c63574218514359fde24d0157fb5"
   },
   {
    "name": "DICOM-Converter-Windows-ohne-Admin.zip",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Windows-ohne-Admin.zip",
-   "size": 59159786,
-   "sha256": "04433506f2aa285edb8b56f513365ceebf72ebbeb6aed354873e59a9ed907ef7"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Windows-ohne-Admin.zip",
+   "size": 59269178,
+   "sha256": "11e057907c85247efa31c274202b3c38e2a7f83310721bf677a2e8ac51ba8ea4"
   },
   {
    "name": "DICOM-Converter-Windows-Setup.exe",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.501/DICOM-Converter-Windows-Setup.exe",
-   "size": 45047690,
-   "sha256": "299c028f3de98635f9787917d9f44c705cae5d9f2b6afea56ab553541d522b49"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.504/DICOM-Converter-Windows-Setup.exe",
+   "size": 45141854,
+   "sha256": "50db70ff29e0555b9a79c328740d715ec8168986c4fd29abebd7d45e5abb5b22"
   }
  ]
 }
