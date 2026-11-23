@@ -58,7 +58,7 @@ s("view");document.addEventListener("click",function(e){var a=e.target.closest&&
 
 <p class="sprache"><a href="../" hreflang="de" lang="de">DE</a> | <b>EN</b></p>
 <h1>DICOM-Converter</h1>
-<p class="muted">Version 3.0.0.511 · as of 22.11.2026 · for macOS and Windows</p>
+<p class="muted">Version 3.0.0.513 · as of 23.11.2026 · for macOS and Windows</p>
 
 <p class="lead">The DICOM-Converter turns ultrasound examinations – and also CT, MRI, X-ray and other DICOM data – into
 ordinary <b>movies and images</b> that you can view with any program, put into PowerPoint or Keynote, or pass on –
@@ -90,7 +90,7 @@ You do not need to set anything. <a href="#schneller">More about this</a></p>
   </div>
 <p class="muted">Windows without administrator rights (e.g. a hospital PC managed by IT): <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Windows-ohne-Admin.zip" data-klick="download-windows">ZIP version</a> – unpack and start (<a href="#windows-zip">how it works</a>)</p>
 <p class="muted">Mac with macOS 11 or later (Apple silicon and Intel), signed by Apple · Windows 10 or 11 (64-bit) · <a href="#voraussetzungen">System requirements</a></p>
-<p class="muted">Version 3.0.0.511 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Whats-New.pdf" data-klick="download-neuerungen">What’s new compared with 2.0.8 (PDF)</a></p>
+<p class="muted">Version 3.0.0.513 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Whats-New.pdf" data-klick="download-neuerungen">What’s new compared with 2.0.8 (PDF)</a></p>
 <div class="support">
   <span>The DICOM-Converter is free of charge. Developing it further does cost money, though – for the Apple Developer Program (so that the Mac starts the program without a warning) and for the AI assistant Claude, with which it is developed. I would be very grateful for your support.</span>
   <a class="button secondary" href="https://www.paypal.com/paypalme/DicomConverter" data-klick="paypal">Support with PayPal</a>
@@ -98,6 +98,12 @@ You do not need to set anything. <a href="#schneller">More about this</a></p>
 
 
 <h2 id="neu">New in the latest versions</h2>
+<h3>Version 3.0.0.513 <span class="muted">· 23.11.2026</span></h3>
+<ul>
+  <li>Movies – repair and convert to MP4: the question about anonymizing now comes first; with “Also anonymize” only one window with overview and originals follows. Only “our” MP4 (H.264) counts as finished – HEVC movies (e.g. from an iPhone) are converted too, so that they play everywhere.</li>
+  <li>Rewritten movies carry a note under “Copyright” in the Finder saying what the DICOM-Converter did (repaired, converted, repackaged, anonymized, cropped). Movies that are already anonymized are recognised by it and not processed again.</li>
+  <li>The Finder information “Where from” (download address, often with the old file name) is no longer copied to the new file by any tool.</li>
+</ul>
 <h3>Version 3.0.0.511 <span class="muted">· 22.11.2026</span></h3>
 <ul>
   <li>Movies – anonymize afterwards (also when repairing with “Also anonymize”): if an “… anonymisiert” file from an earlier version already lies next to a movie, it is anonymized anyway (the new one is then called “… anonymisiert 2”). Until now the program stopped there, and repairing turned these movies into new MP4 files without anonymization.</li>
@@ -113,6 +119,7 @@ You do not need to set anything. <a href="#schneller">More about this</a></p>
   <li>GE LOGIQ (960×540 movies from lectures): movies in dual view (B-mode and contrast side by side) are now recognised when anonymizing afterwards; until now they stayed unchanged. The cover over the name is black for all 960×540 movies and leaves the probe text next to it free.</li>
   <li>PowerPoint on the Mac: inserted movies now really start by themselves as soon as the slide appears. Until now they waited for a click.</li>
 </ul>
+<details><summary>Older versions</summary>
 <h3>Version 3.0.0.501 <span class="muted">· 21.11.2026</span></h3>
 <ul>
   <li>Finder tags (B-Bild, CEUS, …) are kept when images or movies are edited in place (anonymize afterwards, remove cine bar, crop, repair). Until now they were lost.</li>
@@ -121,7 +128,6 @@ You do not need to set anything. <a href="#schneller">More about this</a></p>
   <li>Installation on the Mac: the steps on the left of the installer window are easy to read again (lighter background, own version for dark mode); the contact shown there is dicom-converter@gmx.net.</li>
   <li>GE LOGIQ (movies and images 960×540 from presentations): with linear probes a thin grey line stayed left of the image below the covered header line. It no longer appears.</li>
 </ul>
-<details><summary>Older versions</summary>
 <h3>Version 3.0.0.480 <span class="muted">· 20.11.2026</span></h3>
 <ul>
   <li>New in the terminal: <code>thick-movies</code> averages finished CT movies with thin slices into 3 mm slices afterwards (thickness from the file name, the original is deleted after a checked conversion); <code>cine-bars</code> removes the cine bar from finished, cropped Canon still images without changing the rest of the image. Both in the terminal only.</li>
@@ -560,7 +566,7 @@ support further development, you are welcome to do so via
 
 
 <p class="muted" style="margin-top:3em">All images on this page show test patients (“Mustermann”), no real patient data. The screenshots show the German interface.<br>
-DICOM-Converter 3.0.0.511 · Copyright Dr. Jens Berger (2012-2026)</p>
+DICOM-Converter 3.0.0.513 · Copyright Dr. Jens Berger (2012-2026)</p>
 
 </main>
 </body>
