@@ -1,7 +1,14 @@
 {
- "version": "3.0.0.513",
+ "version": "3.0.0.521",
  "page": "https://jensberger-dev.github.io/dicom-converter/",
  "changes": [
+  {
+   "version": "3.0.0.521",
+   "date": "25.11.2026",
+   "items": [
+    "Echokardiographie wird zuverlässiger erkannt: Neben dem Sektor-Schallkopf zählen jetzt auch eindeutige Angaben im DICOM-Kopf (z. B. Körperteil Herz, Untersuchungsgebiet Kardiologie, „Echo“ oder „TTE“ im Protokoll). Damit landen auch Echos von Philips EPIQ CVx, GE Vivid und GE Venue im Ordner „US <Datum> Echo“. Ein Sektor-Schallkopf allein reicht nicht mehr – es braucht einen zweiten Hinweis (z. B. CW-Doppler, Herz-Preset bei Canon, Herz-Anwendung bei GE oder ein anderes Echo-Bild der Untersuchung). Bilder mit Konvex- oder Linear-Schallkopf gelten nie als Echo, auch wenn im Kopf ein Herz-Protokoll steht."
+   ]
+  },
   {
    "version": "3.0.0.513",
    "date": "23.11.2026",
@@ -388,16 +395,16 @@
    "items": [
     "Neue Webseite mit Downloads, Impressum und Datenschutz."
    ]
-  },
-  {
-   "version": "3.0.0.86",
-   "date": "19.10.2026",
-   "items": [
-    "Erste Version 3 zum Herunterladen: Installationsprogramm für Mac und Windows, eigenes Programmfenster, Rechtsklick-Menü und Anonymisierung für alle gängigen Hersteller."
-   ]
   }
  ],
  "changes_en": [
+  {
+   "version": "3.0.0.521",
+   "date": "25.11.2026",
+   "items": [
+    "Echocardiography is recognized more reliably: besides the sector transducer, clear details in the DICOM header now count too (e.g. body part heart, cardiology, “Echo” or “TTE” in the protocol). Echoes from Philips EPIQ CVx, GE Vivid and GE Venue therefore also go into “US <date> Echo”. A sector transducer alone is no longer enough – a second clue is needed (e.g. CW Doppler, the Canon heart preset, the GE cardiac application or another echo image of the examination). Images taken with a convex or linear transducer never count as echo, even if the header names a cardiac protocol."
+   ]
+  },
   {
    "version": "3.0.0.513",
    "date": "23.11.2026",
@@ -784,75 +791,68 @@
    "items": [
     "New website with downloads, legal notice and privacy policy."
    ]
-  },
-  {
-   "version": "3.0.0.86",
-   "date": "19.10.2026",
-   "items": [
-    "First version 3 for download: installer for Mac and Windows, a program window of its own, context menu and anonymization for all common manufacturers."
-   ]
   }
  ],
  "files": [
   {
    "name": "changes.txt",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.513/changes.txt",
-   "size": 210175,
-   "sha256": "b93f05f8ea8c434835d9883278c35b02142d5bd5b379718e64d546cf0648afcc"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/changes.txt",
+   "size": 212895,
+   "sha256": "ed9c9dcc8b4fa20d203eb8f3dd472d6cab2b035684bdc0ff34bcce370c27a9aa"
   },
   {
    "name": "DICOM-Converter-Handbuch.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.513/DICOM-Converter-Handbuch.pdf",
-   "size": 274442,
-   "sha256": "c5fe293006dd8422ae3f6b8cade9801d6de6464fee3ec136fbdcefd2ce30d5c3"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Handbuch.pdf",
+   "size": 274614,
+   "sha256": "fe4b6620a73637ca07b015ff4e19b09217d00a7275d463c65c262618606a3d73"
   },
   {
    "name": "DICOM-Converter-Kurzanleitung.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.513/DICOM-Converter-Kurzanleitung.pdf",
-   "size": 81813,
-   "sha256": "832dd4e148f95da9ebb1dc82979fc0f8f38761a7aef3ad35beb965ed2e9ba378"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Kurzanleitung.pdf",
+   "size": 81814,
+   "sha256": "b5d1e6b05d05bfb397dd0992bc6588e5ad8df3a9eeb6e740c9d562648634bc45"
   },
   {
    "name": "DICOM-Converter-macOS.pkg",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.513/DICOM-Converter-macOS.pkg",
-   "size": 99052502,
-   "sha256": "90676b413bff0b15371427daf55a11c1b776f1954bd60eab8093df5e49ccc8d2"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-macOS.pkg",
+   "size": 99118947,
+   "sha256": "58def67ec7b1fca6c478d05458ba0318808fd3e4dc85ecdea70bd3d4bbfbf189"
   },
   {
    "name": "DICOM-Converter-Manual.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.513/DICOM-Converter-Manual.pdf",
-   "size": 268295,
-   "sha256": "7b169290ea238182bb367c21b29071fc1aa5c66e894040bf0ffdb4a398d938b8"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Manual.pdf",
+   "size": 269377,
+   "sha256": "5e6e88b2ebdfd2fa9ef078ebc00328975695875330a489dd8a3f224b2b18445d"
   },
   {
    "name": "DICOM-Converter-Neuerungen.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.513/DICOM-Converter-Neuerungen.pdf",
-   "size": 66258,
-   "sha256": "05f0ddeaf451f89cb64cec7afb94ef7b38dc51711bf1d9da95b7ba0dfce836d9"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Neuerungen.pdf",
+   "size": 66313,
+   "sha256": "5babb29e786359b75398f16836cd02867499734b7d3039fbfe56d68f0ce1f6ce"
   },
   {
    "name": "DICOM-Converter-Quick-Start-Guide.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.513/DICOM-Converter-Quick-Start-Guide.pdf",
-   "size": 80680,
-   "sha256": "89c942fc15f0fc57891b5c3877a4e8b001afe399228cf1334698b78a63ef936f"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Quick-Start-Guide.pdf",
+   "size": 80681,
+   "sha256": "9acb2baccc16d0948d53c858a4a7a801c178fde38625b4e16bc389df4726e5a6"
   },
   {
    "name": "DICOM-Converter-Whats-New.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.513/DICOM-Converter-Whats-New.pdf",
-   "size": 65740,
-   "sha256": "36baca917f4a7b7d60daa55cf2b8a41fa46e262ce2d33c1191bed194d6b361fa"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Whats-New.pdf",
+   "size": 65822,
+   "sha256": "354cbec5ae83bcd239a74de21abdd9de0a9f8826df88721bcada546639035f6d"
   },
   {
    "name": "DICOM-Converter-Windows-ohne-Admin.zip",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.513/DICOM-Converter-Windows-ohne-Admin.zip",
-   "size": 59295847,
-   "sha256": "ea08a47c114d7b6dd184b26ac5adbadb3ebe729fb1cf2954ca6b98d99a337f2e"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Windows-ohne-Admin.zip",
+   "size": 59334735,
+   "sha256": "cb9900a1dfa43aef9bec18c36d5d763226b9f3e0abcd143543f0b7ba46ed8733"
   },
   {
    "name": "DICOM-Converter-Windows-Setup.exe",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.513/DICOM-Converter-Windows-Setup.exe",
-   "size": 45139296,
-   "sha256": "20d1946e304d7221723c027fbeef066dcc8015d06116971c47ca5faab88a6e89"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Windows-Setup.exe",
+   "size": 45172627,
+   "sha256": "19de145ec6464ead580cee63ff7d5278b3467c62bfcca79a2f752cdf1a31a61b"
   }
  ]
 }
