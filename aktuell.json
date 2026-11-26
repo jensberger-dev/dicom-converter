@@ -1,7 +1,17 @@
 {
- "version": "3.0.0.521",
+ "version": "3.0.0.544",
  "page": "https://jensberger-dev.github.io/dicom-converter/",
  "changes": [
+  {
+   "version": "3.0.0.544",
+   "date": "26.11.2026",
+   "items": [
+    "Filme und Bilder – nachträglich anonymisieren: Bilder der Endosonographie (EUS) mit Fujifilm-Echoendoskop werden jetzt erkannt und anonymisiert – Name, Geburtsdatum, Patienten-ID und Auftragsnummer werden abgedeckt. Datum und Uhrzeit für den Dateinamen liest der DICOM-Converter auf großen Bildern jetzt zuverlässiger. Namen mit Akzenten (z. B. polnische oder französische) erkennt das nachträgliche Anonymisieren im Bild jetzt zuverlässiger.",
+    "Vortrag – reparieren (Keynote): Abdeck-Rechtecke, die stehen bleiben müssen (über einem nicht anonymisierten Bild, in einer Gruppe oder verknüpft), stehen jetzt wie bei PowerPoint im Bericht unter „Bitte ansehen“.",
+    "DICOM – konvertieren: Die Frage „Loops zusammenfügen?“ hat ein Häkchen „Nicht mehr fragen – immer so antworten“. Danach gilt die gewählte Antwort ohne Rückfrage; wieder fragen lassen: Programmfenster → Ablage (Windows: Datei) → Rückfragen wieder stellen.",
+    "Mac: ⌘Q beendet den DICOM-Converter jetzt auch, wenn gerade ein Dialog offen ist (z. B. „Was ist neu?“ oder eine Meldung) – bisher tat ⌘Q dann nichts. Das Fortschrittsfenster (Rechtsklick im Finder) hat jetzt eine Menüleiste: ⌘Q beendet, ⌘W schließt das Fenster; ein laufender Vorgang wird dabei abgebrochen."
+   ]
+  },
   {
    "version": "3.0.0.521",
    "date": "25.11.2026",
@@ -388,16 +398,19 @@
     "Der Befehl im Terminal heißt jetzt dicomconverter.",
     "Das Mac-Paket ist von Apple signiert und beglaubigt: keine Warnung mehr beim Öffnen."
    ]
-  },
-  {
-   "version": "3.0.0.96",
-   "date": "19.10.2026",
-   "items": [
-    "Neue Webseite mit Downloads, Impressum und Datenschutz."
-   ]
   }
  ],
  "changes_en": [
+  {
+   "version": "3.0.0.544",
+   "date": "26.11.2026",
+   "items": [
+    "Movies and images – anonymize afterwards: endoscopic ultrasound (EUS) images from a Fujifilm echoendoscope are now recognised and anonymized – name, date of birth, patient ID and accession number are covered. The DICOM-Converter now reads the date and time for the file name more reliably on large images. Names with accents (e.g. Polish or French) are now recognised more reliably in the image when anonymizing afterwards.",
+    "Lecture – repair (Keynote): cover rectangles that have to stay (over an image that is not anonymized, in a group or linked) are now listed in the report under “Please look at it”, as with PowerPoint.",
+    "DICOM – convert: the question “Join loops?” has a tick box “Don’t ask again – always answer this way”. After that the chosen answer applies without asking; to be asked again: program window → File → Ask questions again.",
+    "Mac: ⌘Q now quits the DICOM-Converter even while a dialog is open (e.g. “What’s new?” or a message) – before, ⌘Q did nothing then. The progress window (right-click in the Finder) now has a menu bar: ⌘Q quits, ⌘W closes the window; a running task is cancelled."
+   ]
+  },
   {
    "version": "3.0.0.521",
    "date": "25.11.2026",
@@ -784,75 +797,68 @@
     "The terminal command is now called dicomconverter.",
     "The Mac package is signed and notarized by Apple: no more warning when opening it."
    ]
-  },
-  {
-   "version": "3.0.0.96",
-   "date": "19.10.2026",
-   "items": [
-    "New website with downloads, legal notice and privacy policy."
-   ]
   }
  ],
  "files": [
   {
    "name": "changes.txt",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/changes.txt",
-   "size": 212895,
-   "sha256": "ed9c9dcc8b4fa20d203eb8f3dd472d6cab2b035684bdc0ff34bcce370c27a9aa"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/changes.txt",
+   "size": 220861,
+   "sha256": "c1a8adff3587b2b79d125a9c8a4a2f8a8deca5a72927d068b5cc0211b3cc476d"
   },
   {
    "name": "DICOM-Converter-Handbuch.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Handbuch.pdf",
-   "size": 274614,
-   "sha256": "fe4b6620a73637ca07b015ff4e19b09217d00a7275d463c65c262618606a3d73"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Handbuch.pdf",
+   "size": 274834,
+   "sha256": "c32d3882361c9efa485446cad6814ea4488bb5524d57c585bb922cd098833c4b"
   },
   {
    "name": "DICOM-Converter-Kurzanleitung.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Kurzanleitung.pdf",
-   "size": 81814,
-   "sha256": "b5d1e6b05d05bfb397dd0992bc6588e5ad8df3a9eeb6e740c9d562648634bc45"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Kurzanleitung.pdf",
+   "size": 81995,
+   "sha256": "b1e38508c887dd65017143b1c91f89553ad5e624b3b883680db16e61d8828cd4"
   },
   {
    "name": "DICOM-Converter-macOS.pkg",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-macOS.pkg",
-   "size": 99118947,
-   "sha256": "58def67ec7b1fca6c478d05458ba0318808fd3e4dc85ecdea70bd3d4bbfbf189"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-macOS.pkg",
+   "size": 99110207,
+   "sha256": "6e59787b6dc312cfd36cfe648da5f8ab632fa50898b13444876895a512c7714e"
   },
   {
    "name": "DICOM-Converter-Manual.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Manual.pdf",
-   "size": 269377,
-   "sha256": "5e6e88b2ebdfd2fa9ef078ebc00328975695875330a489dd8a3f224b2b18445d"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Manual.pdf",
+   "size": 269603,
+   "sha256": "efac7545bf0a3b6f5ae6436f843ab3d8cc501e36e6abfc164088d5dadc5f08d4"
   },
   {
    "name": "DICOM-Converter-Neuerungen.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Neuerungen.pdf",
-   "size": 66313,
-   "sha256": "5babb29e786359b75398f16836cd02867499734b7d3039fbfe56d68f0ce1f6ce"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Neuerungen.pdf",
+   "size": 66296,
+   "sha256": "e190731acbee26e66e2945d5f4ab576d5eef91c09ab5e4474c5bdec21c026f97"
   },
   {
    "name": "DICOM-Converter-Quick-Start-Guide.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Quick-Start-Guide.pdf",
-   "size": 80681,
-   "sha256": "9acb2baccc16d0948d53c858a4a7a801c178fde38625b4e16bc389df4726e5a6"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Quick-Start-Guide.pdf",
+   "size": 80847,
+   "sha256": "6a2ace7b8ed29be2b242b819108e053a751da78ec4e9965046bd421e8c11dc74"
   },
   {
    "name": "DICOM-Converter-Whats-New.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Whats-New.pdf",
-   "size": 65822,
-   "sha256": "354cbec5ae83bcd239a74de21abdd9de0a9f8826df88721bcada546639035f6d"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Whats-New.pdf",
+   "size": 65801,
+   "sha256": "8c7376b3ee01da077e55dcdfaf794c244eab3a60d7cda2bf6faae646b47d6d65"
   },
   {
    "name": "DICOM-Converter-Windows-ohne-Admin.zip",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Windows-ohne-Admin.zip",
-   "size": 59334735,
-   "sha256": "cb9900a1dfa43aef9bec18c36d5d763226b9f3e0abcd143543f0b7ba46ed8733"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Windows-ohne-Admin.zip",
+   "size": 59321898,
+   "sha256": "8901ce03d9849c6f07c1bee14f18f1b7487488fb598335575117b53a19713d5b"
   },
   {
    "name": "DICOM-Converter-Windows-Setup.exe",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.521/DICOM-Converter-Windows-Setup.exe",
-   "size": 45172627,
-   "sha256": "19de145ec6464ead580cee63ff7d5278b3467c62bfcca79a2f752cdf1a31a61b"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Windows-Setup.exe",
+   "size": 45181666,
+   "sha256": "72ff2aea437d2ad605f54e0552ae65cad1fb3109ee3cb21f101c7b2b575ec900"
   }
  ]
 }
