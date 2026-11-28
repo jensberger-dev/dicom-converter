@@ -1,7 +1,21 @@
 {
- "version": "3.0.0.544",
+ "version": "3.0.0.567",
  "page": "https://jensberger-dev.github.io/dicom-converter/",
  "changes": [
+  {
+   "version": "3.0.0.567",
+   "date": "28.11.2026",
+   "items": [
+    "Schneller bei großen Mengen: Auf Rechnern mit 10 und mehr Kernen wandelt der DICOM-Converter jetzt bis zu fünf Dateien gleichzeitig um (bisher drei), bei 8–9 Kernen vier. Im Test mit 218 Ultraschall-Dateien 1:00 statt 1:13 Minuten, die Ergebnisse sind dieselben.",
+    "Protokoll: Der Kopf ist übersichtlicher – Quelle, Ziel, Filme, Anonymisierung, Optionen und Parallel stehen untereinander; bei „Optionen“ nur, was eingeschaltet ist.",
+    "Protokoll: Die Ergebnistabelle am Ende ist aufgeräumt – ausgeschriebene Spaltennamen, die Zeit nur noch insgesamt (bei mehreren Dateien gleichzeitig ergaben die Zeiten je Bildart keine Summe), „Probleme“ nur, wenn es welche gab, und Untersuchungen werden auch bei „Sonstige“ und in der Summe richtig gezählt.",
+    "Protokoll: Jede Untersuchung nennt ihren Zielordner gleich in der Trennzeile, die Dateien stehen eingerückt darunter; im Fortschrittsfenster etwas größere Schrift.",
+    "Auch im Terminal schreibt der DICOM-Converter jetzt die Protokolldatei.",
+    "Neuer Schalter „Ordner ohne Alter“ (Terminal: --no-age-in-folder): Der Patientenordner heißt dann ohne Alter, die Dateien behalten es.",
+    "Probelauf deutlich schneller (Testbestand ohne Ultraschall: 7 statt 66 Sekunden).",
+    "Protokoll: Untersuchungen ohne Ausgabe (z. B. nur Übersichtsbilder) sagen das in einer Zeile, Berichte und andere Dateien ohne Bilder stehen unter „Sonstige“, ergänzte Gerätedaten werden einmal je Untersuchung gemeldet; unter der Ergebnistabelle steht, wie viele Kerne im Mittel genutzt wurden."
+   ]
+  },
   {
    "version": "3.0.0.544",
    "date": "26.11.2026",
@@ -388,19 +402,23 @@
     "Windows: Filme standardmäßig als MP4.",
     "Systemvoraussetzungen in Anleitung und auf der Webseite."
    ]
-  },
-  {
-   "version": "3.0.0.115",
-   "date": "19.10.2026",
-   "items": [
-    "Neue Geräte werden automatisch erkannt und anonymisiert; Proben zum Einschicken liegen als ZIP in EXAMS.",
-    "Viele weitere Hersteller werden erkannt (Esaote, Mindray, BK Medical, Butterfly, Clarius und andere).",
-    "Der Befehl im Terminal heißt jetzt dicomconverter.",
-    "Das Mac-Paket ist von Apple signiert und beglaubigt: keine Warnung mehr beim Öffnen."
-   ]
   }
  ],
  "changes_en": [
+  {
+   "version": "3.0.0.567",
+   "date": "28.11.2026",
+   "items": [
+    "Faster with large amounts: on computers with 10 or more cores the DICOM-Converter now converts up to five files at the same time (previously three), with 8–9 cores four. In a test with 218 ultrasound files 1:00 instead of 1:13 minutes, the results are the same.",
+    "Log: the header is clearer – source, destination, movies, anonymization, options and parallel conversion are listed one below the other; “Options” shows only what is switched on.",
+    "Log: the results table at the end is tidier – full column names, the time only in total (with several files at the same time, the times per image type did not add up), “Problems” only if there were any, and examinations are also counted correctly for “Other” and in the total.",
+    "Log: each examination names its destination folder right in its separator line, the files are indented below it; slightly larger font in the progress window.",
+    "The DICOM-Converter now also writes the log file when it runs in the terminal.",
+    "New switch “Folder without age” (terminal: --no-age-in-folder): the patient folder is then named without the age, the files keep it.",
+    "Trial run much faster (test set without ultrasound: 7 instead of 66 seconds).",
+    "Log: examinations without output (e.g. only overview images) say so in one line, reports and other files without images are listed under “Other”, completed device data is reported once per examination; below the results table it shows how many cores were used on average."
+   ]
+  },
   {
    "version": "3.0.0.544",
    "date": "26.11.2026",
@@ -787,78 +805,68 @@
     "Windows: movies as MP4 by default.",
     "System requirements in the guide and on the website."
    ]
-  },
-  {
-   "version": "3.0.0.115",
-   "date": "19.10.2026",
-   "items": [
-    "New devices are recognized and anonymized automatically; samples to send in are stored as a ZIP in EXAMS.",
-    "Many more manufacturers are recognized (Esaote, Mindray, BK Medical, Butterfly, Clarius and others).",
-    "The terminal command is now called dicomconverter.",
-    "The Mac package is signed and notarized by Apple: no more warning when opening it."
-   ]
   }
  ],
  "files": [
   {
    "name": "changes.txt",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/changes.txt",
-   "size": 220861,
-   "sha256": "c1a8adff3587b2b79d125a9c8a4a2f8a8deca5a72927d068b5cc0211b3cc476d"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.567/changes.txt",
+   "size": 229598,
+   "sha256": "d71043bb028d65f1d72def48664610edbc1e1d87ffd9fa75a1af3a17cbbcd4c5"
   },
   {
    "name": "DICOM-Converter-Handbuch.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Handbuch.pdf",
-   "size": 274834,
-   "sha256": "c32d3882361c9efa485446cad6814ea4488bb5524d57c585bb922cd098833c4b"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.567/DICOM-Converter-Handbuch.pdf",
+   "size": 277625,
+   "sha256": "debe4a9f5ffd8f6056422923b44c2d4bda3a109687d9e40f4a489d2400e25619"
   },
   {
    "name": "DICOM-Converter-Kurzanleitung.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Kurzanleitung.pdf",
-   "size": 81995,
-   "sha256": "b1e38508c887dd65017143b1c91f89553ad5e624b3b883680db16e61d8828cd4"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.567/DICOM-Converter-Kurzanleitung.pdf",
+   "size": 82152,
+   "sha256": "ad7d30b58b8ef1d08770bfaa38a377ec3f9b930e12860f4ec37c4fa34aa09dc3"
   },
   {
    "name": "DICOM-Converter-macOS.pkg",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-macOS.pkg",
-   "size": 99110207,
-   "sha256": "6e59787b6dc312cfd36cfe648da5f8ab632fa50898b13444876895a512c7714e"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.567/DICOM-Converter-macOS.pkg",
+   "size": 99160540,
+   "sha256": "bd28cc893cf12de6f6c686ae27412b15e666734bb09c2796fa8fc33dd5ace278"
   },
   {
    "name": "DICOM-Converter-Manual.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Manual.pdf",
-   "size": 269603,
-   "sha256": "efac7545bf0a3b6f5ae6436f843ab3d8cc501e36e6abfc164088d5dadc5f08d4"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.567/DICOM-Converter-Manual.pdf",
+   "size": 272292,
+   "sha256": "b9fd0996d2c80c28ec3fea4c532d915b2129b21828f2f5c948727c8bb5cf51c1"
   },
   {
    "name": "DICOM-Converter-Neuerungen.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Neuerungen.pdf",
-   "size": 66296,
-   "sha256": "e190731acbee26e66e2945d5f4ab576d5eef91c09ab5e4474c5bdec21c026f97"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.567/DICOM-Converter-Neuerungen.pdf",
+   "size": 66593,
+   "sha256": "a44d841589d649db12b34faa26c5697a79d48c0676ddc51630882943272a0e25"
   },
   {
    "name": "DICOM-Converter-Quick-Start-Guide.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Quick-Start-Guide.pdf",
-   "size": 80847,
-   "sha256": "6a2ace7b8ed29be2b242b819108e053a751da78ec4e9965046bd421e8c11dc74"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.567/DICOM-Converter-Quick-Start-Guide.pdf",
+   "size": 81012,
+   "sha256": "e172553f4304cdf0250f7d50fb754067cd1235786d99613f5654144c2a5db5b2"
   },
   {
    "name": "DICOM-Converter-Whats-New.pdf",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Whats-New.pdf",
-   "size": 65801,
-   "sha256": "8c7376b3ee01da077e55dcdfaf794c244eab3a60d7cda2bf6faae646b47d6d65"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.567/DICOM-Converter-Whats-New.pdf",
+   "size": 66125,
+   "sha256": "91c573338a566f594b0ff1fa6efbbebc73160a34d4bb0b8326810c68da200aa9"
   },
   {
    "name": "DICOM-Converter-Windows-ohne-Admin.zip",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Windows-ohne-Admin.zip",
-   "size": 59321898,
-   "sha256": "8901ce03d9849c6f07c1bee14f18f1b7487488fb598335575117b53a19713d5b"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.567/DICOM-Converter-Windows-ohne-Admin.zip",
+   "size": 59349943,
+   "sha256": "74f21de65eb263d78da56731d726dc0e7f755756f7d0d6b2e8638ae335cd37bc"
   },
   {
    "name": "DICOM-Converter-Windows-Setup.exe",
-   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.544/DICOM-Converter-Windows-Setup.exe",
-   "size": 45181666,
-   "sha256": "72ff2aea437d2ad605f54e0552ae65cad1fb3109ee3cb21f101c7b2b575ec900"
+   "url": "https://github.com/jensberger-dev/dicom-converter/releases/download/v3.0.0.567/DICOM-Converter-Windows-Setup.exe",
+   "size": 45189374,
+   "sha256": "7bfe1328a5969e25f766c44ac1f8d5a89e0da5040ec1875d45b6f8a71cd32420"
   }
  ]
 }

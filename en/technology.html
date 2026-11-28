@@ -181,7 +181,7 @@
     <tr><th>Lanes</th><th>Run time</th><th>CPU time</th><th>Cores on average</th><th>Memory</th></tr>
     <tr><td class="z">1</td><td class="z">131 s</td><td class="z">708 s</td><td class="z">5.4</td><td class="z">1.3 GB</td></tr>
     <tr><td class="z">2</td><td class="z">100 s</td><td class="z">772 s</td><td class="z">7.7</td><td class="z">2.1 GB</td></tr>
-    <tr><td class="z">3 (automatic from 8 cores)</td><td class="z">90 s</td><td class="z">776 s</td><td class="z">8.6</td><td class="z">2.3 GB</td></tr>
+    <tr><td class="z">3 (automatic from 8 cores up to 3.0.0.544)</td><td class="z">90 s</td><td class="z">776 s</td><td class="z">8.6</td><td class="z">2.3 GB</td></tr>
     <tr><td class="z">4</td><td class="z">86 s</td><td class="z">774 s</td><td class="z">9.0</td><td class="z">2.5 GB</td></tr>
     <tr><td class="z">6</td><td class="z">86 s</td><td class="z">778 s</td><td class="z">9.0</td><td class="z">3.2 GB</td></tr>
   </table></div>
@@ -249,8 +249,8 @@
   <h2><span class="nr">5</span>Faster encoding: x264 “veryfast” instead of “medium” <span class="label">since 3.0.0.389</span></h2>
   <p>After stage&nbsp;4 the computer is fully loaded, with 8.6 of 10 cores working on average. Sampling during the conversion shows what
   for: <b>88&nbsp;%</b> of the computing time goes into the H.264 encoder x264, reading and color conversion together less than 4&nbsp;%.
-  More files at the same time therefore no longer help (3, 5 and 7 lanes: 16.9 / 17.2 / 17.5&nbsp;s on a subset). The lever is the
-  encoder itself.</p>
+  More files at the same time therefore no longer helped back then (3, 5 and 7 lanes: 16.9 / 17.2 / 17.5&nbsp;s on a subset). The
+  lever is the encoder itself. With the faster encoder, more lanes pay off again – see below.</p>
   <p>x264 has presets from “ultrafast” to “placebo”. They determine how thoroughly it searches for motion between frames and how many
   earlier frames it uses as references. The quality level (CRF&nbsp;18) stays the same, and x264 adjusts the amount of data accordingly.
   Across all 92 movies of the test set:</p>
@@ -268,9 +268,22 @@
   frames as references without saving much time.</p>
   <div class="kasten">
     <p><b>Switching it off:</b> <code>--encoding thorough</code> in the terminal or <code>DCMCONV_X264_PRESET=medium</code> encodes as up to
-    3.0.0.388. The log states the choice in the line about the encoded movies. Hardware encoders (VideoToolbox) were not
+    3.0.0.388. The log states the choice in the line “Movies” (encoded fast or thoroughly). Hardware encoders (VideoToolbox) were not
     faster than “veryfast” and give different results depending on the computer.</p>
   </div>
+
+  <h3>Measured again with “veryfast” (27.11.2026)</h3>
+  <p>Since the encoder got faster it slows things down less, and the single-threaded parts – reading, text recognition, anonymization check – weigh more. More lanes therefore pay off again. Ultrasound test set (now 218 files, 16 080 frames), Mac with 10 cores, mean of two runs:</p>
+  <div class="tab"><table>
+    <tr><th>Lanes</th><th>Run time</th><th>CPU time</th><th>Memory</th></tr>
+    <tr><td class="z">1</td><td class="z">165 s</td><td class="z">420 s</td><td class="z">1.3 GB</td></tr>
+    <tr><td class="z">2</td><td class="z">93 s</td><td class="z">432 s</td><td class="z">1.5 GB</td></tr>
+    <tr><td class="z">3 (automatic up to 3.0.0.544)</td><td class="z">73 s</td><td class="z">439 s</td><td class="z">1.9–2.2 GB</td></tr>
+    <tr><td class="z">4</td><td class="z">67 s</td><td class="z">453 s</td><td class="z">2.0–2.1 GB</td></tr>
+    <tr><td class="z">5 (now automatic from 10 cores)</td><td class="z">60 s</td><td class="z">470 s</td><td class="z">2.3 GB</td></tr>
+    <tr><td class="z">6</td><td class="z">58 s</td><td class="z">479 s</td><td class="z">2.5 GB</td></tr>
+  </table></div>
+  <p>From five lanes on the gain becomes small, while the total computing work already rises by about 7&nbsp;%. CT, MRI and special cases: 3 → 5 lanes 120 → 113&nbsp;s and 55 → 38&nbsp;s, memory rose to at most 1.7&nbsp;GB. Outputs the same at every level. Since then the DICOM-Converter chooses 5 lanes from 10 cores, 4 from 8 cores, 2 from 6 cores.</p>
 
   <footer>Checked on the entire test collection (6.5&nbsp;GB, 758 outputs): old version = one after the other = at the same time, also
   with glue and the anonymization check, in the Windows VM and in the Intel part under Rosetta. All test data: 326&nbsp;s → 197&nbsp;s;

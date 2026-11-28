@@ -181,7 +181,7 @@
     <tr><th>Spuren</th><th>Laufzeit</th><th>CPU-Zeit</th><th>Kerne im Mittel</th><th>Speicher</th></tr>
     <tr><td class="z">1</td><td class="z">131 s</td><td class="z">708 s</td><td class="z">5,4</td><td class="z">1,3 GB</td></tr>
     <tr><td class="z">2</td><td class="z">100 s</td><td class="z">772 s</td><td class="z">7,7</td><td class="z">2,1 GB</td></tr>
-    <tr><td class="z">3 (automatisch ab 8 Kernen)</td><td class="z">90 s</td><td class="z">776 s</td><td class="z">8,6</td><td class="z">2,3 GB</td></tr>
+    <tr><td class="z">3 (automatisch ab 8 Kernen bis 3.0.0.544)</td><td class="z">90 s</td><td class="z">776 s</td><td class="z">8,6</td><td class="z">2,3 GB</td></tr>
     <tr><td class="z">4</td><td class="z">86 s</td><td class="z">774 s</td><td class="z">9,0</td><td class="z">2,5 GB</td></tr>
     <tr><td class="z">6</td><td class="z">86 s</td><td class="z">778 s</td><td class="z">9,0</td><td class="z">3,2 GB</td></tr>
   </table></div>
@@ -247,7 +247,8 @@
   <h2><span class="nr">5</span>Schneller kodieren: x264 „veryfast“ statt „medium“ <span class="label">seit 3.0.0.389</span></h2>
   <p>Nach Stufe&nbsp;4 ist der Rechner voll ausgelastet, im Mittel arbeiten 8,6 von 10 Kernen. Eine Abtastung während der Umwandlung zeigt, wofür:
   <b>88&nbsp;%</b> der Rechenzeit gehen in den H.264-Kodierer x264, Lesen und Farbumrechnung zusammen keine 4&nbsp;%. Mehr Dateien gleichzeitig
-  bringen deshalb nichts mehr (3, 5 und 7 Spuren: 16,9 / 17,2 / 17,5&nbsp;s an einem Teilsatz). Der Hebel ist der Kodierer selbst.</p>
+  brachten deshalb damals nichts mehr (3, 5 und 7 Spuren: 16,9 / 17,2 / 17,5&nbsp;s an einem Teilsatz). Der Hebel ist der Kodierer selbst.
+  Mit dem schnelleren Kodierer lohnen sich mehr Spuren wieder – siehe unten.</p>
   <p>x264 kennt Voreinstellungen von „ultrafast“ bis „placebo“. Sie legen fest, wie gründlich er nach Bewegung zwischen den Bildern sucht und
   wie viele frühere Bilder er als Bezug heranzieht. Die Qualitätsstufe (CRF&nbsp;18) bleibt gleich, x264 regelt die Datenmenge danach. Über
   alle 92 Filme des Testsatzes:</p>
@@ -265,9 +266,22 @@
   sogar größer, weil es weniger frühere Bilder als Bezug nutzt, ohne viel Zeit zu sparen.</p>
   <div class="kasten">
     <p><b>Abschalten:</b> <code>--encoding thorough</code> im Terminal oder <code>DCMCONV_X264_PRESET=medium</code> kodiert wie bis 3.0.0.388.
-    Das Protokoll nennt die Wahl in der Zeile „Filme: … kodiert“. Hardware-Kodierer (VideoToolbox) waren nicht schneller als „veryfast“
+    Das Protokoll nennt die Wahl in der Zeile „Filme“ (schnell bzw. gründlich kodiert). Hardware-Kodierer (VideoToolbox) waren nicht schneller als „veryfast“
     und liefern je nach Rechner andere Ergebnisse.</p>
   </div>
+
+  <h3>Nachgemessen mit „veryfast“ (27.11.2026)</h3>
+  <p>Seit der Kodierer schneller ist, bremst er weniger, und die einspurigen Teile – Lesen, Texterkennung, Anonymisierungsprüfung – fallen stärker ins Gewicht. Mehr Spuren lohnen sich dadurch wieder. Ultraschall-Testsatz (inzwischen 218 Dateien, 16 080 Frames), Mac mit 10 Kernen, Mittel aus zwei Läufen:</p>
+  <div class="tab"><table>
+    <tr><th>Spuren</th><th>Laufzeit</th><th>CPU-Zeit</th><th>Speicher</th></tr>
+    <tr><td class="z">1</td><td class="z">165 s</td><td class="z">420 s</td><td class="z">1,3 GB</td></tr>
+    <tr><td class="z">2</td><td class="z">93 s</td><td class="z">432 s</td><td class="z">1,5 GB</td></tr>
+    <tr><td class="z">3 (bis 3.0.0.544 automatisch)</td><td class="z">73 s</td><td class="z">439 s</td><td class="z">1,9–2,2 GB</td></tr>
+    <tr><td class="z">4</td><td class="z">67 s</td><td class="z">453 s</td><td class="z">2,0–2,1 GB</td></tr>
+    <tr><td class="z">5 (jetzt automatisch ab 10 Kernen)</td><td class="z">60 s</td><td class="z">470 s</td><td class="z">2,3 GB</td></tr>
+    <tr><td class="z">6</td><td class="z">58 s</td><td class="z">479 s</td><td class="z">2,5 GB</td></tr>
+  </table></div>
+  <p>Ab fünf Spuren wird der Gewinn klein, die Rechenarbeit insgesamt steigt schon um etwa 7&nbsp;%. CT, MRT und Sonderfälle: 3 → 5 Spuren 120 → 113&nbsp;s bzw. 55 → 38&nbsp;s, der Speicher stieg dabei höchstens auf 1,7&nbsp;GB. Ausgaben bei allen Stufen gleich. Seither wählt der DICOM-Converter 5 Spuren ab 10 Kernen, 4 ab 8 Kernen, 2 ab 6 Kernen.</p>
 
   <footer>Geprüft auf dem gesamten Testbestand (6,5&nbsp;GB, 758 Ausgaben): alte Version = nacheinander = gleichzeitig, auch mit Glue und
   Anonymisierungsprüfung, in der Windows-VM und im Intel-Teil unter Rosetta. Alle Testdaten: 326&nbsp;s → 197&nbsp;s; mit Glue und Prüfung

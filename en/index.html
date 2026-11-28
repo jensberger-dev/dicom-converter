@@ -62,7 +62,7 @@ s("view");document.addEventListener("click",function(e){var a=e.target.closest&&
 
 <p class="sprache"><a href="../" hreflang="de" lang="de">DE</a> | <b>EN</b></p>
 <h1>DICOM-Converter</h1>
-<p class="muted">Version 3.0.0.544 · as of 26.11.2026 · for macOS and Windows</p>
+<p class="muted">Version 3.0.0.567 · as of 28.11.2026 · for macOS and Windows</p>
 
 <p class="lead">The DICOM-Converter turns ultrasound examinations – and also CT, MRI, X-ray and other DICOM data – into
 ordinary <b>movies and images</b> that you can view with any program, put into PowerPoint or Keynote, or pass on –
@@ -97,7 +97,7 @@ You do not need to set anything. <a href="#schneller">More about this</a></p>
   </div>
   </div>
 <p class="muted">Mac with macOS 11 or later (Apple silicon and Intel), signed by Apple · Windows 10 or 11 (64-bit) · <a href="#voraussetzungen">System requirements</a></p>
-<p class="muted">Version 3.0.0.544 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Whats-New.pdf" data-klick="download-neuerungen">What’s new compared with 2.0.8 (PDF)</a></p>
+<p class="muted">Version 3.0.0.567 · <a href="https://github.com/jensberger-dev/dicom-converter/releases/latest/download/DICOM-Converter-Whats-New.pdf" data-klick="download-neuerungen">What’s new compared with 2.0.8 (PDF)</a></p>
 <div class="support">
   <span>The DICOM-Converter is free of charge. Developing it further does cost money, though – for the Apple Developer Program (so that the Mac starts the program without a warning) and for the AI assistant Claude, with which it is developed. I would be very grateful for your support.</span>
   <a class="button secondary" href="https://www.paypal.com/paypalme/DicomConverter" data-klick="paypal">Support with PayPal</a>
@@ -105,6 +105,17 @@ You do not need to set anything. <a href="#schneller">More about this</a></p>
 
 
 <h2 id="neu">New in the latest versions</h2>
+<h3>Version 3.0.0.567 <span class="muted">· 28.11.2026</span></h3>
+<ul>
+  <li>Faster with large amounts: on computers with 10 or more cores the DICOM-Converter now converts up to five files at the same time (previously three), with 8–9 cores four. In a test with 218 ultrasound files 1:00 instead of 1:13 minutes, the results are the same.</li>
+  <li>Log: the header is clearer – source, destination, movies, anonymization, options and parallel conversion are listed one below the other; “Options” shows only what is switched on.</li>
+  <li>Log: the results table at the end is tidier – full column names, the time only in total (with several files at the same time, the times per image type did not add up), “Problems” only if there were any, and examinations are also counted correctly for “Other” and in the total.</li>
+  <li>Log: each examination names its destination folder right in its separator line, the files are indented below it; slightly larger font in the progress window.</li>
+  <li>The DICOM-Converter now also writes the log file when it runs in the terminal.</li>
+  <li>New switch “Folder without age” (terminal: <code>--no-age-in-folder</code>): the patient folder is then named without the age, the files keep it.</li>
+  <li>Trial run much faster (test set without ultrasound: 7 instead of 66 seconds).</li>
+  <li>Log: examinations without output (e.g. only overview images) say so in one line, reports and other files without images are listed under “Other”, completed device data is reported once per examination; below the results table it shows how many cores were used on average.</li>
+</ul>
 <h3>Version 3.0.0.544 <span class="muted">· 26.11.2026</span></h3>
 <ul>
   <li>Movies and images – anonymize afterwards: endoscopic ultrasound (EUS) images from a Fujifilm echoendoscope are now recognised and anonymized – name, date of birth, patient ID and accession number are covered. The DICOM-Converter now reads the date and time for the file name more reliably on large images. Names with accents (e.g. Polish or French) are now recognised more reliably in the image when anonymizing afterwards.</li>
@@ -116,13 +127,13 @@ You do not need to set anything. <a href="#schneller">More about this</a></p>
 <ul>
   <li>Echocardiography is recognized more reliably: besides the sector transducer, clear details in the DICOM header now count too (e.g. body part heart, cardiology, “Echo” or “TTE” in the protocol). Echoes from Philips EPIQ CVx, GE Vivid and GE Venue therefore also go into “US &lt;date&gt; Echo”. A sector transducer alone is no longer enough – a second clue is needed (e.g. CW Doppler, the Canon heart preset, the GE cardiac application or another echo image of the examination). Images taken with a convex or linear transducer never count as echo, even if the header names a cardiac protocol.</li>
 </ul>
+<details><summary>Older versions</summary>
 <h3>Version 3.0.0.513 <span class="muted">· 23.11.2026</span></h3>
 <ul>
   <li>Movies – repair and convert to MP4: the question about anonymizing now comes first; with “Also anonymize” only one window with overview and originals follows. Only “our” MP4 (H.264) counts as finished – HEVC movies (e.g. from an iPhone) are converted too, so that they play everywhere.</li>
   <li>Rewritten movies carry a note under “Copyright” in the Finder saying what the DICOM-Converter did (repaired, converted, repackaged, anonymized, cropped). Movies that are already anonymized are recognised by it and not processed again.</li>
   <li>The Finder information “Where from” (download address, often with the old file name) is no longer copied to the new file by any tool.</li>
 </ul>
-<details><summary>Older versions</summary>
 <h3>Version 3.0.0.511 <span class="muted">· 22.11.2026</span></h3>
 <ul>
   <li>Movies – anonymize afterwards (also when repairing with “Also anonymize”): if an “… anonymisiert” file from an earlier version already lies next to a movie, it is anonymized anyway (the new one is then called “… anonymisiert 2”). Until now the program stopped there, and repairing turned these movies into new MP4 files without anonymization.</li>
@@ -405,7 +416,7 @@ computer, and the patient data are shown in the image. The DICOM-Converter</p>
 
 <h3 id="schneller">Fast – even with large amounts</h3>
 <p>Today’s computers have several processor cores. The DICOM-Converter uses them and converts <b>several files at the same
-time</b> – up to three on computers with 8 or more cores, two with 6–7 cores. Everything that depends on the order
+time</b> – up to five on computers with 10 or more cores, four with 8–9 cores, two with 6–7 cores. Everything that depends on the order
 (e.g. two patients with the same name, joined loops, CT and MRI series) is still done strictly in sequence. That is why
 the result is <b>the same, frame for frame</b>, as when converting one after the other, and the log appears in the usual
 order. Many ultrasound images and movies gain the most; during the run the computer is more heavily loaded. In addition,
@@ -479,6 +490,7 @@ the settings in the <a href="https://github.com/jensberger-dev/dicom-converter/r
   <tr><td><b>Join movies</b></td><td>All loops of one examination become a single movie.</td></tr>
   <tr><td><b>Crop banner</b></td><td>The header line with the device data is cut off completely instead of being covered.</td></tr>
   <tr><td><b>PID in name</b></td><td>The patient ID is added to the folder name.</td></tr>
+  <tr><td><b>Folder without age</b></td><td>The patient folder is named without the age, the files keep it.</td></tr>
   <tr><td><b>no anonymization</b></td><td>⚠ Patient data remain in the image – for internal use only.</td></tr>
 </table>
 </div>
@@ -584,7 +596,7 @@ support further development, you are welcome to do so via
 
 
 <p class="muted" style="margin-top:3em">All images on this page show test patients (“Mustermann”), no real patient data. The screenshots show the German interface.<br>
-DICOM-Converter 3.0.0.544 · Copyright Dr. Jens Berger (2012-2026)</p>
+DICOM-Converter 3.0.0.567 · Copyright Dr. Jens Berger (2012-2026)</p>
 
 </main>
 </body>
